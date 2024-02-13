@@ -10,7 +10,11 @@
         <link rel="stylesheet" href="<?= PUBLIC_DIR ?>/css/style.css">
         <title>FORUM</title>
     </head>
+    
     <body>
+
+
+
         <div id="wrapper"> 
             <div id="mainpage">
                 <!-- c'est ici que les messages (erreur ou succès) s'affichent-->
@@ -24,7 +28,10 @@
                             if(App\Session::isAdmin()){
                                 ?>
                                 <a href="index.php?ctrl=home&action=users">Voir la liste des gens</a>
-                            <?php } ?>
+                                
+                            <?php 
+                        } 
+                        ?>
                         </div>
                         <div id="nav-right">
                         <?php
@@ -40,6 +47,7 @@
                                 <a href="index.php?ctrl=security&action=login">Connexion</a>
                                 <a href="index.php?ctrl=security&action=register">Inscription</a>
                                 <a href="index.php?ctrl=forum&action=index">Liste des catégories</a>
+                                <a href="index.php?ctrl=forum&action=listTopics">Liste des Topics</a>
                             <?php
                             }
                         ?>
@@ -55,11 +63,15 @@
                 <p>&copy; <?= date_create("now")->format("Y") ?> - <a href="#">Règlement du forum</a> - <a href="#">Mentions légales</a></p>
             </footer>
         </div>
+
+
+
         <script
             src="https://code.jquery.com/jquery-3.4.1.min.js"
             integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
             crossorigin="anonymous">
         </script>
+
         <script>
             $(document).ready(function(){
                 $(".message").each(function(){
@@ -88,6 +100,10 @@
                 });
             })
         </script>
+
         <script src="<?= PUBLIC_DIR ?>/js/script.js"></script>
+
+
+
     </body>
 </html>
