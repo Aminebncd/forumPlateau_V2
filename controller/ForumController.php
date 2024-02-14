@@ -46,15 +46,19 @@ class ForumController extends AbstractController implements ControllerInterface{
     }
     
     public function listSubCategories($id) {
+
+        $categoryManager = new CategoryManager();
         $subCategoryManager = new SubCategoryManager();
         
-        $subCategories = $subCategoryManager->findAll();
+        $category = $categoryManager->findOneById($id);
+        $subCategories = $subCategoryManager->findByCategory($id);
         // var_dump($category->current());die;
         
         return [
-            "view" => VIEW_DIR."forum/listSubCategory.php",
+            "view" => VIEW_DIR."forum/detailsCategory.php",
             // "meta_description" => "Liste des topics par catégorie : ".$category,
             "data" => [
+                "category" => $category,
                 "subCategories" => $subCategories
             ]
         ];

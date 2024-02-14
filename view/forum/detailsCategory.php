@@ -1,15 +1,13 @@
 <?php
     $category = $result["data"]['category']; 
-    $topics = $result["data"]['topics']; 
+    $subCategories = $result["data"]['subCategories']; 
 ?>
 
 <h1>Liste des topics sous la catégorie : <?= $category->getName() ?></h1>
 
 <?php
-foreach($topics as $topic ){ ?>
-    <p>
-    <a href="index.php?ctrl=forum&action=listPostByTopic&id=<?= $topic->getId() ?>"><?= $topic->getTitle() ?></a>
-         par <?= $topic->getUser() ?></p>
+foreach($subCategories as $subCategory ){ ?>
+    <p><a href="index.php?ctrl=forum&action=listTopicsBySubCategory&id=<?= $subCategory->getId() ?>"><?= $subCategory->getName() ?></a></p>
 <?php }
 
 
