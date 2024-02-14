@@ -1,5 +1,5 @@
 <?php
-    $category = $result["data"]['category']; 
+    // $category = $result["data"]['category']; 
     $topics = $result["data"]['topics']; 
 ?>
 
@@ -7,5 +7,7 @@
 
 <?php
 foreach($topics as $topic ){ ?>
-    <p><a href="#"><?= $topic ?></a> par <?= $topic->getUser() ?></p>
+    <p>
+    <a href="index.php?ctrl=forum&action=listPostByTopic&id=<?= $topic->getId() ?> "><?= $topic->getTitle() ?></a>
+         par <?= $topic->getUser() ?></p>
 <?php }

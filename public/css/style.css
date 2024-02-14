@@ -2,8 +2,25 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    background-color: #1A1D28;
+    color: aliceblue;
+    font-size: 20px;
+    font-family: "rubik";
 }
 
 h1 {
-    color: rgb(0, 122, 156);
+    color: rgb(255, 255, 255);
+    font-size: 35px;
+}
+
+#wrapper {
+    padding: 150px;
+}
+
+a {
+    color: aliceblue;
+}
+
+main {
+    padding: 50px;
 }
