@@ -15,11 +15,11 @@ class TopicManager extends Manager{
     }
 
     // récupérer tous les topics d'une catégorie spécifique (par son id)
-    public function findTopicsByCategory($id) {
+    public function findTopicsBySubCategory($id) {
 
         $sql = "SELECT * 
                 FROM ".$this->tableName." t 
-                WHERE t.category_id = :id";
+                WHERE t.subCategory_id = :id";
        
         // la requête renvoie plusieurs enregistrements --> getMultipleResults
         return  $this->getMultipleResults(

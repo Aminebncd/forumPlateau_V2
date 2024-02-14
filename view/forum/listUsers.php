@@ -7,7 +7,7 @@
 <?php
 foreach($users as $user ){ ?>
     <p>
-        <a href="index.php?ctrl=forum&action=listUsers&id=<?= $user->getId() ?>"><?= $user->getNickName() ?></a>
+        <a href="index.php?ctrl=forum&action=listUsers&id=<?= $user->getId() ?>"><?= $user->getPseudo() ?></a>
     </p>
 <?php }
 

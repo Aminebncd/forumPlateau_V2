@@ -6,6 +6,7 @@ use App\AbstractController;
 use App\ControllerInterface;
 use App\Manager;
 use Model\Managers\CategoryManager;
+use Model\Managers\SubCategoryManager;
 use Model\Managers\TopicManager;
 use Model\Managers\PostManager;
 use Model\Managers\UserManager;
@@ -22,7 +23,7 @@ class ForumController extends AbstractController implements ControllerInterface{
         // le controller communique avec la vue "listCategories" (view) pour lui envoyer la liste des catégories (data)
         return [
             "view" => VIEW_DIR."forum/listCategories.php",
-            "meta_description" => "Liste des catégories du forum",
+            // "meta_description" => "Liste des catégories du forum",
             "data" => [
                 "categories" => $categories
             ]
@@ -33,13 +34,28 @@ class ForumController extends AbstractController implements ControllerInterface{
         $categoryManager = new CategoryManager();
         
         $categories = $categoryManager->findAll();
-        // var_dump($category->current());die;
+        // var_dump($categories->current());die;
         
         return [
             "view" => VIEW_DIR."forum/listCategories.php",
             // "meta_description" => "Liste des topics par catégorie : ".$category,
             "data" => [
                 "categories" => $categories
+            ]
+        ];
+    }
+    
+    public function listSubCategories($id) {
+        $subCategoryManager = new SubCategoryManager();
+        
+        $subCategories = $subCategoryManager->findAll();
+        // var_dump($category->current());die;
+        
+        return [
+            "view" => VIEW_DIR."forum/listSubCategory.php",
+            // "meta_description" => "Liste des topics par catégorie : ".$category,
+            "data" => [
+                "subCategories" => $subCategories
             ]
         ];
     }
@@ -59,23 +75,43 @@ class ForumController extends AbstractController implements ControllerInterface{
         ];
     }
 
-    public function listTopicsByCategory($id) {
+    public function listTopicsBySubCategory($id) {
 
-        $categoryManager = new CategoryManager();
+        $subCategoryManager = new SubCategoryManager();
         $topicManager = new TopicManager();
 
-        $category = $categoryManager->findOneById($id);
-        $topics = $topicManager->findTopicsByCategory($id);
+        $subCategory = $subCategoryManager->findOneById($id);
+        $topics = $topicManager->findTopicsBySubCategory($id);
 
         return [
-            "view" => VIEW_DIR."forum/detailsCategory.php",
-            // "meta_description" => "Liste des topics sous la catégorie : ".$category,
+            "view" => VIEW_DIR."forum/detailsSubCategory.php",
+            // "meta_description" => "Liste des topics sous la catégorie : ".$subCategory,
             "data" => [
-                "category" => $category,
+                "subCategory" => $subCategory,
                 "topics" => $topics
             ]
         ];
     }
+
+    // public function listTopicsByCategory($id) {
+
+    //     $categoryManager = new CategoryManager();
+    //     $topicManager = new TopicManager();
+
+    //     $category = $categoryManager->findOneById($id);
+    //     $topics = $topicManager->findTopicsByCategory($id);
+
+    //     return [
+    //         "view" => VIEW_DIR."forum/detailsCategory.php",
+    //         // "meta_description" => "Liste des topics sous la catégorie : ".$category,
+    //         "data" => [
+    //             "category" => $category,
+    //             "topics" => $topics
+    //         ]
+    //     ];
+    // }
+
+    
 
     // public function listPostsByUser($id) {
 
