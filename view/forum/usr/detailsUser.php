@@ -1,9 +1,10 @@
 <?php
-    $category = $result["data"]['category']; 
+    $user = $result["data"]['user']; 
     $topics = $result["data"]['topics']; 
+    $posts = $result["data"]['posts']; 
 ?>
 
-<h1>profil de <?= $category->getName() ?></h1>
+<h1>profil de <?= $user->getPseudo() ?></h1>
 
 <h1>Liste des topics :</h1>
 
@@ -18,10 +19,8 @@ foreach($topics as $topic ){ ?>
 <h1>Liste des posts :</h1>
 
 <?php
-foreach($topics as $topic ){ ?>
-    <p>
-    <a href="index.php?ctrl=forum&action=listPostByTopic&id=<?= $topic->getId() ?>"><?= $topic->getTitle() ?></a>
-         par <?= $topic->getUser() ?></p>
+foreach($posts as $post ){ ?>
+    <p><?= $post->getContent() ?></p>
 <?php } ?>
 
 

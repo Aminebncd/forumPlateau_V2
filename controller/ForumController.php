@@ -22,7 +22,7 @@ class ForumController extends AbstractController implements ControllerInterface{
 
         // le controller communique avec la vue "listCategories" (view) pour lui envoyer la liste des catégories (data)
         return [
-            "view" => VIEW_DIR."forum/listCategories.php",
+            "view" => VIEW_DIR."forum/tags/listCategories.php",
             // "meta_description" => "Liste des catégories du forum",
             "data" => [
                 "categories" => $categories
@@ -37,7 +37,7 @@ class ForumController extends AbstractController implements ControllerInterface{
         // var_dump($categories->current());die;
         
         return [
-            "view" => VIEW_DIR."forum/listCategories.php",
+            "view" => VIEW_DIR."forum/tags/listCategories.php",
             // "meta_description" => "Liste des topics par catégorie : ".$category,
             "data" => [
                 "categories" => $categories
@@ -55,7 +55,7 @@ class ForumController extends AbstractController implements ControllerInterface{
         // var_dump($category->current());die;
         
         return [
-            "view" => VIEW_DIR."forum/detailsCategory.php",
+            "view" => VIEW_DIR."forum/tags/detailsCategory.php",
             // "meta_description" => "Liste des topics par catégorie : ".$category,
             "data" => [
                 "category" => $category,
@@ -71,7 +71,7 @@ class ForumController extends AbstractController implements ControllerInterface{
         // var_dump($topics->current());die;
         
         return [
-            "view" => VIEW_DIR."forum/listTopics.php",
+            "view" => VIEW_DIR."forum/topics/listTopics.php",
             // "meta_description" => "Liste des topics par catégorie : ".$topics,
             "data" => [
                 "topics" => $topics
@@ -88,7 +88,7 @@ class ForumController extends AbstractController implements ControllerInterface{
         $topics = $topicManager->findTopicsBySubCategory($id);
 
         return [
-            "view" => VIEW_DIR."forum/detailsSubCategory.php",
+            "view" => VIEW_DIR."forum/tags/detailsSubCategory.php",
             // "meta_description" => "Liste des topics sous la catégorie : ".$subCategory,
             "data" => [
                 "subCategory" => $subCategory,
@@ -97,23 +97,26 @@ class ForumController extends AbstractController implements ControllerInterface{
         ];
     }
 
-    // public function listTopicsByCategory($id) {
+    public function whoIsThisUser($id) {
 
-    //     $categoryManager = new CategoryManager();
-    //     $topicManager = new TopicManager();
+        $userManager = new userManager();
+        $topicManager = new TopicManager();
+        $postManager = new PostManager();
 
-    //     $category = $categoryManager->findOneById($id);
-    //     $topics = $topicManager->findTopicsByCategory($id);
+        $user = $userManager->findOneById($id);
+        $topics = $topicManager->findTopicsByUser($id);
+        $posts = $postManager->findPostsByUser($id);
 
-    //     return [
-    //         "view" => VIEW_DIR."forum/detailsCategory.php",
-    //         // "meta_description" => "Liste des topics sous la catégorie : ".$category,
-    //         "data" => [
-    //             "category" => $category,
-    //             "topics" => $topics
-    //         ]
-    //     ];
-    // }
+        return [
+            "view" => VIEW_DIR."forum/usr/detailsUser.php",
+            // "meta_description" => "Liste des topics sous la catégorie : ".$user,
+            "data" => [
+                "user" => $user,
+                "topics" => $topics,
+                "posts" => $posts
+            ]
+        ];
+    }
 
     
 
@@ -143,7 +146,7 @@ class ForumController extends AbstractController implements ControllerInterface{
         $posts = $postManager->findPostsByTopic($id);
 
         return [
-            "view" => VIEW_DIR."forum/detailsTopic.php",
+            "view" => VIEW_DIR."forum/topics/detailsTopic.php",
             // "meta_description" => "Liste des topics sous la catégorie : ".$category,
             "data" => [
                 "topic" => $topic,
@@ -159,7 +162,7 @@ class ForumController extends AbstractController implements ControllerInterface{
         // var_dump($users);die;
 
         return [
-            "view" => VIEW_DIR."forum/listUsers.php",
+            "view" => VIEW_DIR."forum/usr/listUsers.php",
             // "meta_description" => "Liste des utilisateurs : ".$users,
             "data" => [
                 "users" => $users

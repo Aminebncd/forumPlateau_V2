@@ -28,17 +28,18 @@ class PostManager extends Manager{
         );
     }
 
-    // public function findPostsByUser($id) {
+    // récupérer tous les Posts d'un User spécifique (par son id)
+    public function findPostsByUser($id) {
 
-    //     $sql = "SELECT * 
-    //             FROM ".$this->tableName." t 
-    //             WHERE t.user_id = :id";
+        $sql = "SELECT * 
+                FROM ".$this->tableName." t 
+                WHERE t.user_id = :id";
        
-    //     // la requête renvoie plusieurs enregistrements --> getMultipleResults
-    //     return  $this->getMultipleResults(
-    //         DAO::select($sql, ['id' => $id]), 
-    //         $this->className
-    //     );
-    // }
-    
+        // la requête renvoie plusieurs enregistrements --> getMultipleResults
+        return  $this->getMultipleResults(
+            DAO::select($sql, ['id' => $id]), 
+            $this->className
+        );
+    }
+
 }

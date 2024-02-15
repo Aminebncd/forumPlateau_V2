@@ -1,5 +1,5 @@
 <?php
-    $subCategory = $result["data"]['subCategory']; 
+    // $subCategory = $result["data"]['subCategory']; 
     $topics = $result["data"]['topics']; 
 ?>
 
