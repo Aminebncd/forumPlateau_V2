@@ -7,7 +7,7 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <script src="https://cdn.tiny.cloud/1/zg3mwraazn1b2ezih16je1tc6z7gwp5yd4pod06ae5uai8pa/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" integrity="sha256-h20CPZ0QyXlBuAw7A+KluUYx/3pK+c7lYEpqLTlxjYQ=" crossorigin="anonymous" />
-        <link rel="stylesheet" href="<?= PUBLIC_DIR ?>/css/style.css">
+        <link rel="stylesheet" href="<?= PUBLIC_DIR ?>/css/main.css">
         <title>FORUM</title>
     </head>
     
@@ -22,6 +22,7 @@
                 <h3 class="message" style="color: green"><?= App\Session::getFlash("success") ?></h3>
                 <header>
                     <nav>
+
                         <div id="nav-left">
                             <a href="/">Accueil</a>
                             <?php
@@ -33,6 +34,7 @@
                         } 
                         ?>
                         </div>
+
                         <div id="nav-right">
                         <?php
                             // si l'utilisateur est connecté 
@@ -46,13 +48,14 @@
                                 ?>
                                 <a href="index.php?ctrl=security&action=login">Connexion</a>
                                 <a href="index.php?ctrl=security&action=register">Inscription</a>
-                                <a href="index.php?ctrl=forum&action=listCategories">Liste des catégories</a>
-                                <a href="index.php?ctrl=forum&action=listTopics">Liste des Topics</a>
-                                <a href="index.php?ctrl=forum&action=listUsers">Liste des utilisateurs</a>
+                                <a href="index.php?ctrl=tag&action=listCategories">Liste des catégories</a>
+                                <a href="index.php?ctrl=topic&action=listTopics">Liste des Topics</a>
+                                <a href="index.php?ctrl=user&action=listUsers">Liste des utilisateurs</a>
                             <?php
                             }
                         ?>
                         </div>
+                        
                     </nav>
                 </header>
                 

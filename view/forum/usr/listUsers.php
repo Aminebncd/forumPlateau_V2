@@ -7,7 +7,7 @@
 <?php
 foreach($users as $user ){ ?>
     <p>
-        <a href="index.php?ctrl=forum&action=whoIsThisUser&id=<?= $user->getId() ?>"><?= $user->getPseudo() ?></a>
+        <a href="index.php?ctrl=user&action=whoIsThisUser&id=<?= $user->getId() ?>"><?= $user->getPseudo() ?></a>
     </p>
 <?php }
 

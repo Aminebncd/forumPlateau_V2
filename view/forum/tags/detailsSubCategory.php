@@ -1,5 +1,5 @@
 <?php
-    $subCategory = $result["data"]['subCategory']; 
+    $subCategory = $result["data"]['subCategory'];  
     $topics = $result["data"]['topics']; 
 ?>
 
@@ -8,6 +8,9 @@
 <?php
 foreach($topics as $topic ){ ?>
     <p>
-    <a href="index.php?ctrl=forum&action=listPostByTopic&id=<?= $topic->getId() ?> "><?= $topic->getTitle() ?></a>
-         par <?= $topic->getUser() ?></p>
+        <a href="index.php?ctrl=topic&action=listPostByTopic&id=<?= $topic->getId() ?> "><?= $topic->getTitle() ?></a>
+            par 
+            <?= $topic->getUser() ?>
+        
+    </p>
 <?php }

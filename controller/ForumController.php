@@ -6,169 +6,28 @@ use App\AbstractController;
 use App\ControllerInterface;
 use App\Manager;
 use Model\Managers\CategoryManager;
-use Model\Managers\SubCategoryManager;
-use Model\Managers\TopicManager;
-use Model\Managers\PostManager;
-use Model\Managers\UserManager;
+// use Controller\TagController;
+// use Model\Managers\SubCategoryManager;
+// use Model\Managers\TopicManager;
+// use Model\Managers\PostManager;
+// use Model\Managers\UserManager;
 
 class ForumController extends AbstractController implements ControllerInterface{
 
     public function index() {
         
         // créer une nouvelle instance de CategoryManager
-        $categoryManager = new CategoryManager();
+        // $categoryManager = new CategoryManager();
         // récupérer la liste de toutes les catégories grâce à la méthode findAll de Manager.php (triés par nom)
-        $categories = $categoryManager->findAll(["name", "DESC"]);
+        // $categories = $categoryManager->findAll(["name", "DESC"]);
 
         // le controller communique avec la vue "listCategories" (view) pour lui envoyer la liste des catégories (data)
-        return [
-            "view" => VIEW_DIR."forum/tags/listCategories.php",
+        // return [
+        //     "view" => VIEW_DIR."forum/tags/listCategories.php",
             // "meta_description" => "Liste des catégories du forum",
-            "data" => [
-                "categories" => $categories
-            ]
-        ];
+        //     "data" => [
+        //         "categories" => $categories
+        //     ]
+        // ];
     }
-    
-    public function listCategories() {
-        $categoryManager = new CategoryManager();
-        
-        $categories = $categoryManager->findAll();
-        // var_dump($categories->current());die;
-        
-        return [
-            "view" => VIEW_DIR."forum/tags/listCategories.php",
-            // "meta_description" => "Liste des topics par catégorie : ".$category,
-            "data" => [
-                "categories" => $categories
-            ]
-        ];
-    }
-    
-    public function listSubCategories($id) {
-
-        $categoryManager = new CategoryManager();
-        $subCategoryManager = new SubCategoryManager();
-        
-        $category = $categoryManager->findOneById($id);
-        $subCategories = $subCategoryManager->findByCategory($id);
-        // var_dump($category->current());die;
-        
-        return [
-            "view" => VIEW_DIR."forum/tags/detailsCategory.php",
-            // "meta_description" => "Liste des topics par catégorie : ".$category,
-            "data" => [
-                "category" => $category,
-                "subCategories" => $subCategories
-            ]
-        ];
-    }
-        
-    public function listTopics() {
-        $topicManager = new TopicManager();
-        
-        $topics = $topicManager->findAll();
-        // var_dump($topics->current());die;
-        
-        return [
-            "view" => VIEW_DIR."forum/topics/listTopics.php",
-            // "meta_description" => "Liste des topics par catégorie : ".$topics,
-            "data" => [
-                "topics" => $topics
-            ]
-        ];
-    }
-
-    public function listTopicsBySubCategory($id) {
-
-        $subCategoryManager = new SubCategoryManager();
-        $topicManager = new TopicManager();
-
-        $subCategory = $subCategoryManager->findOneById($id);
-        $topics = $topicManager->findTopicsBySubCategory($id);
-
-        return [
-            "view" => VIEW_DIR."forum/tags/detailsSubCategory.php",
-            // "meta_description" => "Liste des topics sous la catégorie : ".$subCategory,
-            "data" => [
-                "subCategory" => $subCategory,
-                "topics" => $topics
-            ]
-        ];
-    }
-
-    public function whoIsThisUser($id) {
-
-        $userManager = new userManager();
-        $topicManager = new TopicManager();
-        $postManager = new PostManager();
-
-        $user = $userManager->findOneById($id);
-        $topics = $topicManager->findTopicsByUser($id);
-        $posts = $postManager->findPostsByUser($id);
-
-        return [
-            "view" => VIEW_DIR."forum/usr/detailsUser.php",
-            // "meta_description" => "Liste des topics sous la catégorie : ".$user,
-            "data" => [
-                "user" => $user,
-                "topics" => $topics,
-                "posts" => $posts
-            ]
-        ];
-    }
-
-    
-
-    // public function listPostsByUser($id) {
-
-    //     $topicManager = new TopicManager();
-    //     $categoryManager = new CategoryManager();
-    //     $category = $categoryManager->findOneById($id);
-    //     $topics = $topicManager->findTopicsByCategory($id);
-
-    //     return [
-    //         "view" => VIEW_DIR."forum/detailsCategory.php",
-    //         // "meta_description" => "Liste des topics sous la catégorie : ".$category,
-    //         "data" => [
-    //             "category" => $category,
-    //             "topics" => $topics
-    //         ]
-    //     ];
-    // }
-
-    public function listPostByTopic($id) {
-
-        $topicManager = new TopicManager();
-        $postManager = new PostManager();
-
-        $topic = $topicManager->findOneById($id);
-        $posts = $postManager->findPostsByTopic($id);
-
-        return [
-            "view" => VIEW_DIR."forum/topics/detailsTopic.php",
-            // "meta_description" => "Liste des topics sous la catégorie : ".$category,
-            "data" => [
-                "topic" => $topic,
-                "posts" => $posts
-            ]
-        ];
-    }
-            
-    public function listUsers() {
-        $userManager = new UserManager();
-
-        $users = $userManager->findAll();
-        // var_dump($users);die;
-
-        return [
-            "view" => VIEW_DIR."forum/usr/listUsers.php",
-            // "meta_description" => "Liste des utilisateurs : ".$users,
-            "data" => [
-                "users" => $users
-            ]
-        ];
-    }
-
-
 }
