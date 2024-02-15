@@ -192,6 +192,27 @@ class TopicController extends AbstractController implements ControllerInterface{
         }
     }
 
+    public function deletePost($id) {
+        $postManager = new PostManager();
+        $topicManager = new TopicManager();
+
+        $posts = $postManager->findAll();
+        $topic = $topicManager->findOneById($id);
+
+
+        $postManager->delete($id);
+
+        return [
+            "view" => VIEW_DIR . "forum/topics/detailsTopic.php",
+            // "meta_description" => "Liste des topics par catégorie : ".$topics,
+            "data" => [
+                "topic" => $topic,
+                "posts" => $posts,
+                "error" => isset($error) ? $error : null
+            ]
+        ]; 
+    }
+
 
 
 }

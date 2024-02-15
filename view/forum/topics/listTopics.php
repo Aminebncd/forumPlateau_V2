@@ -3,8 +3,8 @@
     $topics = $result["data"]['topics']; 
 ?>
 
-<h1>Liste des topics</h1>
 <a href="index.php?ctrl=topic&action=createTopicForm">ajoutez un topic</a>
+<h1>Liste des topics</h1>
 
 <?php
 foreach($topics as $topic ){ ?>
