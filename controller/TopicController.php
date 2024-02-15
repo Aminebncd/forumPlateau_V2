@@ -135,6 +135,63 @@ class TopicController extends AbstractController implements ControllerInterface{
         }
     }
 
+    // public function createPostForm($id) {
+        
+    //     $topicManager = new topicManager();
+    //     $topic = $topicManager->findOneById($id);
+
+    //         return [
+    //             "view" => VIEW_DIR."forum/topics/createPost.php",
+    //             "data" => [
+    //                 "title" => "Post creation"
+    //             ]
+    //             // "meta_description" => "creation form used to create topics"
+    //         ];
+    // }
+
+
+    public function createPost($id) {
+
+        $postManager = new PostManager();
+        $topicManager = new TopicManager();
+        
+        $posts = $postManager->findAll();
+        $topic = $topicManager->findOneById($id);
+
+        if (isset($_POST["submit"])) {
+
+            $content = filter_input(INPUT_POST, "content", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $topic_id = $id;
+            $user_id = 1;
+            $dateCreation = new \DateTime();
+                $formattedDateCreation = $dateCreation->format('Y-m-d H:i:s');
+            
+            $data = [
+                "content" => $content,
+                "topic_id" => $topic_id,
+                "user_id" => $user_id,
+                "dateCreation" => $formattedDateCreation
+            ];
+                
+            $success = $postManager->add($data);
+        
+            if ($success) {
+                return [
+                    "view" => VIEW_DIR . "forum/topics/detailsTopic.php",
+                    // "meta_description" => "Liste des topics par catégorie : ".$topics,
+                    "data" => [
+                        "topic" => $topic,
+                        "posts" => $posts,
+                        "error" => isset($error) ? $error : null
+                    ]
+                ]; 
+            } else {
+                // Gérer les erreurs
+                $error = "Une erreur s'est produite lors de l'ajout du sujet.";
+            }
+        }
+    }
+
 
 
 }
