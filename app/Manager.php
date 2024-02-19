@@ -70,8 +70,8 @@ abstract class Manager{
     public function update($data) {
         $keyParams = [];
       
-        $setClause = array_keys($data);
-        foreach($setClause as $key) {
+        $setParams = array_keys($data);
+        foreach($setParams as $key) {
             if($key !== "id") { 
                 $keyParams[] = "$key = :$key"; 
             }

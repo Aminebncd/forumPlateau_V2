@@ -42,4 +42,7 @@ class PostManager extends Manager{
         );
     }
 
+    // récupérer le topic associé à un post (par son id)
+    
+
 }

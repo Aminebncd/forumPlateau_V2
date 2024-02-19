@@ -30,7 +30,7 @@
 <?php
 foreach($posts as $post ){ ?>
     <p>
-        <?= $post->getContent() ?> par <?= $post->getUser() ?> <a href="index.php?ctrl=topic&action=deletePost&id=<?= $post->getId() ?>">supprimer</a> <a href="index.php?ctrl=topic&action=updatePost&id=<?= $post->getId() ?>">modifier</a>
+        <?= $post->getContent() ?> par <?= $post->getUser() ?> <a href="index.php?ctrl=topic&action=deletePost&id=<?= $post->getId() ?>">supprimer</a> <a href="index.php?ctrl=topic&action=updatePostForm&id=<?= $post->getId() ?>">modifier</a>
     </p>
 <?php } ?>
 

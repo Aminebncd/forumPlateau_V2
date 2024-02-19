@@ -265,6 +265,52 @@ class TopicController extends AbstractController implements ControllerInterface{
         }
     }
 
+    public function updatePostForm($id) {
+
+        $postManager = new PostManager;
+        $post = $postManager->findOneById($id);
+        
+        return [
+            "view" => VIEW_DIR."forum/topics/updatePost.php",
+            "data" => [
+                "title" => "post update",
+                "post" => $post
+            ],
+            "meta" => "update an existing topic"
+        ];
+    }
+
+    public function updatePost($id) {
+
+        $postManager = new PostManager();
+        $post = $postManager->findOneById($id);
+        $topic = $post->getTopic()->getId();
+        $posts = $postManager->findPostsByTopic($topic);
+        
+        // var_dump($posts);die;
+
+        if (isset($_POST["submit"])) {
+
+        $content = filter_input(INPUT_POST, "content", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+        $dataPost = [
+            "id" => $id,
+            "content" => $content
+        ];
+
+        $success = $postManager->update($dataPost);
+        
+        if ($success) {
+            // Rediriger l'utilisateur vers la page du topic
+            $this->redirectTo("topic", "listPostByTopic", $topic);
+        } else {
+            // Gérer les erreurs
+            $error = "Une erreur s'est produite lors de la mise à jour du message.";
+        }
+        }
+       
+    }
+
     public function deletePost($id) {
         $postManager = new PostManager();
         $topicManager = new TopicManager();
@@ -275,15 +321,16 @@ class TopicController extends AbstractController implements ControllerInterface{
 
         $postManager->delete($id);
 
-        return [
-            "view" => VIEW_DIR . "forum/topics/detailsTopic.php",
-            // "meta_description" => "Liste des topics par catégorie : ".$topics,
-            "data" => [
-                "topic" => $topic,
-                "posts" => $posts,
-                "error" => isset($error) ? $error : null
-            ]
-        ]; 
+        $this->redirectTo("topic", "listPostByTopic", $topic);
+        // return [
+        //     "view" => VIEW_DIR . "forum/topics/detailsTopic.php",
+        //     // "meta_description" => "Liste des topics par catégorie : ".$topics,
+        //     "data" => [
+        //         "topic" => $topic,
+        //         "posts" => $posts,
+        //         "error" => isset($error) ? $error : null
+        //     ]
+        // ]; 
     }
 
 
