@@ -31,7 +31,7 @@ class TopicController extends AbstractController implements ControllerInterface{
 
 
 
-    
+
 // FONCTIONS DE LISTAGE
 
     // Listage de tous les topics peu importe les tags 
@@ -154,7 +154,7 @@ class TopicController extends AbstractController implements ControllerInterface{
                 "user_id" => $user_id
             ];
 
-            $id = lastInsertId();
+            
                 
             $success = $topicManager->add($data);
         
