@@ -30,7 +30,11 @@ foreach($posts as $post ){ ?>
     <p>
         <?= $post->getContent() ?> par <?= $post->getUser() ?> <a href="index.php?ctrl=topic&action=deletePost&id=<?= $post->getId() ?>">supprimer</a>
     </p>
-<?php }
+<?php } ?>
+
+<a href="index.php?ctrl=topic&action=deleteTopic&id=<?= $topic->getId() ?>">supprimer le topic</a>
+
+
 
 
   

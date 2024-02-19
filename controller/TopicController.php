@@ -18,6 +18,10 @@ class TopicController extends AbstractController implements ControllerInterface{
 
     }
    
+
+
+// FONCTIONS DE LISTAGE
+
     // Listage de tous les topics peu importe les tags 
     public function listTopics() {
         $topicManager = new TopicManager();
@@ -74,6 +78,14 @@ class TopicController extends AbstractController implements ControllerInterface{
         ];
     }
 
+
+
+
+
+
+// FONCTIONS DE CREATIONS/SUPPRESION
+
+    // TOPICS
     public function createTopicForm() { 
        
 
@@ -135,6 +147,26 @@ class TopicController extends AbstractController implements ControllerInterface{
         }
     }
 
+    public function deleteTopic($id) {
+       
+        $topicManager = new TopicManager();
+
+        $topics = $topicManager->findAll();
+        $topic = $topicManager->findOneById($id);
+
+        $topicManager->delete($id);
+
+        return [
+            "view" => VIEW_DIR . "forum/topics/listTopics.php",
+            // "meta_description" => "Liste des topics par catégorie : ".$topics,
+            "data" => [
+                "topic" => $topic,
+                "topics" => $topics,
+                "error" => isset($error) ? $error : null
+            ]
+        ]; 
+    }
+
     // public function createPostForm($id) {
         
     //     $topicManager = new topicManager();
@@ -150,6 +182,8 @@ class TopicController extends AbstractController implements ControllerInterface{
     // }
 
 
+
+    // POSTS
     public function createPost($id) {
 
         $postManager = new PostManager();
@@ -212,6 +246,7 @@ class TopicController extends AbstractController implements ControllerInterface{
             ]
         ]; 
     }
+
 
 
 
