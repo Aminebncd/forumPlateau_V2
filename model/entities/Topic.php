@@ -74,4 +74,24 @@ final class Topic extends Entity{
     public function __toString(){
         return $this->title;
     }
+
+    /**
+     * Get the value of subCategory
+     */ 
+    public function getSubCategory()
+    {
+        return $this->subCategory;
+    }
+
+    /**
+     * Set the value of subCategory
+     *
+     * @return  self
+     */ 
+    public function setSubCategory($subCategory)
+    {
+        $this->subCategory = $subCategory;
+
+        return $this;
+    }
 }

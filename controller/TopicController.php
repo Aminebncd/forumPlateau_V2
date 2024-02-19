@@ -20,6 +20,18 @@ class TopicController extends AbstractController implements ControllerInterface{
    
 
 
+
+
+
+
+
+
+
+
+
+
+
+    
 // FONCTIONS DE LISTAGE
 
     // Listage de tous les topics peu importe les tags 
@@ -85,6 +97,20 @@ class TopicController extends AbstractController implements ControllerInterface{
 
 // FONCTIONS DE CREATION/MODIFICATION/SUPPRESION
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     // TOPICS
     public function createTopicForm() { 
        
@@ -107,12 +133,11 @@ class TopicController extends AbstractController implements ControllerInterface{
     }
 
     public function createTopic() {
-
-        $topicManager = new TopicManager(); 
-        $topics = $topicManager->findAll();
         
         if (isset($_POST["submit"])) {
-
+            
+            $topicManager = new TopicManager(); 
+            $topics = $topicManager->findAll();
             
             $title = filter_input(INPUT_POST, "title", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $dateCreation = new \DateTime();
@@ -128,18 +153,14 @@ class TopicController extends AbstractController implements ControllerInterface{
                 "subCategory_id" => $subCategory_id,
                 "user_id" => $user_id
             ];
+
+            $id = lastInsertId();
                 
             $success = $topicManager->add($data);
         
             if ($success) {
-                return [
-                    "view" => VIEW_DIR . "forum/topics/listTopics.php",
-                    // "meta_description" => "Liste des topics par catégorie : ".$topics,
-                    "data" => [
-                        "topics" => $topics,
-                        "error" => isset($error) ? $error : null
-                    ]
-                ]; 
+                // Rediriger l'utilisateur vers la page du topic
+                $this->redirectTo("topic", "detailsTopic", $id);
             } else {
                 // Gérer les erreurs
                 $error = "Une erreur s'est produite lors de l'ajout du sujet.";
@@ -183,13 +204,8 @@ class TopicController extends AbstractController implements ControllerInterface{
         $success = $topicManager->update($dataTopic);
         
             if ($success) {
-                return [
-                    "view" => VIEW_DIR."forum/topics/detailsTopic.php",
-                    "data" => [
-                        "topic" => $topic,
-                        "posts" => $posts
-                    ]
-                ];
+                // Rediriger l'utilisateur vers la page du topic
+                $this->redirectTo("topic", "detailsTopic", $topic);
             } else {
                 // Gérer les erreurs
                 $error = "Une erreur s'est produite lors de l'ajout du sujet.";
@@ -199,24 +215,32 @@ class TopicController extends AbstractController implements ControllerInterface{
     }
 
     public function deleteTopic($id) {
-       
+
         $topicManager = new TopicManager();
 
         $topics = $topicManager->findAll();
         $topic = $topicManager->findOneById($id);
 
-        $topicManager->delete($id);
+        $this->clearPosts($id);
+        $success = $topicManager->delete($id);
 
-        return [
-            "view" => VIEW_DIR . "forum/topics/listTopics.php",
-            // "meta_description" => "Liste des topics par catégorie : ".$topics,
-            "data" => [
-                "topic" => $topic,
-                "topics" => $topics,
-                "error" => isset($error) ? $error : null
-            ]
-        ]; 
+        if ($success) {
+            // Rediriger l'utilisateur vers la page du topic
+            $this->redirectTo("topic", "listTopics");
+        } else {
+            // Gérer les erreurs
+            $error = "Une erreur s'est produite lors de la mise à jour du message.";
+        } 
     }
+
+
+
+
+
+
+
+
+
 
 
 
@@ -229,7 +253,7 @@ class TopicController extends AbstractController implements ControllerInterface{
         $topicManager = new TopicManager();
         
         $posts = $postManager->findPostsByTopic($id);
-        $topic = $topicManager->findOneById($id);
+        $topic = $topicManager->findOneById($id)->getId();
 
         if (isset($_POST["submit"])) {
 
@@ -247,21 +271,14 @@ class TopicController extends AbstractController implements ControllerInterface{
             ];
                 
             $success = $postManager->add($data);
-        
+    
             if ($success) {
-                return [
-                    "view" => VIEW_DIR . "forum/topics/detailsTopic.php",
-                    // "meta_description" => "Liste des topics par catégorie : ".$topics,
-                    "data" => [
-                        "topic" => $topic,
-                        "posts" => $posts,
-                        "error" => isset($error) ? $error : null
-                    ]
-                ]; 
+                // Rediriger l'utilisateur vers la page du topic
+                $this->redirectTo("topic", "listPostByTopic", $topic);
             } else {
                 // Gérer les erreurs
-                $error = "Une erreur s'est produite lors de l'ajout du sujet.";
-            }
+                $error = "Une erreur s'est produite lors de la mise à jour du message.";
+            } 
         }
     }
 
@@ -286,9 +303,7 @@ class TopicController extends AbstractController implements ControllerInterface{
         $post = $postManager->findOneById($id);
         $topic = $post->getTopic()->getId();
         $posts = $postManager->findPostsByTopic($topic);
-        
-        // var_dump($posts);die;
-
+     
         if (isset($_POST["submit"])) {
 
         $content = filter_input(INPUT_POST, "content", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
@@ -316,21 +331,25 @@ class TopicController extends AbstractController implements ControllerInterface{
         $topicManager = new TopicManager();
 
         $posts = $postManager->findAll();
-        $topic = $topicManager->findOneById($id);
+        $topic = $postManager->findOneById($id)->getTopic()->getId();
 
+        $success = $postManager->delete($id);
 
-        $postManager->delete($id);
+        if ($success) {
+            // Rediriger l'utilisateur vers la page du topic
+            $this->redirectTo("topic", "listPostByTopic", $topic);
+        } else {
+            // Gérer les erreurs
+            $error = "Une erreur s'est produite lors de la mise à jour du message.";
+        } 
+    }
 
-        $this->redirectTo("topic", "listPostByTopic", $topic);
-        // return [
-        //     "view" => VIEW_DIR . "forum/topics/detailsTopic.php",
-        //     // "meta_description" => "Liste des topics par catégorie : ".$topics,
-        //     "data" => [
-        //         "topic" => $topic,
-        //         "posts" => $posts,
-        //         "error" => isset($error) ? $error : null
-        //     ]
-        // ]; 
+    public function clearPosts($id) {
+        $postManager = new PostManager();
+        $posts = $postManager->findPostsByTopic($id);
+        foreach ($posts as $post) {
+            $postManager->delete($post->getId());
+        }
     }
 
 

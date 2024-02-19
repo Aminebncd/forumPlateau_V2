@@ -1,3 +1,5 @@
+@import url(usr.css);
+
 * {
     margin: 0;
     padding: 0;
@@ -24,3 +26,6 @@ a {
 main {
     padding: 50px;
 }
+
+
+

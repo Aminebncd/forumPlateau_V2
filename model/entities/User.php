@@ -124,7 +124,7 @@ final class User extends Entity{
         
         echo "
         <figure>
-            <img src='./public/img/uploads/$picture' alt='$picture'>
+            <img src='./public/img/uploads/$picture' alt='$picture' class='profileImg'>
         </figure>
         ";
     }
