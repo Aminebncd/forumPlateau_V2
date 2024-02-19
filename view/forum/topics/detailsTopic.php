@@ -3,6 +3,8 @@
     $posts = $result["data"]['posts']; 
 ?>
 
+<a href="index.php?ctrl=topic&action=deleteTopic&id=<?= $topic->getId() ?>">supprimer le topic</a>
+<a href="index.php?ctrl=topic&action=updateTopicForm&id=<?= $topic->getId() ?>">modifier le topic</a>
 
 <div id="form-container">
 
@@ -28,11 +30,10 @@
 <?php
 foreach($posts as $post ){ ?>
     <p>
-        <?= $post->getContent() ?> par <?= $post->getUser() ?> <a href="index.php?ctrl=topic&action=deletePost&id=<?= $post->getId() ?>">supprimer</a>
+        <?= $post->getContent() ?> par <?= $post->getUser() ?> <a href="index.php?ctrl=topic&action=deletePost&id=<?= $post->getId() ?>">supprimer</a> <a href="index.php?ctrl=topic&action=updatePost&id=<?= $post->getId() ?>">modifier</a>
     </p>
 <?php } ?>
 
-<a href="index.php?ctrl=topic&action=deleteTopic&id=<?= $topic->getId() ?>">supprimer le topic</a>
 
 
 

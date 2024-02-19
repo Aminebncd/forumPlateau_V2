@@ -83,7 +83,7 @@ class TopicController extends AbstractController implements ControllerInterface{
 
 
 
-// FONCTIONS DE CREATIONS/SUPPRESION
+// FONCTIONS DE CREATION/MODIFICATION/SUPPRESION
 
     // TOPICS
     public function createTopicForm() { 
@@ -147,6 +147,57 @@ class TopicController extends AbstractController implements ControllerInterface{
         }
     }
 
+    public function updateTopicForm($id) {
+
+        $topicManager = new TopicManager;
+        $topic = $topicManager->findOneById($id);
+        
+        return [
+            "view" => VIEW_DIR."forum/topics/updateTopic.php",
+            "data" => [
+                "title" => "Topic update",
+                "topic" => $topic
+            ],
+            "meta" => "update an existing topic"
+        ];
+    }
+
+    public function updateTopic($id) {
+
+        $topicManager = new TopicManager;
+        $topic = $topicManager->findOneById($id);
+
+        $postManager = new PostManager();
+        $posts = $postManager->findPostsByTopic($id);
+
+        if (isset($_POST["submit"])) {
+
+        $title = filter_input(INPUT_POST, "title", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+        $dataTopic = [
+            "id" => $id,
+            "title" => $title
+        ];
+
+        // var_dump($id);die;
+        $success = $topicManager->update($dataTopic);
+        
+            if ($success) {
+                return [
+                    "view" => VIEW_DIR."forum/topics/detailsTopic.php",
+                    "data" => [
+                        "topic" => $topic,
+                        "posts" => $posts
+                    ]
+                ];
+            } else {
+                // Gérer les erreurs
+                $error = "Une erreur s'est produite lors de l'ajout du sujet.";
+            }
+        }
+       
+    }
+
     public function deleteTopic($id) {
        
         $topicManager = new TopicManager();
@@ -167,19 +218,7 @@ class TopicController extends AbstractController implements ControllerInterface{
         ]; 
     }
 
-    // public function createPostForm($id) {
-        
-    //     $topicManager = new topicManager();
-    //     $topic = $topicManager->findOneById($id);
 
-    //         return [
-    //             "view" => VIEW_DIR."forum/topics/createPost.php",
-    //             "data" => [
-    //                 "title" => "Post creation"
-    //             ]
-    //             // "meta_description" => "creation form used to create topics"
-    //         ];
-    // }
 
 
 
@@ -189,7 +228,7 @@ class TopicController extends AbstractController implements ControllerInterface{
         $postManager = new PostManager();
         $topicManager = new TopicManager();
         
-        $posts = $postManager->findAll();
+        $posts = $postManager->findPostsByTopic($id);
         $topic = $topicManager->findOneById($id);
 
         if (isset($_POST["submit"])) {
