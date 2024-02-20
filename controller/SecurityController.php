@@ -89,7 +89,7 @@ class SecurityController extends AbstractController{
                     
             // Vérification des données du formulaire
             if ($pseudo && $motDePasse) {
-                $user = $userManager->findUser($pseudo);
+                $user = $userManager->findUserByPseudo($pseudo);
 
                 if($user) {
                     // Vérification du mot de passe
@@ -137,40 +137,109 @@ class SecurityController extends AbstractController{
     }
 
 
-    // public function newMdpForm() {
+    public function newMdpForm() {
 
-    //     return [
-    //         "view" => VIEW_DIR."security/newMotDePasse.php",
-    //         "data" => [
-    //             "title" => "Change password"
-    //         ],
-    //         "meta" => "change the password of an account"
-    //     ];
-    // }
+        return [
+            "view" => VIEW_DIR."security/newMdp.php",
+            "data" => [
+                "title" => "Change password"
+            ],
+            "meta" => "change the password of an account"
+        ];
+    }
 
-    // public function newMdp() { 
+    public function newMdp() { 
 
-    //     $userManager = new UserManager;
+        if (isset($_POST["submit"])) {
+            $userManager = new UserManager;
+    
+            // Validation des données du formulaire
+            $mail = filter_input(INPUT_POST, "mail", FILTER_SANITIZE_EMAIL);
+            $oldMotDePasse = filter_input(INPUT_POST, "oldMotDePasse", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $NewMotDePasse = filter_input(INPUT_POST, "NewMotDePasse", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $NewMotDePasseAgain = filter_input(INPUT_POST, "NewMotDePasseAgain", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    
+            if (!empty($mail) 
+            && !empty($oldMotDePasse) 
+            && !empty($NewMotDePasse) 
+            && !empty($NewMotDePasseAgain)
+            && ($NewMotDePasse === $NewMotDePasseAgain)) {
+
+                // Récupération de l'utilisateur par email
+                $user = $userManager->findUserByMail($mail);
+                $verifMotDePasse = $user->getMotDePasse();
+                $success = password_verify($oldMotDePasse, $verifMotDePasse);
+                // var_dump($success);die;
+                
+                if ($user && $success) {
+                    // Hachage du nouveau mot de passe
+                    $hashedNewMotDePasse = password_hash($NewMotDePasse, PASSWORD_DEFAULT);
+    
+                    // Mise à jour du mot de passe de l'utilisateur
+                    $user->setMotDePasse($hashedNewMotDePasse);
+
+                    $data = [
+                        "id" => $user->getId(),
+                        "motDePasse" => $hashedNewMotDePasse
+                    ];
+    
+                    $userManager->update($data);
+    
+                    // Redirection vers la page de connexion
+                    $this->redirectTo("security", "login");
+
+                } else {
+                    // Utilisateur introuvable ou mot de passe incorrect
+                    $error = "Utilisateur introuvable ou mot de passe incorrect.";
+                }
+
+            } else {
+                // Les champs sont vides ou les mots de passe ne correspondent pas
+                $error = "Veuillez saisir des données valides et assurez-vous que les mots de passe correspondent.";
+            }
+
+            return [
+                "view" => VIEW_DIR."security/login.php",
+                "data" => [
+                    "title" => ""
+                ],
+                "meta" => ""
+            ];
+        }  
+        
+    }
+
+    // public function hashMoi() {
+        
     //     if (isset($_POST["submit"])) {
+    //         $userManager = new UserManager;
 
-    //         $mail = filter_input(INPUT_POST, "mail", FILTER_SANITIZE_EMAIL, FILTER_VALIDATE_EMAIL);
-    //         $motDePasse = filter_input(INPUT_POST, "motDePasse", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-    //         $motDePasseAgain = filter_input(INPUT_POST, "motDePasseAgain", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-
-    //         $hashedMotDePasse = password_hash($motDePasse, PASSWORD_DEFAULT)
-    //         $user = $userManager->findUser($mail);
-    //         $user->setPassword($hashedMotDePasse);
-
+    //         $mail = filter_input(INPUT_POST, "mail", FILTER_SANITIZE_EMAIL);
+    //         $user = $userManager->findUserByMail($mail);
+    //         $mdp = $user->getMotDePasse();
+    //         $hashedNewMotDePasse = password_hash($mdp, PASSWORD_DEFAULT);
+    //         // Mise à jour du mot de passe de l'utilisateur
+    //         $user->setMotDePasse($hashedNewMotDePasse);
     //         $data = [
-    //             "id" => $user->getId(),
-    //             "password" => $hashedPassword
+    //                     "id" => $user->getId(),
+    //                     "motDePasse" => $hashedNewMotDePasse
+    //                 ];
+    
+    //                 $userManager->update($data);
+
+    //         var_dump($user->getMotDePasse());die;
+
+    //         return [
+    //             "view" => VIEW_DIR."security/login.php",
+    //             "data" => [
+    //                 "title" => ""
+    //             ],
+    //             "meta" => ""
     //         ];
-
-    //         $userManager->update($data);
-
-    //         $this->redirectTo("security", "login");
     //     }
     // }
+    
+    
 
   
 

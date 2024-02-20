@@ -41,11 +41,13 @@
                             // si l'utilisateur est connecté 
                             if(App\Session::getUser()){
                                 ?>
-                                <a href="index.php?ctrl=security&action=profile"><span class="fas fa-user"></span>&nbsp;<?= App\Session::getUser()?></a>
-                                
-                                <a href="index.php?ctrl=security&action=newMdpForm">changer mdp</a>
+                                <a href="index.php?ctrl=user&action=whoIsThisUser&id=<?= App\Session::getUser()->getId()?>"><span class="fas fa-user"></span>&nbsp;<?= App\Session::getUser()?></a>
                                 
                                 <a href="index.php?ctrl=security&action=logout">Déconnexion</a>
+
+                                <a href="index.php?ctrl=tag&action=listCategories">Liste des catégories</a>
+                                <a href="index.php?ctrl=topic&action=listTopics">Liste des Topics</a>
+                                <a href="index.php?ctrl=user&action=listUsers">Liste des utilisateurs</a>
                                 <?php
                             }
                             else{

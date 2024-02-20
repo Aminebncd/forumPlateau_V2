@@ -123,38 +123,41 @@ class TopicController extends AbstractController implements ControllerInterface{
     }
 
     public function createTopic() {
-        
-        if (isset($_POST["submit"])) {
-            
-            $topicManager = new TopicManager(); 
-            $topics = $topicManager->findAll();
-            
-            $title = filter_input(INPUT_POST, "title", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-            $dateCreation = new \DateTime();
-                $formattedDateCreation = $dateCreation->format('Y-m-d H:i:s');
-            $closed = 0;
-            $subCategory_id = filter_input(INPUT_POST, "subCategory", FILTER_SANITIZE_NUMBER_INT);
-            $user_id = 1;
-            
-            $data = [
-                "title" => $title,
-                "dateCreation" => $formattedDateCreation,
-                "closed" => $closed,
-                "subCategory_id" => $subCategory_id,
-                "user_id" => $user_id
-            ];
-
-            
+        if(Session::getUser()){
+            if (isset($_POST["submit"])) {
                 
-            $success = $topicManager->add($data);
-        
-            if ($success) {
-                // Rediriger l'utilisateur vers la page du topic
-                $this->redirectTo("topic", "detailsTopic", $id);
-            } else {
-                // Gérer les erreurs
-                $error = "Une erreur s'est produite lors de l'ajout du sujet.";
+                $topicManager = new TopicManager(); 
+                $topics = $topicManager->findAll();
+                
+                $title = filter_input(INPUT_POST, "title", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+                $dateCreation = new \DateTime();
+                    $formattedDateCreation = $dateCreation->format('Y-m-d H:i:s');
+                $closed = 0;
+                $subCategory_id = filter_input(INPUT_POST, "subCategory", FILTER_SANITIZE_NUMBER_INT);
+                $user_id = Session::getUser()->getId();
+                
+                $data = [
+                    "title" => $title,
+                    "dateCreation" => $formattedDateCreation,
+                    "closed" => $closed,
+                    "subCategory_id" => $subCategory_id,
+                    "user_id" => $user_id
+                ];
+
+                
+                    
+                $success = $topicManager->add($data);
+            
+                if ($success) {
+                    // Rediriger l'utilisateur vers la page du topic
+                    $this->redirectTo("topic", "detailsTopic", $id);
+                } else {
+                    // Gérer les erreurs
+                    $error = "Une erreur s'est produite lors de l'ajout du sujet.";
+                }
             }
+        } else {
+            $error = "Veuillez vous connecter d'abord.";
         }
     }
 

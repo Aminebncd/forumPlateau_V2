@@ -18,3 +18,5 @@ use App\Session;
         <button type="submit" name="submit">Connexion</button>
     </div>
 </form>
+
+<a href="index.php?ctrl=security&action=newMdpForm">Mot de passe oublié?</a>

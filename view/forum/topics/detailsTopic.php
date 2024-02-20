@@ -18,15 +18,20 @@
     </form>
 </div>
 
+<h1>Liste des posts sous le topic : "<?= $topic->getTitle() ?>"</h1>
 
-<h1>Liste des posts sous le topic : <?= $topic->getTitle() ?></h1>
 
 <?php
+if (!empty($subCategories)) {
 foreach($posts as $post ){ ?>
     <p>
         <?= $post->getContent() ?> par <?= $post->getUser() ?> <a href="index.php?ctrl=topic&action=deletePost&id=<?= $post->getId() ?>">supprimer</a> <a href="index.php?ctrl=topic&action=updatePostForm&id=<?= $post->getId() ?>">modifier</a>
     </p>
-<?php } ?>
+<?php } 
+} else {
+    echo "<p>Soyez le premier à repondre !</p>";
+}
+?>
 
 
 

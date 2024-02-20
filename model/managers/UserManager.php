@@ -14,7 +14,7 @@ class UserManager extends Manager{
         parent::connect();
     }
 
-    public function findUser($pseudo) {
+    public function findUserByPseudo($pseudo) {
         $sql = 
         "SELECT 
             *
@@ -30,20 +30,20 @@ class UserManager extends Manager{
         );
     }
 
-    // public function findUser($mail) {
-    //     $sql = 
-    //     "SELECT 
-    //         *
-    //     FROM
-    //         user 
-    //     WHERE 
-    //         mail = :mail 
-    //     ";
+    public function findUserByMail($mail) {
+        $sql = 
+        "SELECT 
+            *
+        FROM
+            user 
+        WHERE 
+            mail = :mail 
+        ";
 
-    //     return $this->getOneOrNullResult(
-    //         DAO::select($sql, ['mail' => $mail], false), 
-    //         $this->className
-    //     );
-    // }
+        return $this->getOneOrNullResult(
+            DAO::select($sql, ['mail' => $mail], false), 
+            $this->className
+        );
+    }
     
 }

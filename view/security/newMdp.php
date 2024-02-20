@@ -5,14 +5,22 @@ use App\Session;
 
 <form action="index.php?ctrl=security&action=newMdp" method="post">
     <div>
-        <label for="motDePasse">Mot de passe :</label>
-        <input type="password" id="motDePasse" name="motDePasse" required>
+        <label for="mail">Adresse e-mail :</label>
+        <input type="email" id="mail" name="mail" required>
     </div>
     <div>
-        <label for="motDePasseAgain">Confirmer le mot de passe :</label>
-        <input type="password" id="motDePasseAgain" name="motDePasseAgain" required>
+        <label for="oldMotDePasse">Ancien mot de passe :</label>
+        <input type="password" id="oldMotDePasse" name="oldMotDePasse" required>
     </div>
     <div>
-        <button type="submit" name="submit">S'inscrire</button>
+        <label for="NewMotDePasse">Nouveau mot de passe :</label>
+        <input type="password" id="NewMotDePasse" name="NewMotDePasse" required>
+    </div>
+    <div>
+        <label for="NewMotDePasseAgain">Confirmez le mot de passe :</label>
+        <input type="password" id="NewMotDePasseAgain" name="NewMotDePasseAgain" required>
+    </div>
+    <div>
+        <button type="submit" name="submit">Changer le mot de passe</button>
     </div>
 </form>
