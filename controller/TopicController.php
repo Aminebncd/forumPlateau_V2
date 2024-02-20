@@ -22,16 +22,6 @@ class TopicController extends AbstractController implements ControllerInterface{
 
 
 
-
-
-
-
-
-
-
-
-
-
 // FONCTIONS DE LISTAGE
 
     // Listage de tous les topics peu importe les tags 

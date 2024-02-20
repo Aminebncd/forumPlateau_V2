@@ -13,7 +13,8 @@
     
     <body>
 
-
+    
+    <!-- <?php var_dump(App\Session::getUser()); ?> -->
 
         <div id="wrapper"> 
             <div id="mainpage">
@@ -41,13 +42,16 @@
                             if(App\Session::getUser()){
                                 ?>
                                 <a href="index.php?ctrl=security&action=profile"><span class="fas fa-user"></span>&nbsp;<?= App\Session::getUser()?></a>
+                                
+                                <a href="index.php?ctrl=security&action=newMdpForm">changer mdp</a>
+                                
                                 <a href="index.php?ctrl=security&action=logout">Déconnexion</a>
                                 <?php
                             }
                             else{
                                 ?>
-                                <a href="index.php?ctrl=security&action=login">Connexion</a>
-                                <a href="index.php?ctrl=security&action=register">Inscription</a>
+                                <a href="index.php?ctrl=security&action=loginForm">Connexion</a>
+                                <a href="index.php?ctrl=security&action=registerForm">Inscription</a>
                                 <a href="index.php?ctrl=tag&action=listCategories">Liste des catégories</a>
                                 <a href="index.php?ctrl=topic&action=listTopics">Liste des Topics</a>
                                 <a href="index.php?ctrl=user&action=listUsers">Liste des utilisateurs</a>

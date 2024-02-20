@@ -66,7 +66,7 @@ final class User extends Entity{
     }
     
     
-    public function setmMotDePasse($motDePasse)
+    public function setMotDePasse($motDePasse)
     {
         $this->motDePasse = $motDePasse;
 
@@ -85,6 +85,12 @@ final class User extends Entity{
         $this->role = $role;
 
         return $this;
+    }
+
+    public function hasRole($role)
+    {
+        $result = $this->getRole() == json_encode($role);
+        return $result;
     }
 
 
