@@ -1,20 +1,23 @@
 <?php
 // Récupération des données
-$category = $result["data"]['category']; 
-$subCategories = $result["data"]['subCategories']; 
+$category = $result["data"]['category'];  
+$topics = $result["data"]['topics']; 
 
-// Bouton d'ajout d'une nouvelle sous-catégorie
+// Bouton d'ajout d'un nouveau topic
 ?>
-
-<h1>Liste des tags sous la catégorie : <?= $category->getName() ?></h1>
+<a href="index.php?ctrl=topic&action=createTopicForm">Ajouter un topic</a>
+<h1>Liste des topics sous le tag : <?= $category->getName() ?></h1>
 
 <?php
-// Affichage des sous-catégories s'il y en a
-if (!empty($subCategories)) {
-    foreach($subCategories as $subCategory) { ?>
-        <p><a href="index.php?ctrl=topic&action=listTopicsBySubCategory&id=<?= $subCategory->getId() ?>"><?= $subCategory->getName() ?></a></p>
+// Affichage des topics s'il y en a
+if (!empty($topics)) {
+    foreach($topics as $topic) { ?>
+        <p>
+            <a href="index.php?ctrl=topic&action=listPostByTopic&id=<?= $topic->getId() ?> "><?= $topic->getTitle() ?></a>
+            par <?= $topic->getUser() ?>
+        </p>
     <?php }
 } else {
-    echo "<p>Aucune sous-catégorie n'a été trouvée.</p>";
+    echo "<p>Aucun topic n'a été trouvé.</p>";
 }
 ?>

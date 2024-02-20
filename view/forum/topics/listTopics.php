@@ -15,6 +15,8 @@ if (!empty($topics)) {
             <a href="index.php?ctrl=topic&action=listPostByTopic&id=<?= $topic->getId() ?> "><?= $topic->getTitle() ?></a> 
 
             <a href="index.php?ctrl=topic&action=listTopicsBySubCategory&id=<?= $topic->getSubCategory()->getId() ?> ">(<?= $topic->getSubCategory() ?>)</a> 
+
+            <a href="index.php?ctrl=topic&action=listTopicsByCategory&id=<?= $topic->getCategory()->getId() ?> ">(<?= $topic->getCategory() ?>)</a> 
             
             par <?= $topic->getUser() ?>
         </p>

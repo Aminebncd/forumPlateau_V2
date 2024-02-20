@@ -46,6 +46,7 @@
                                 <a href="index.php?ctrl=security&action=logout">Déconnexion</a>
 
                                 <a href="index.php?ctrl=tag&action=listCategories">Liste des catégories</a>
+                                <a href="index.php?ctrl=tag&action=listSubCategories">Liste des sous-catégories</a>
                                 <a href="index.php?ctrl=topic&action=listTopics">Liste des Topics</a>
                                 <a href="index.php?ctrl=user&action=listUsers">Liste des utilisateurs</a>
                                 <?php
@@ -55,6 +56,7 @@
                                 <a href="index.php?ctrl=security&action=loginForm">Connexion</a>
                                 <a href="index.php?ctrl=security&action=registerForm">Inscription</a>
                                 <a href="index.php?ctrl=tag&action=listCategories">Liste des catégories</a>
+                                <a href="index.php?ctrl=tag&action=listSubCategories">Liste des sous-catégories</a>
                                 <a href="index.php?ctrl=topic&action=listTopics">Liste des Topics</a>
                                 <a href="index.php?ctrl=user&action=listUsers">Liste des utilisateurs</a>
                             <?php

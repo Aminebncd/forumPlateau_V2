@@ -9,7 +9,7 @@ $posts = $result["data"]['posts'];
     <h1>Profil de <?= $user->getPseudo() ?></h1>
     <!-- Afficher la photo de profil -->
     <?= $user->showProfilePicture() ?>
-    <p>Rôle : <?= $user->getRole() ?></p>
+    
     <p>Email : <?= $user->getMail() ?></p>
 </header>
 

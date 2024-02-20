@@ -2,6 +2,7 @@
 use App\Session;
 
 $subCategories = $result["data"]["subCategories"];
+$categories = $result["data"]["categories"];
 
 
 ?>
@@ -18,6 +19,15 @@ $subCategories = $result["data"]["subCategories"];
         <input id="title" type="text" name="title" value="">
         
 
+        <label for="category">Catégorie :</label>
+        <select name="category" id="category">
+            <?php foreach($categories as $category) { ?>
+                <option value="<?= $category->getId() ?>">
+                    <?= $category->getName() ?>
+                </option>
+            <?php  } ?>
+        </select>
+
         <label for="subCategory">sous catégorie :</label>
         <select name="subCategory" id="subCategory">
             <?php foreach($subCategories as $SubCategory) { ?>
@@ -27,7 +37,7 @@ $subCategories = $result["data"]["subCategories"];
             <?php  } ?>
         </select>
 
-        <button type="submit" name ="submit">submit</button>
+        <button type="submit" name ="submit">Poster</button>
 
     </form>
     

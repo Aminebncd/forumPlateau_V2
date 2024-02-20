@@ -41,6 +41,27 @@ class TopicController extends AbstractController implements ControllerInterface{
     }
 
     // Listage des topics par sous-categorie
+    public function listTopicsByCategory($id) {
+
+        $categoryManager = new CategoryManager();
+        $topicManager = new TopicManager();
+
+        $category = $categoryManager->findOneById($id);
+        // $user = $topicManager->findUserByTopic($id);
+        $topics = $topicManager->findTopicsByCategory($id);
+
+        return [
+            "view" => VIEW_DIR."forum/tags/detailsCategory.php",
+            // "meta_description" => "Liste des topics sous la catégorie : ".$subCategory,
+            "data" => [
+                "category" => $category,
+                // "user" => $user,
+                "topics" => $topics
+            ]
+        ];
+    }
+
+    // Listage des topics par sous-categorie
     public function listTopicsBySubCategory($id) {
 
         $subCategoryManager = new SubCategoryManager();
@@ -85,18 +106,10 @@ class TopicController extends AbstractController implements ControllerInterface{
 
 
 
+
+
+
 // FONCTIONS DE CREATION/MODIFICATION/SUPPRESION
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -107,13 +120,16 @@ class TopicController extends AbstractController implements ControllerInterface{
 
         $subCategoryManager = new subCategoryManager();
         $subCategories = $subCategoryManager->findAll();
+        $categoryManager = new categoryManager();
+        $categories = $categoryManager->findAll();
 
         
             return [
                 "view" => VIEW_DIR."forum/topics/createTopic.php",
                 "data" => [
                     "title" => "Topic creation",
-                    "subCategories" => $subCategories
+                    "subCategories" => $subCategories,
+                    "categories" => $categories
                 ],
                 // "meta_description" => "creation form used to create topics"
             ];
@@ -133,6 +149,7 @@ class TopicController extends AbstractController implements ControllerInterface{
                 $dateCreation = new \DateTime();
                     $formattedDateCreation = $dateCreation->format('Y-m-d H:i:s');
                 $closed = 0;
+                $category_id = filter_input(INPUT_POST, "category", FILTER_SANITIZE_NUMBER_INT);
                 $subCategory_id = filter_input(INPUT_POST, "subCategory", FILTER_SANITIZE_NUMBER_INT);
                 $user_id = Session::getUser()->getId();
                 
@@ -141,23 +158,23 @@ class TopicController extends AbstractController implements ControllerInterface{
                     "dateCreation" => $formattedDateCreation,
                     "closed" => $closed,
                     "subCategory_id" => $subCategory_id,
+                    "category_id" => $category_id,
                     "user_id" => $user_id
                 ];
-
-                
-                    
+                   
                 $success = $topicManager->add($data);
             
                 if ($success) {
                     // Rediriger l'utilisateur vers la page du topic
-                    $this->redirectTo("topic", "detailsTopic", $id);
+                    $this->redirectTo("topic", "listTopics");
                 } else {
                     // Gérer les erreurs
                     $error = "Une erreur s'est produite lors de l'ajout du sujet.";
                 }
             }
         } else {
-            $error = "Veuillez vous connecter d'abord.";
+            $this->redirectTo("topic", "createTopicForm");
+            // echo "Veuillez vous connecter d'abord.";
         }
     }
 
@@ -241,7 +258,7 @@ class TopicController extends AbstractController implements ControllerInterface{
 
     // POSTS
     public function createPost($id) {
-
+        
         $postManager = new PostManager();
         $topicManager = new TopicManager();
         

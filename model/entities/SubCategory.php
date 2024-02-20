@@ -11,7 +11,7 @@ final class SubCategory extends Entity{
 
     private $id;
     private $name;
-    private $category;
+   
 
     // chaque entité aura le même constructeur grâce à la méthode hydrate (issue de App\Entity)
     public function __construct($data){         
@@ -59,21 +59,5 @@ final class SubCategory extends Entity{
         return $this->name;
     }
 
-    /**
-     * Get the value of category
-     */ 
-    public function getCategory(){
-        return $this->category;
-    }
-
-    /**
-     * Set the value of category
-     *
-     * @return  self
-     */ 
-    public function setCategory($category){
-        $this->category = $category;
-        return $this;
-    }
 
 }

@@ -35,20 +35,18 @@ class TagController extends AbstractController implements ControllerInterface{
     }
     
     // liste les sous-categories d'une categorie mère
-    public function listSubCategories($id) {
+    public function listSubCategories() {
 
-        $categoryManager = new CategoryManager();
         $subCategoryManager = new SubCategoryManager();
         
-        $category = $categoryManager->findOneById($id);
-        $subCategories = $subCategoryManager->findByCategory($id);
+        $subCategories = $subCategoryManager->findAll();
         // var_dump($category->current());die;
         
         return [
-            "view" => VIEW_DIR."forum/tags/detailsCategory.php",
+            "view" => VIEW_DIR."forum/tags/listSubCategories.php",
             // "meta_description" => "Liste des topics par catégorie : ".$category,
             "data" => [
-                "category" => $category,
+                
                 "subCategories" => $subCategories
             ]
         ];
