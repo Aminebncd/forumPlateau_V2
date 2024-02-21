@@ -5,29 +5,44 @@ $posts = $result["data"]['posts'];
 ?>
 
 
+
+<a href="index.php?ctrl=security&action=updateUserForm&id=<?= $user->getId() ?>">Modifier le profil</a>
 <header>
     <h1>Profil de <?= $user->getPseudo() ?></h1>
-    <!-- Afficher la photo de profil -->
     <?= $user->showProfilePicture() ?>
-    
-    <p>Email : <?= $user->getMail() ?></p>
+
 </header>
 
 <section>
     <h2>Liste des topics :</h2>
-    <?php foreach($topics as $topic): ?>
-        <div>
-            <h3><a href="index.php?ctrl=topic&action=listPostByTopic&id=<?= $topic->getId() ?>"><?= $topic->getTitle() ?></a></h3>
-        </div>
-    <?php endforeach; ?>
+    <?php
+
+// Affichage des topics s'il y en a
+if (!empty($topics)) {
+    foreach ($topics as $topic) { ?>
+        <p>
+            <a href="index.php?ctrl=topic&action=listPostByTopic&id=<?= $topic->getId() ?>"><?= $topic->getTitle() ?></a>
+        </p>
+    <?php }
+} else {
+    echo "<p>Aucun topic n'a été trouvé.</p>";
+}
+?>
 </section>
 
 <section>
     <h2>Liste des posts :</h2>
-    <?php foreach($posts as $post): ?>
-        <div>
-            <p><?= $post->getContent() ?></p>
-        </div>
-    <?php endforeach; ?>
-</section>
+    <?php 
 
+    if (!empty($posts)) {
+        foreach($posts as $post){  ?>
+            <div>
+                <p><?= $post->getContent() ?></p>
+            </div>
+        <?php }
+    } else {
+        echo "<p>Aucun post n'a été trouvé.</p>";
+    } 
+    ?>
+    
+</section>
