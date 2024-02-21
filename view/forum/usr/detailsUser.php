@@ -6,7 +6,14 @@ $posts = $result["data"]['posts'];
 
 
 
-<a href="index.php?ctrl=security&action=updateUserForm&id=<?= $user->getId() ?>">Modifier le profil</a>
+<?php
+    if((App\Session::isAdmin()) || (App\Session::getUser()->getId() == $user->getId())){
+        ?>
+        <a href="index.php?ctrl=security&action=updateUserForm&id=<?= $user->getId() ?>">Modifier le profil</a> 
+    <?php 
+} 
+?>
+
 <header>
     <h1>Profil de <?= $user->getPseudo() ?></h1>
     <?= $user->showProfilePicture() ?>

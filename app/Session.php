@@ -44,4 +44,12 @@ class Session{
         }
         return false;
     }
+
+    // public static function isAdminOrAuthor(){
+        
+    //     if(self::getUser() && self::getUser()->hasRole("ROLE_ADMIN") || ()){
+    //         return true;
+    //     }
+    //     return false;
+    // }
 }
