@@ -89,7 +89,7 @@ final class User extends Entity{
 
     public function hasRole($role)
     {
-        $result = $this->getRole() == json_encode($role);
+        $result = $this->getRole() == $role;
         return $result;
     }
 

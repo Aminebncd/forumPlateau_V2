@@ -13,7 +13,7 @@
 
     <form id="form-content" action="index.php?ctrl=topic&action=createPost&id=<?= $topic->getId() ?>" method="post">
         <label for="content">contenu :</label>
-        <textarea id="content" type="text" name="content" cols="60" rows="5"></textarea>
+        <textarea id="content" type="text" name="content" cols="60" rows="5" required></textarea>
         <button type="submit" name ="submit">soumettre</button>
     </form>
 </div>
