@@ -37,34 +37,105 @@ class SecurityController extends AbstractController{
             $motDePasseAgain = filter_input(INPUT_POST, "motDePasseAgain", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $inscriptionDate = new \DateTime();
             $formattedInscriptionDate = $inscriptionDate->format('Y-m-d H:i:s');
+
+            $errorCheck = false; // wil become true is there is any problems in any form
             
-            // Vérification des données du formulaire
-            if ($pseudo && $mail && $motDePasse && ($motDePasse === $motDePasseAgain)) {
-                // Définition du rôle de l'utilisateur
-                $role = json_encode(["ROLE_USER"]);
-    
-                // Hashage du mot de passe
-                $hashedMotDePasse = password_hash($motDePasse, PASSWORD_DEFAULT);
-    
-                // Création des données pour l'ajout de l'utilisateur
-                $data = [
-                    "pseudo" => $pseudo,
-                    "mail" => $mail,
-                    "motDePasse" => $hashedMotDePasse,
-                    "role" => $role,
-                    "inscriptionDate" => $formattedInscriptionDate
-                ];
-    
-                // Ajout de l'utilisateur
-                $success = $userManager->add($data);
-    
-                if ($success) {
-                    $this->redirectTo("home");
-                } else {
-                    // Gérer les erreurs
-                    $error = "Une erreur s'est produite lors de l'ajout de l'utilisateur.";
+            // regex: need at least 1 capital, 1 small, 1 number, 1 special char and 4 characters in total 
+            //(the CNIL advise around 12 to be actually safe)
+            $password_regex = "/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{4,}$/";
+
+            // check that all inputs were completed
+            if(empty($pseudo)) {
+                Session::addFlash("pseudo", "This field is mandatory!");
+                $errorCheck = true;
+            }
+
+            if(empty($mail)) {
+                Session::addFlash("mail", "This field is mandatory!");
+                $errorCheck = true;
+            }
+
+
+            if(empty($motDePasse)) {
+                Session::addFlash("motDePasse", "This field is mandatory!");
+                $errorCheck = true;
+            }
+
+            if(empty($motDePasseAgain)) {
+                Session::addFlash("motDePasseAgain", "This field is mandatory!");
+                $errorCheck = true;
+            }
+
+            // check regex password
+            if(!preg_match($password_regex, $motDePasse)) {
+                Session::addFlash("motDePasse", "this password isn't safe!");
+                $errorCheck = true;
+            }
+
+
+            if($motDePasse !== $motDePasseAgain) {
+                Session::addFlash("motDePasseAgain", "The passwords are not the same");
+                $errorCheck = true;
+            }
+
+            // check if username and email aren't already used (both are unique)
+            $pseudos = $userManager->findEveryUsername();
+            $mails = $userManager->findEveryMail();
+
+            foreach($pseudos as $pseudoDatabase) {
+                if($pseudoDatabase->getPseudo() === $pseudo) {
+                    Session::addFlash("pseudo", "Username is invalid or already in use");
+                    $errorCheck = true;
                 }
             }
+
+            foreach($mails as $mailsDatabase) {
+                if($mailsDatabase->getMail() === $mail) {
+                    Session::addFlash("mail", "Email is invalid or already in use");
+                    $errorCheck = true;
+                }
+            }
+
+            if (!$errorCheck) {  
+            // Vérification des données du formulaire
+                if ($pseudo && $mail && $motDePasse && ($motDePasse === $motDePasseAgain)) {
+                    // Définition du rôle de l'utilisateur
+                    $role = json_encode("[ROLE_USER]");
+        
+                    // Hashage du mot de passe
+                    $hashedMotDePasse = password_hash($motDePasse, PASSWORD_DEFAULT);
+        
+                    // Création des données pour l'ajout de l'utilisateur
+                    $data = [
+                        "pseudo" => $pseudo,
+                        "mail" => $mail,
+                        "motDePasse" => $hashedMotDePasse,
+                        "role" => $role,
+                        "inscriptionDate" => $formattedInscriptionDate
+                    ];
+        
+                    // Ajout de l'utilisateur
+                    $success = $userManager->add($data);
+        
+                    if ($success) {
+                        $this->redirectTo("home");
+                    } else {
+                        // Gérer les erreurs
+                        $error = "Une erreur s'est produite lors de l'ajout de l'utilisateur.";
+                    }
+
+                } else { // mistake(s) were made in some of the input 
+                    $this->redirectTo("security", "register");
+                }
+            }
+
+            return [
+                "view" => VIEW_DIR."security/register.php",
+                "data" => [
+                    "title" => "Register"
+                ],
+                "meta" => "Form to create an account"
+            ];
         }
     }
     
@@ -233,6 +304,7 @@ class SecurityController extends AbstractController{
 
                 $pseudo = filter_input(INPUT_POST, "pseudo", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
                 $mail = filter_input(INPUT_POST, "mail", FILTER_SANITIZE_EMAIL);
+
             
                 if(isset($_FILES['profilePic'])){
 
@@ -277,6 +349,8 @@ class SecurityController extends AbstractController{
         }
        
     }
+
+
 
     // public function hashMoi() {
         

@@ -3,13 +3,13 @@ use App\Session;
     $topic = $result["data"]['topic']; 
     $posts = $result["data"]['posts']; 
 
-    if ($topic->getClosed() == 0){
+    if ($topic->isClosed() == 0){
         $state = "Ouvert";
     } else {
         $state = "Fermé";
     }
 
-    var_dump($state);
+    // echo '<pre>'; var_dump($_SESSION); echo '</pre>'
     
 ?>
 <?php
@@ -24,14 +24,14 @@ use App\Session;
         if(Session::isAdmin()){
             ?>
             <a href="index.php?ctrl=topic&action=topicState&id=<?= $topic->getId() ?>">
-                <?php echo "Statut : $state";?>
+                <?php echo "<h2>Statut : $state</h2>";?>
             </a>
             <?php 
         }
 ?>
 
 <?php 
-        if ($topic->getClosed() == 0) { 
+        if ($topic->isClosed() == 0) { 
 ?>
             <div id="form-container">
                 <div id="form-header">
@@ -40,7 +40,8 @@ use App\Session;
 
                 <form id="form-content" action="index.php?ctrl=topic&action=createPost&id=<?= $topic->getId() ?>" method="post">
                     <label for="content">contenu :</label>
-                    <textarea id="content" type="text" name="content" cols="60" rows="5" required></textarea>
+                    <textarea id="content" type="text" name="content" cols="60" rows="5"></textarea>
+                    <?= Session::getFlash("content") ?>
                     <button type="submit" name ="submit">soumettre</button>
                 </form>
             </div>
@@ -54,24 +55,25 @@ use App\Session;
 
 
 <?php
-if (!empty($posts)) {
-foreach($posts as $post ){ ?>
-    <p>
+        if (!empty($posts)) {
+        foreach($posts as $post ){ 
+?>
+        <p>
         <?= $post->getContent() ?> par <?= $post->getUser() ?> 
 
 <?php
         if((Session::isAdmin()) || (Session::getUser()->getId() == $post->getUser()->getId())){
 ?>
-        <a href="index.php?ctrl=topic&action=deletePost&id=<?= $post->getId() ?>">supprimer</a> 
-        <a href="index.php?ctrl=topic&action=updatePostForm&id=<?= $post->getId() ?>">modifier</a>
+            <a href="index.php?ctrl=topic&action=deletePost&id=<?= $post->getId() ?>">supprimer</a> 
+            <a href="index.php?ctrl=topic&action=updatePostForm&id=<?= $post->getId() ?>">modifier</a>
 <?php 
         }
 ?>
-    </p>
-<?php } 
-} else {
-    echo "<p>Soyez le premier à repondre !</p>";
-}
+        </p>
+<?php       } 
+        } else {
+            echo "<p>Soyez le premier à repondre !</p>";
+        }
 ?>
 
 

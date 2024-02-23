@@ -27,5 +27,12 @@ main {
     padding: 50px;
 }
 
-
+form {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    /* label {
+        padding: 10px;
+    } */
+}
 

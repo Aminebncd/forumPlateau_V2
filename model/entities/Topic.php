@@ -119,7 +119,7 @@ final class Topic extends Entity{
     /**
      * Get the value of category
      */ 
-    public function getClosed()
+    public function isClosed()
     {
         return $this->closed;
     }
