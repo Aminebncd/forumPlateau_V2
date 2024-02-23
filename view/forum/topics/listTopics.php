@@ -19,6 +19,8 @@ if (!empty($topics)) {
             <a href="index.php?ctrl=topic&action=listTopicsByCategory&id=<?= $topic->getCategory()->getId() ?> ">(<?= $topic->getCategory() ?>)</a> 
             
             par <a href="index.php?ctrl=user&action=whoIsThisUser&id=<?= $topic->getUser()->getId() ?> "><?= $topic->getUser() ?></a> 
+
+            <?= $topic->getDateCreation() ?>
         </p>
     <?php }
 } else {

@@ -15,13 +15,13 @@ $user = $result["data"]["user"];
     <form id="form-content" action="index.php?ctrl=security&action=updateUser&id=<?= $user->getId() ?>" method="post" enctype="multipart/form-data">
         
         <label for="pseudo">Nouveau Pseudo :</label>
-        <input id="pseudo" type="text" name="pseudo" value="">
+        <input id="pseudo" type="text" name="pseudo" value="<?= $user->getPseudo() ?>">
 
         <label for="mail">Nouveau Mail :</label>
-        <input id="mail" type="email" name="mail" value="">
+        <input id="mail" type="email" name="mail" value="<?= $user->getMail() ?>">
 
         <label for="profilePic">Nouvelle photo de profil :</label>
-        <input id="profilePic" type="file" name="profilePic" value="">
+        <input id="profilePic" type="file" name="profilePic" value="<?= $user->getProfilePic() ?>">
 
         <button type="submit" name ="submit">submit</button>
 

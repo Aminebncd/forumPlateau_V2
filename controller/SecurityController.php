@@ -35,12 +35,12 @@ class SecurityController extends AbstractController{
             $mail = filter_input(INPUT_POST, "mail", FILTER_SANITIZE_EMAIL);
             $motDePasse = filter_input(INPUT_POST, "motDePasse", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $motDePasseAgain = filter_input(INPUT_POST, "motDePasseAgain", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-            $inscriptionDate = new \DateTime();
-            $formattedInscriptionDate = $inscriptionDate->format('Y-m-d H:i:s');
+            // $inscriptionDate = new \DateTime();
+            // $formattedInscriptionDate = $inscriptionDate->format('Y-m-d H:i:s');
 
             $errorCheck = false; // wil become true is there is any problems in any form
             
-            // regex: need at least 1 capital, 1 small, 1 number, 1 special char and 4 characters in total 
+            // regex: needs at least 1 capital, 1 small, 1 number, 1 special char and 4 characters in total 
             //(the CNIL advise around 12 to be actually safe)
             $password_regex = "/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{4,}$/";
 
@@ -71,7 +71,6 @@ class SecurityController extends AbstractController{
                 Session::addFlash("motDePasse", "this password isn't safe!");
                 $errorCheck = true;
             }
-
 
             if($motDePasse !== $motDePasseAgain) {
                 Session::addFlash("motDePasseAgain", "The passwords are not the same");
@@ -110,8 +109,8 @@ class SecurityController extends AbstractController{
                         "pseudo" => $pseudo,
                         "mail" => $mail,
                         "motDePasse" => $hashedMotDePasse,
-                        "role" => $role,
-                        "inscriptionDate" => $formattedInscriptionDate
+                        "role" => $role
+                        // "inscriptionDate" => $formattedInscriptionDate
                     ];
         
                     // Ajout de l'utilisateur
@@ -231,10 +230,10 @@ class SecurityController extends AbstractController{
             $NewMotDePasseAgain = filter_input(INPUT_POST, "NewMotDePasseAgain", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     
             if (!empty($mail) 
-            && !empty($oldMotDePasse) 
-            && !empty($NewMotDePasse) 
-            && !empty($NewMotDePasseAgain)
-            && ($NewMotDePasse === $NewMotDePasseAgain)) {
+             && !empty($oldMotDePasse) 
+             && !empty($NewMotDePasse) 
+             && !empty($NewMotDePasseAgain)
+             && ($NewMotDePasse === $NewMotDePasseAgain)) {
 
                 // Récupération de l'utilisateur par email
                 $user = $userManager->findUserByMail($mail);
@@ -341,6 +340,14 @@ class SecurityController extends AbstractController{
                 if ($success) {
                     // Rediriger l'utilisateur vers la page du topic
                     $this->redirectTo("user", "detailsUser", $id);
+                    return [
+                        "view" => VIEW_DIR."forum/usr/detailsUser.php",
+                        "data" => [
+                            "title" => "user profile",
+                            "user" => $user
+                        ],
+                        "meta" => "details"
+                    ];
                 } else {
                     // Gérer les erreurs
                     echo "Une erreur s'est produite lors de la mise à jour de la photo.";

@@ -143,6 +143,7 @@ class TopicController extends AbstractController implements ControllerInterface{
 
     public function createTopic() {
         if(Session::getUser()){
+            
             if (isset($_POST["submit"])) {
 
                 $subCategoryManager = new subCategoryManager();
@@ -187,7 +188,9 @@ class TopicController extends AbstractController implements ControllerInterface{
                     $errorCheck = true;
                 }
                 
-                if (!$errorCheck && !preg_match("/^[a-zA-Z0-9]{5,}$/", $title) && !preg_match("/^[a-zA-Z0-9]{5,}$/", $post)) {
+                if (!$errorCheck 
+                 && !preg_match("/^[a-zA-Z0-9]$/", $title) 
+                 && !preg_match("/^[a-zA-Z0-9]$/", $post )) {
 
                     $dataTopic = [
                         "title" => $title,
@@ -207,15 +210,15 @@ class TopicController extends AbstractController implements ControllerInterface{
                     ];
                     $successPost = $postManager->add($dataPost);
 
+
                     if ($successTopic && $successPost) {
                         // Rediriger l'utilisateur vers la page du topic
                         $this->redirectTo("topic", "listTopics");
-                    } else {
-                        // Gérer les erreurs
-                        $error = "Une erreur s'est produite lors de l'ajout du sujet.";
-                    }
+                    } 
+                    
                     
                 }
+                
                 return [
                     "view" => VIEW_DIR."forum/topics/createTopic.php",
                     "data" => [
@@ -225,7 +228,8 @@ class TopicController extends AbstractController implements ControllerInterface{
                     ],
                     // "meta_description" => "creation form used to create topics"
                 ];
-            }
+            } 
+            
         } else {
             $this->redirectTo("security", "login");
             // echo "Veuillez vous connecter d'abord.";
