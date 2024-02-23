@@ -238,6 +238,44 @@ class TopicController extends AbstractController implements ControllerInterface{
        
     }
 
+    public function topicState($id) {
+        $topicManager = new TopicManager();
+        $topic = $topicManager->findOneById($id);
+
+        $postManager = new PostManager();
+        $posts = $postManager->findPostsByTopic($id);
+
+        $state = $topic->getClosed();
+
+        if ($state == 1) {
+            $topic->setClosed(0);
+        } else {
+            $topic->setClosed(1);
+        }
+
+        $dataTopic = [
+            "id" => $id,
+            "closed" => $topic->getClosed()
+        ];
+
+        $topicManager->update($dataTopic);
+        $state = $topic->getClosed();
+        // var_dump($topic->getClosed());
+        // var_dump($topic->isClosed($id));
+
+        return [
+            "view" => VIEW_DIR."forum/topics/detailsTopic.php",
+            "data" => [
+                "title" => "Topic update",
+                "topic" => $topic,
+                'posts' => $posts
+            ],
+            "meta" => "update an existing topic"
+        ];
+
+        $this->redirectTo("topic", "detailsTopic, $id");
+    }
+
     public function deleteTopic($id) {
 
         $topicManager = new TopicManager();

@@ -69,6 +69,23 @@ class TopicManager extends Manager{
         );
     }
 
+    // public function isClosed($id) {
+    //     $sql = "SELECT closed
+    //     FROM".$this->tableName." t
+    //     WHERE t.id_topic = :id";
+
+    //     return $this->getOneOrNullResult(
+    //         DAO::select($sql, ['id' => $id], false), 
+    //         $this->className
+    //     );
+
+    //     if (closed == 1) {
+    //         return ["CLOSED"];
+    //     } else {
+    //         return ["OPEN"];
+    //     }
+    // }
+
     
     
 }
