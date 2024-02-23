@@ -2,7 +2,7 @@
     $subCategories = $result["data"]['subCategories']; 
 ?>
 
-<h1>Liste des catégories</h1>
+<h1>Liste des sous-catégories</h1>
 
 <?php
 foreach($subCategories as $subCategory ){ ?>

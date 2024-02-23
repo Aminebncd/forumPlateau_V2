@@ -16,8 +16,8 @@ $categories = $result["data"]["categories"];
     <form id="form-content" action="index.php?ctrl=topic&action=createTopic" method="post">
         
         <label for="title">Titre :</label>
-        <input id="title" type="text" name="title" value="" required >
-        
+        <input id="title" type="text" name="title" required >
+        <?= Session::getFlash("title") ?>
 
         <label for="category">Catégorie :</label>
         <select name="category" id="category" required >
@@ -27,6 +27,7 @@ $categories = $result["data"]["categories"];
                 </option>
             <?php  } ?>
         </select>
+        <?= Session::getFlash("category") ?>
 
         <label for="subCategory">sous catégorie :</label>
         <select name="subCategory" id="subCategory" required >
@@ -36,9 +37,11 @@ $categories = $result["data"]["categories"];
                 </option>
             <?php  } ?>
         </select>
+        <?= Session::getFlash("subCategory") ?>
 
-        <label for="post">Message :</label>
-        <textarea id="post" type="text" name="post" value="" required ></textarea>
+        <label for="post">Contenu :</label>
+        <textarea id="post" type="text" name="post" required></textarea>
+        <?= Session::getFlash("post") ?>
 
         <button type="submit" name ="submit">Poster</button>
 

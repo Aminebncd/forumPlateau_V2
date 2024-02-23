@@ -50,15 +50,20 @@ class TopicController extends AbstractController implements ControllerInterface{
         // $user = $topicManager->findUserByTopic($id);
         $topics = $topicManager->findTopicsByCategory($id);
 
-        return [
-            "view" => VIEW_DIR."forum/tags/detailsCategory.php",
-            // "meta_description" => "Liste des topics sous la catégorie : ".$subCategory,
-            "data" => [
-                "category" => $category,
-                // "user" => $user,
-                "topics" => $topics
-            ]
-        ];
+
+        if ($category) {
+            return [
+                "view" => VIEW_DIR."forum/tags/detailsCategory.php",
+                // "meta_description" => "Liste des topics sous la catégorie : ".$subCategory,
+                "data" => [
+                    "category" => $category,
+                    // "user" => $user,
+                    "topics" => $topics
+                ]
+            ];
+        } else {
+            $this->redirectTo("home", "index");
+        }
     }
 
     // Listage des topics par sous-categorie
@@ -71,15 +76,19 @@ class TopicController extends AbstractController implements ControllerInterface{
         // $user = $topicManager->findUserByTopic($id);
         $topics = $topicManager->findTopicsBySubCategory($id);
 
-        return [
-            "view" => VIEW_DIR."forum/tags/detailsSubCategory.php",
-            // "meta_description" => "Liste des topics sous la catégorie : ".$subCategory,
-            "data" => [
-                "subCategory" => $subCategory,
-                // "user" => $user,
-                "topics" => $topics
-            ]
-        ];
+        if($subCategory) {
+            return [
+                "view" => VIEW_DIR."forum/tags/detailsSubCategory.php",
+                // "meta_description" => "Liste des topics sous la catégorie : ".$subCategory,
+                "data" => [
+                    "subCategory" => $subCategory,
+                    // "user" => $user,
+                    "topics" => $topics
+                ]
+            ];
+        } else {
+            $this->redirectTo("home", "index");
+        }
     }
 
     // listage des posts (réponses) sous un topic
@@ -116,13 +125,10 @@ class TopicController extends AbstractController implements ControllerInterface{
 
     // TOPICS
     public function createTopicForm() { 
-       
-
         $subCategoryManager = new subCategoryManager();
         $subCategories = $subCategoryManager->findAll();
         $categoryManager = new categoryManager();
         $categories = $categoryManager->findAll();
-
         
             return [
                 "view" => VIEW_DIR."forum/topics/createTopic.php",
@@ -133,59 +139,97 @@ class TopicController extends AbstractController implements ControllerInterface{
                 ],
                 // "meta_description" => "creation form used to create topics"
             ];
-            
-        
-
     }
 
     public function createTopic() {
         if(Session::getUser()){
+            
             if (isset($_POST["submit"])) {
-                
+
+                $subCategoryManager = new subCategoryManager();
+                $subCategories = $subCategoryManager->findAll();
+
+                $categoryManager = new categoryManager();
+                $categories = $categoryManager->findAll();
+
                 $topicManager = new TopicManager(); 
                 $topics = $topicManager->findAll();
 
                 $postManager = new PostManager();
+
+
                 
-                $title = filter_input(INPUT_POST, "title", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+                $title = trim(filter_input(INPUT_POST, "title", FILTER_SANITIZE_FULL_SPECIAL_CHARS));
                 // $dateCreation = new \DateTime();
                 //     $formattedDateCreation = $dateCreation->format('Y-m-d H:i:s');
-            
                 $closed = 0;
                 $category_id = filter_input(INPUT_POST, "category", FILTER_SANITIZE_NUMBER_INT);
                 $subCategory_id = filter_input(INPUT_POST, "subCategory", FILTER_SANITIZE_NUMBER_INT);
+                $post = trim(filter_input(INPUT_POST, "post", FILTER_SANITIZE_FULL_SPECIAL_CHARS));
                 $user_id = Session::getUser()->getId();
-            
-                $dataTopic = [
-                    "title" => $title,
-                    // "dateCreation" => $formattedDateCreation,
-                    "closed" => $closed,
-                    "subCategory_id" => $subCategory_id,
-                    "category_id" => $category_id,
-                    "user_id" => $user_id
-                ];
-
-                $successTopic = $topicManager->add($dataTopic);
-
-                $topic_id = $successTopic;
-                $post = filter_input(INPUT_POST, "post", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
                 
-                $dataPost = [
-                    'content' => $post,
-                    'topic_id' => $topic_id,
-                    "user_id" => $user_id
-                ];
+                $errorCheck = false; // wil become true is there is any problem in any form
 
-                $successPost = $postManager->add($dataPost);
-            
-                if ($successTopic && $successPost) {
-                    // Rediriger l'utilisateur vers la page du topic
-                    $this->redirectTo("topic", "listTopics");
-                } else {
-                    // Gérer les erreurs
-                    $error = "Une erreur s'est produite lors de l'ajout du sujet.";
+                // checks every field
+                if(empty($title)) {
+                    Session::addFlash("title", "This field is mandatory!");
+                    $errorCheck = true;
                 }
-            }
+                if(empty($category_id)) {
+                    Session::addFlash("category", "This field is mandatory!");
+                    $errorCheck = true;
+                }
+                if(empty($subCategory_id)) {
+                    Session::addFlash("subCategory", "This field is mandatory!");
+                    $errorCheck = true;
+                }
+                if(empty($post)) {
+                    Session::addFlash("post", "This field is mandatory!");
+                    $errorCheck = true;
+                }
+                
+                if (!$errorCheck 
+                 && !preg_match("/^[a-zA-Z0-9]$/", $title) 
+                 && !preg_match("/^[a-zA-Z0-9]$/", $post )) {
+
+                    $dataTopic = [
+                        "title" => $title,
+                        // "dateCreation" => $formattedDateCreation,
+                        "closed" => $closed,
+                        "subCategory_id" => $subCategory_id,
+                        "category_id" => $category_id,
+                        "user_id" => $user_id
+                    ];
+                    $successTopic = $topicManager->add($dataTopic);
+                    
+                    $topic_id = $successTopic;
+                    $dataPost = [
+                        'content' => $post,
+                        'topic_id' => $topic_id,
+                        "user_id" => $user_id
+                    ];
+                    $successPost = $postManager->add($dataPost);
+
+
+                    if ($successTopic && $successPost) {
+                        // Rediriger l'utilisateur vers la page du topic
+                        $this->redirectTo("topic", "listTopics");
+                    } 
+                    
+                    
+                }
+                
+                return [
+                    "view" => VIEW_DIR."forum/topics/createTopic.php",
+                    "data" => [
+                        "title" => "Topic creation",
+                        "subCategories" => $subCategories,
+                        "categories" => $categories
+                    ],
+                    // "meta_description" => "creation form used to create topics"
+                ];
+            } 
+            
         } else {
             $this->redirectTo("security", "login");
             // echo "Veuillez vous connecter d'abord.";
@@ -196,12 +240,20 @@ class TopicController extends AbstractController implements ControllerInterface{
 
         $topicManager = new TopicManager;
         $topic = $topicManager->findOneById($id);
+
+        $subCategoryManager = new subCategoryManager();
+        $subCategories = $subCategoryManager->findAll();
+
+        $categoryManager = new categoryManager();
+        $categories = $categoryManager->findAll();
         
         return [
             "view" => VIEW_DIR."forum/topics/updateTopic.php",
             "data" => [
                 "title" => "Topic update",
-                "topic" => $topic
+                "topic" => $topic,
+                "subCategories" => $subCategories,
+                "categories" => $categories
             ],
             "meta" => "update an existing topic"
         ];
@@ -209,33 +261,110 @@ class TopicController extends AbstractController implements ControllerInterface{
 
     public function updateTopic($id) {
 
-        $topicManager = new TopicManager;
+        $topicManager = new TopicManager();      
+        $subCategoryManager = new subCategoryManager();
+        $categoryManager = new categoryManager();
+        $postManager = new PostManager();
+
+        $topic = $topicManager->findOneById($id);
+        $subCategories = $subCategoryManager->findAll();
+        $categories = $categoryManager->findAll();
+        $posts = $postManager->findPostsByTopic($id);
+
+        if (isset($_POST["submit"])) {
+
+            $title = trim(filter_input(INPUT_POST, "title", FILTER_SANITIZE_FULL_SPECIAL_CHARS));
+            $category_id = filter_input(INPUT_POST, "category", FILTER_SANITIZE_NUMBER_INT);
+            $subCategory_id = filter_input(INPUT_POST, "subCategory", FILTER_SANITIZE_NUMBER_INT);
+            
+            $errorCheck = false; // wil become true is there is any problem in any form
+
+            // checks every field
+            if(empty($title)) {
+                Session::addFlash("title", "This field is mandatory!");
+                $errorCheck = true;
+            }
+            if(empty($category_id)) {
+                Session::addFlash("category", "This field is mandatory!");
+                $errorCheck = true;
+            }
+            if(empty($subCategory_id)) {
+                Session::addFlash("subCategory", "This field is mandatory!");
+                $errorCheck = true;
+            }
+            
+            if (!$errorCheck 
+             && !preg_match("/^[a-zA-Z0-9]$/", $title)) {
+
+                $dataTopic = [
+                    "title" => $title,
+                    "subCategory_id" => $subCategory_id,
+                    "category_id" => $category_id, 
+                ];
+                
+                $topicManager->update($dataTopic);
+                $this->redirectTo("topic", "detailsTopic", $topic->getId());
+                return [
+                    "view" => VIEW_DIR."forum/topics/detailsTopic.php",
+                    "data" => [
+                        "title" => "Topic",
+                        "topic" => $topic,
+                        "subCategories" => $subCategories
+                    ],
+                ];
+            }      
+            $this->redirectTo("topic", "updateTopic", $topic->getId());
+            return [
+                "view" => VIEW_DIR."forum/topics/updateTopic.php",
+                "data" => [
+                    "title" => "Topic",
+                    "topic" => $topic,
+                    "subCategories" => $subCategories,
+                    "categories" => $categories
+                ],
+                // "meta_description" => "creation form used to create topics"
+            ];
+        }
+    }
+                
+
+
+    public function topicState($id) {
+        $topicManager = new TopicManager();
         $topic = $topicManager->findOneById($id);
 
         $postManager = new PostManager();
         $posts = $postManager->findPostsByTopic($id);
 
-        if (isset($_POST["submit"])) {
+        $state = $topic->isClosed();
 
-        $title = filter_input(INPUT_POST, "title", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        if ($state == 1) {
+            $topic->setClosed(0);
+        } else {
+            $topic->setClosed(1);
+        }
 
         $dataTopic = [
             "id" => $id,
-            "title" => $title
+            "closed" => $topic->isClosed()
         ];
 
-        // var_dump($id);die;
-        $success = $topicManager->update($dataTopic);
-        
-            if ($success) {
-                // Rediriger l'utilisateur vers la page du topic
-                $this->redirectTo("topic", "detailsTopic", $topic);
-            } else {
-                // Gérer les erreurs
-                $error = "Une erreur s'est produite lors de l'ajout du sujet.";
-            }
-        }
-       
+        $topicManager->update($dataTopic);
+        $state = $topic->isClosed();
+        // var_dump($topic->isClosed());
+        // var_dump($topic->isClosed($id));
+
+        return [
+            "view" => VIEW_DIR."forum/topics/detailsTopic.php",
+            "data" => [
+                "title" => "Topic update",
+                "topic" => $topic,
+                'posts' => $posts
+            ],
+            "meta" => "update an existing topic"
+        ];
+
+        $this->redirectTo("topic", "detailsTopic, $id");
     }
 
     public function deleteTopic($id) {
@@ -277,32 +406,54 @@ class TopicController extends AbstractController implements ControllerInterface{
         $topicManager = new TopicManager();
         
         $posts = $postManager->findPostsByTopic($id);
-        $topic = $topicManager->findOneById($id)->getId();
+        $topic = $topicManager->findOneById($id);
+        // var_dump($topic);die;
+
+        if(!$topic) {
+            $this->redirectTo("security", "index");
+        }
 
         if (isset($_POST["submit"])) {
+            $success = "";
+            $errorCheck = false;
 
-            $content = filter_input(INPUT_POST, "content", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $content = trim(filter_input(INPUT_POST, "content", FILTER_SANITIZE_FULL_SPECIAL_CHARS));
             $topic_id = $id;
-            $user_id = 1;
+            $user_id = Session::getUser()->getId();
             $dateCreation = new \DateTime();
                 $formattedDateCreation = $dateCreation->format('Y-m-d H:i:s');
+
+            if(empty($content)) {
+                Session::addFlash("content", "This field is mandatory!");
+                $errorCheck = true;
+            }
             
-            $data = [
-                "content" => $content,
-                "topic_id" => $topic_id,
-                "user_id" => $user_id,
-                "dateCreation" => $formattedDateCreation
-            ];
-                
-            $success = $postManager->add($data);
-    
+            if(!$errorCheck && !preg_match("/^[a-zA-Z0-9]{5,}$/", $content)) {
+                $data = [
+                    "content" => $content,
+                    "topic_id" => $topic_id,
+                    "user_id" => $user_id,
+                    "dateCreation" => $formattedDateCreation
+                ];
+                $success = $postManager->add($data);
+            }
+            
+
             if ($success) {
                 // Rediriger l'utilisateur vers la page du topic
-                $this->redirectTo("topic", "listPostByTopic", $topic);
+                $this->redirectTo("topic", "listPostByTopic", $topic->getId());
             } else {
                 // Gérer les erreurs
                 $error = "Une erreur s'est produite lors de la mise à jour du message.";
-            } 
+            }   
+            return [
+                "view" => VIEW_DIR."forum/topics/detailsTopic.php",
+                // "meta_description" => "Liste des topics sous la catégorie : ".$category,
+                "data" => [
+                    "topic" => $topic,
+                    "posts" => $posts
+                ]
+            ];
         }
     }
 

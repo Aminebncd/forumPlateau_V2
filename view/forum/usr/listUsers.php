@@ -7,7 +7,10 @@
 <?php
 foreach($users as $user ){ ?>
     <p>
-        <a href="index.php?ctrl=user&action=whoIsThisUser&id=<?= $user->getId() ?>"><?= $user->getPseudo() ?></a>
+        <a href="index.php?ctrl=user&action=whoIsThisUser&id=<?= $user->getId() ?>">
+            <?= $user->getPseudo() ?>
+        </a>
+        <?= "depuis le ".$user->getInscriptionDate()->format('d/m/Y H')."h" ?>
     </p>
 <?php }
 

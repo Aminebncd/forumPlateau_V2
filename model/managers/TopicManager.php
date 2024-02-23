@@ -19,7 +19,8 @@ class TopicManager extends Manager{
 
         $sql = "SELECT * 
                 FROM ".$this->tableName." t 
-                WHERE t.category_id = :id";
+                WHERE t.category_id = :id
+                ORDER BY t.dateCreation DESC";
        
         // la requête renvoie plusieurs enregistrements --> getMultipleResults
         return  $this->getMultipleResults(
@@ -32,7 +33,8 @@ class TopicManager extends Manager{
 
         $sql = "SELECT * 
                 FROM ".$this->tableName." t 
-                WHERE t.subCategory_id = :id";
+                WHERE t.subCategory_id = :id
+                ORDER BY t.dateCreation DESC";
        
         // la requête renvoie plusieurs enregistrements --> getMultipleResults
         return  $this->getMultipleResults(
@@ -68,6 +70,23 @@ class TopicManager extends Manager{
             $this->className
         );
     }
+
+    // public function isClosed($id) {
+    //     $sql = "SELECT closed
+    //     FROM".$this->tableName." t
+    //     WHERE t.id_topic = :id";
+
+    //     return $this->getOneOrNullResult(
+    //         DAO::select($sql, ['id' => $id], false), 
+    //         $this->className
+    //     );
+
+    //     if (closed == 1) {
+    //         return ["CLOSED"];
+    //     } else {
+    //         return ["OPEN"];
+    //     }
+    // }
 
     
     
