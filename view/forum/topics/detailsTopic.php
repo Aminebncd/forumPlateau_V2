@@ -12,6 +12,13 @@ use App\Session;
             <?php 
         }
 ?>
+<?php
+        if(Session::isAdmin()){
+            ?>
+            <a href="index.php?ctrl=topic&action=closeTopic&id=<?= $topic->getId() ?>">Cloturer le topic</a>
+            <?php 
+        }
+?>
 
 
 <div id="form-container">

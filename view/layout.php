@@ -24,15 +24,15 @@
                     <nav>
 
                         <div id="nav-left">
-                            <a href="/">Accueil</a>
+                            <a href="index.php?ctrl=home">Accueil</a>
                             <?php
                             if(App\Session::isAdmin()){
                                 ?>
                                 <a href="index.php?ctrl=home&action=users">Voir la liste des gens</a>
                                 
-                            <?php 
-                        } 
-                        ?>
+                                <?php 
+                            } 
+                            ?>
                         </div>
 
                         <div id="nav-right">
@@ -47,7 +47,7 @@
                                 <a href="index.php?ctrl=tag&action=listCategories">Liste des catégories</a>
                                 <a href="index.php?ctrl=tag&action=listSubCategories">Liste des sous-catégories</a>
                                 <a href="index.php?ctrl=topic&action=listTopics">Liste des Topics</a>
-                                <a href="index.php?ctrl=user&action=listUsers">Liste des utilisateurs</a>
+                                
                                 <?php
                             }
                             else{
@@ -57,7 +57,6 @@
                                 <a href="index.php?ctrl=tag&action=listCategories">Liste des catégories</a>
                                 <a href="index.php?ctrl=tag&action=listSubCategories">Liste des sous-catégories</a>
                                 <a href="index.php?ctrl=topic&action=listTopics">Liste des Topics</a>
-                                <a href="index.php?ctrl=user&action=listUsers">Liste des utilisateurs</a>
                             <?php
                             }
                         ?>
