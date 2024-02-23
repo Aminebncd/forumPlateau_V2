@@ -20,7 +20,7 @@ if (!empty($topics)) {
             
             par <a href="index.php?ctrl=user&action=whoIsThisUser&id=<?= $topic->getUser()->getId() ?> "><?= $topic->getUser() ?></a> 
 
-            <?= $topic->getDateCreation() ?>
+            <?= $topic->getDateCreation()->format('d/m/Y H:i') ?>
         </p>
     <?php }
 } else {

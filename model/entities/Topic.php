@@ -140,7 +140,8 @@ final class Topic extends Entity{
      */ 
     public function getDateCreation()
     {
-        return $this->dateCreation;
+        $formattedDate = $this->dateCreation;
+        return $formattedDate;
     }
 
     /**
@@ -148,10 +149,9 @@ final class Topic extends Entity{
      *
      * @return  self
      */ 
-    public function setDateCreation($dateCreation)
+    public function setDateCreation($date)
     {
-        $this->dateCreation = $dateCreation;
-
+        $this->dateCreation = new \DateTime($date);
         return $this;
     }
 }

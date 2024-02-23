@@ -240,12 +240,20 @@ class TopicController extends AbstractController implements ControllerInterface{
 
         $topicManager = new TopicManager;
         $topic = $topicManager->findOneById($id);
+
+        $subCategoryManager = new subCategoryManager();
+        $subCategories = $subCategoryManager->findAll();
+
+        $categoryManager = new categoryManager();
+        $categories = $categoryManager->findAll();
         
         return [
             "view" => VIEW_DIR."forum/topics/updateTopic.php",
             "data" => [
                 "title" => "Topic update",
-                "topic" => $topic
+                "topic" => $topic,
+                "subCategories" => $subCategories,
+                "categories" => $categories
             ],
             "meta" => "update an existing topic"
         ];
@@ -253,34 +261,73 @@ class TopicController extends AbstractController implements ControllerInterface{
 
     public function updateTopic($id) {
 
-        $topicManager = new TopicManager;
-        $topic = $topicManager->findOneById($id);
-
+        $topicManager = new TopicManager();      
+        $subCategoryManager = new subCategoryManager();
+        $categoryManager = new categoryManager();
         $postManager = new PostManager();
+
+        $topic = $topicManager->findOneById($id);
+        $subCategories = $subCategoryManager->findAll();
+        $categories = $categoryManager->findAll();
         $posts = $postManager->findPostsByTopic($id);
 
         if (isset($_POST["submit"])) {
 
-        $title = filter_input(INPUT_POST, "title", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $title = trim(filter_input(INPUT_POST, "title", FILTER_SANITIZE_FULL_SPECIAL_CHARS));
+            $category_id = filter_input(INPUT_POST, "category", FILTER_SANITIZE_NUMBER_INT);
+            $subCategory_id = filter_input(INPUT_POST, "subCategory", FILTER_SANITIZE_NUMBER_INT);
+            
+            $errorCheck = false; // wil become true is there is any problem in any form
 
-        $dataTopic = [
-            "id" => $id,
-            "title" => $title
-        ];
-
-        // var_dump($id);die;
-        $success = $topicManager->update($dataTopic);
-        
-            if ($success) {
-                // Rediriger l'utilisateur vers la page du topic
-                $this->redirectTo("topic", "detailsTopic", $topic);
-            } else {
-                // Gérer les erreurs
-                $error = "Une erreur s'est produite lors de l'ajout du sujet.";
+            // checks every field
+            if(empty($title)) {
+                Session::addFlash("title", "This field is mandatory!");
+                $errorCheck = true;
             }
+            if(empty($category_id)) {
+                Session::addFlash("category", "This field is mandatory!");
+                $errorCheck = true;
+            }
+            if(empty($subCategory_id)) {
+                Session::addFlash("subCategory", "This field is mandatory!");
+                $errorCheck = true;
+            }
+            
+            if (!$errorCheck 
+             && !preg_match("/^[a-zA-Z0-9]$/", $title)) {
+
+                $dataTopic = [
+                    "title" => $title,
+                    "subCategory_id" => $subCategory_id,
+                    "category_id" => $category_id, 
+                ];
+                
+                $topicManager->update($dataTopic);
+                $this->redirectTo("topic", "detailsTopic", $topic->getId());
+                return [
+                    "view" => VIEW_DIR."forum/topics/detailsTopic.php",
+                    "data" => [
+                        "title" => "Topic",
+                        "topic" => $topic,
+                        "subCategories" => $subCategories
+                    ],
+                ];
+            }      
+            $this->redirectTo("topic", "updateTopic", $topic->getId());
+            return [
+                "view" => VIEW_DIR."forum/topics/updateTopic.php",
+                "data" => [
+                    "title" => "Topic",
+                    "topic" => $topic,
+                    "subCategories" => $subCategories,
+                    "categories" => $categories
+                ],
+                // "meta_description" => "creation form used to create topics"
+            ];
         }
-       
     }
+                
+
 
     public function topicState($id) {
         $topicManager = new TopicManager();

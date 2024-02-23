@@ -339,7 +339,7 @@ class SecurityController extends AbstractController{
                 
                 if ($success) {
                     // Rediriger l'utilisateur vers la page du topic
-                    $this->redirectTo("user", "detailsUser", $id);
+                    // $this->redirectTo("user", "detailsUser", $id);
                     return [
                         "view" => VIEW_DIR."forum/usr/detailsUser.php",
                         "data" => [
@@ -350,6 +350,14 @@ class SecurityController extends AbstractController{
                     ];
                 } else {
                     // Gérer les erreurs
+                    return [
+                        "view" => VIEW_DIR."forum/usr/updateUser.php",
+                        "data" => [
+                            "title" => "user profile",
+                            "user" => $user
+                        ],
+                        "meta" => "details"
+                    ];
                     echo "Une erreur s'est produite lors de la mise à jour de la photo.";
                 }
             }
