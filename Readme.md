@@ -6,19 +6,19 @@ CTRL + SHIFT + V
 
 ## 📖 Table des matières
 - [Mini-framework MVC Elan](#mini-framework-mvc-elan)
-  - [📖 Table des matières](#-table-des-matières)
-  - [✍️ Rappel des notions](#️-rappel-des-notions)
+  - [📖 Table des matières](#📖-table-des-matières)
+  - [✍️ Rappel des notions](#️✍️-rappel-des-notions)
     - [✅ Design pattern (patron de conception)](#-design-pattern-patron-de-conception)
     - [✅ Modèle Vue Contrôleur (MVC)](#-modèle-vue-contrôleur-mvc)
     - [✅ Programmation orientée objet (POO)](#-programmation-orientée-objet-poo)
-  - [✍️ Structure du framework et responsabilité de chaque couche de l'application](#️-structure-du-framework-et-responsabilité-de-chaque-couche-de-lapplication)
+  - [✍️ Structure du framework et responsabilité de chaque couche de l'application](#️✍️-structure-du-framework-et-responsabilité-de-chaque-couche-de-lapplication)
     - [✅ index.php](#-indexphp)
     - [✅ public](#-public)
     - [✅ App](#-app)
     - [✅ Controller](#-controller)
     - [✅ Model](#-model)
-      - [⭐ Entities](#-entities)
-      - [⭐ Managers](#-managers)
+      - [⭐ Entities](#⭐-entities)
+      - [⭐ Managers](#⭐-managers)
     - [✅ View](#-view)
 
 
