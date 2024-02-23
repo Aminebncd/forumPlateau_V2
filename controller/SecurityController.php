@@ -209,6 +209,75 @@ class SecurityController extends AbstractController{
         
     }
 
+    public function updateUserForm($id) {
+        
+        $userManager = new userManager;
+        $user = $userManager->findOneById($id);
+        
+        return [
+            "view" => VIEW_DIR."forum/usr/updateUser.php",
+            "data" => [
+                "title" => "user update",
+                "user" => $user
+            ],
+            "meta" => "update an existing topic"
+        ];
+    }
+
+    public function updateUser($id) {
+        if(Session::getUser()){
+            $userManager = new userManager();
+            $user = $userManager->findOneById($id);
+        
+            if (isset($_POST["submit"])) {
+
+                $pseudo = filter_input(INPUT_POST, "pseudo", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+                $mail = filter_input(INPUT_POST, "mail", FILTER_SANITIZE_EMAIL);
+            
+                if(isset($_FILES['profilePic'])){
+
+                    $tmpName = $_FILES['profilePic']['tmp_name'];
+                    $name = $_FILES['profilePic']['name'];
+                    $size = $_FILES['profilePic']['size'];
+                    $error = $_FILES['profilePic']['error'];
+                    
+                    $tabExtension = explode('.', $name);
+                    $extension = strtolower(end($tabExtension));
+                    
+                    //Tableau des extensions que l'on accepte
+                    $extensions = ['jpg', 'png', 'jpeg', 'gif', 'webp'];
+                    $maxSize = 1200000;
+                    
+                    if(in_array($extension, $extensions) && $size <= $maxSize){
+                        $uniqueName = uniqid('', true);
+                        //uniqid génère quelque chose comme ca : 5f586bf96dcd38.73540086
+                        $profilePic = $uniqueName.".".$extension;
+                        //$file = 5f586bf96dcd38.73540086.jpg
+                        move_uploaded_file($tmpName, 'public/img/uploads/'.$profilePic);  
+                    }
+                }
+
+                $data = [
+                    "id" => $id,
+                    "pseudo" => $pseudo,
+                    "mail" => $mail,
+                    "profilePic" => $profilePic
+                ];
+
+                $success = $userManager->update($data);
+                
+                if ($success) {
+                    // Rediriger l'utilisateur vers la page du topic
+                    $this->redirectTo("user", "detailsUser", $id);
+                } else {
+                    // Gérer les erreurs
+                    echo "Une erreur s'est produite lors de la mise à jour de la photo.";
+                }
+            }
+        }
+       
+    }
+
     // public function hashMoi() {
         
     //     if (isset($_POST["submit"])) {

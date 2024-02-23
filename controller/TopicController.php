@@ -144,27 +144,41 @@ class TopicController extends AbstractController implements ControllerInterface{
                 
                 $topicManager = new TopicManager(); 
                 $topics = $topicManager->findAll();
+
+                $postManager = new PostManager();
                 
                 $title = filter_input(INPUT_POST, "title", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-                $dateCreation = new \DateTime();
-                    $formattedDateCreation = $dateCreation->format('Y-m-d H:i:s');
+                // $dateCreation = new \DateTime();
+                //     $formattedDateCreation = $dateCreation->format('Y-m-d H:i:s');
+            
                 $closed = 0;
                 $category_id = filter_input(INPUT_POST, "category", FILTER_SANITIZE_NUMBER_INT);
                 $subCategory_id = filter_input(INPUT_POST, "subCategory", FILTER_SANITIZE_NUMBER_INT);
                 $user_id = Session::getUser()->getId();
-                
-                $data = [
+            
+                $dataTopic = [
                     "title" => $title,
-                    "dateCreation" => $formattedDateCreation,
+                    // "dateCreation" => $formattedDateCreation,
                     "closed" => $closed,
                     "subCategory_id" => $subCategory_id,
                     "category_id" => $category_id,
                     "user_id" => $user_id
                 ];
-                   
-                $success = $topicManager->add($data);
+
+                $successTopic = $topicManager->add($dataTopic);
+
+                $topic_id = $successTopic;
+                $post = filter_input(INPUT_POST, "post", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+                
+                $dataPost = [
+                    'content' => $post,
+                    'topic_id' => $topic_id,
+                    "user_id" => $user_id
+                ];
+
+                $successPost = $postManager->add($dataPost);
             
-                if ($success) {
+                if ($successTopic && $successPost) {
                     // Rediriger l'utilisateur vers la page du topic
                     $this->redirectTo("topic", "listTopics");
                 } else {
@@ -173,7 +187,7 @@ class TopicController extends AbstractController implements ControllerInterface{
                 }
             }
         } else {
-            $this->redirectTo("topic", "createTopicForm");
+            $this->redirectTo("security", "login");
             // echo "Veuillez vous connecter d'abord.";
         }
     }

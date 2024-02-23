@@ -16,11 +16,11 @@ $categories = $result["data"]["categories"];
     <form id="form-content" action="index.php?ctrl=topic&action=createTopic" method="post">
         
         <label for="title">Titre :</label>
-        <input id="title" type="text" name="title" value="">
+        <input id="title" type="text" name="title" value="" required >
         
 
         <label for="category">Catégorie :</label>
-        <select name="category" id="category">
+        <select name="category" id="category" required >
             <?php foreach($categories as $category) { ?>
                 <option value="<?= $category->getId() ?>">
                     <?= $category->getName() ?>
@@ -29,13 +29,16 @@ $categories = $result["data"]["categories"];
         </select>
 
         <label for="subCategory">sous catégorie :</label>
-        <select name="subCategory" id="subCategory">
+        <select name="subCategory" id="subCategory" required >
             <?php foreach($subCategories as $SubCategory) { ?>
                 <option value="<?= $SubCategory->getId() ?>">
                     <?= $SubCategory->getName() ?>
                 </option>
             <?php  } ?>
         </select>
+
+        <label for="post">Message :</label>
+        <textarea id="post" type="text" name="post" value="" required ></textarea>
 
         <button type="submit" name ="submit">Poster</button>
 

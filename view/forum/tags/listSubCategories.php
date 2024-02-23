@@ -6,7 +6,7 @@
 
 <?php
 foreach($subCategories as $subCategory ){ ?>
-    <p><a href="index.php?ctrl=topic&action=listTopicsByCategory&id=<?= $subCategory->getId() ?>"><?= $subCategory->getName() ?></a></p>
+    <p><a href="index.php?ctrl=topic&action=listTopicsBySubCategory&id=<?= $subCategory->getId() ?>"><?= $subCategory->getName() ?></a></p>
 <?php }
 
 
