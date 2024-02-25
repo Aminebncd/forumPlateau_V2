@@ -13,7 +13,7 @@ use App\Session;
     
 ?>
 <?php
-        if((Session::isAdmin()) || (Session::getUser()->getId() == $topic->getUser()->getId())){
+        if(Session::getUser() && ((Session::isAdmin()) || (Session::getUser()->getId() == $topic->getUser()->getId()))){
             ?>
             <a href="index.php?ctrl=topic&action=deleteTopic&id=<?= $topic->getId() ?>">supprimer le topic</a>
             <a href="index.php?ctrl=topic&action=updateTopicForm&id=<?= $topic->getId() ?>">modifier le topic</a>
@@ -32,6 +32,7 @@ use App\Session;
 
 <?php 
         if ($topic->isClosed() == 0) { 
+        if (Session::getUser()) { 
 ?>
             <div id="form-container">
                 <div id="form-header">
@@ -45,7 +46,9 @@ use App\Session;
                     <button type="submit" name ="submit">soumettre</button>
                 </form>
             </div>
-<?php 
+<?php } else {
+ echo "Veuilez vous connecter pour pouvoir répondre.";
+}
         } else {
             echo "Topic cloturé.";
         } 
@@ -62,7 +65,7 @@ use App\Session;
         <?= $post->getContent() ?> par <?= $post->getUser() ?> 
 
 <?php
-        if((Session::isAdmin()) || (Session::getUser()->getId() == $post->getUser()->getId())){
+        if(Session::getUser() && ((Session::isAdmin()) || (Session::getUser()->getId() == $topic->getUser()->getId()))){
 ?>
             <a href="index.php?ctrl=topic&action=deletePost&id=<?= $post->getId() ?>">supprimer</a> 
             <a href="index.php?ctrl=topic&action=updatePostForm&id=<?= $post->getId() ?>">modifier</a>

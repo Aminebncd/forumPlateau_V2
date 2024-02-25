@@ -1,0 +1,88 @@
+
+
+
+
+
+
+
+
+
+
+/* CATEGORIES */
+.card {
+    position: relative;
+    width: 400px; /* ou toute autre largeur désirée */
+    height: 300px; /* ou toute autre hauteur désirée */
+    margin: 20px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.card-img {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+}
+
+.card-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Un fond semi-transparent pour un effet d'ombre */
+    opacity: 0; /* L'overlay est initialement invisible */
+    transition: opacity 0.3s ease; /* Animation de transition de l'opacité */
+}
+
+.card:hover .card-overlay {
+    opacity: 1; /* L'overlay devient visible au survol */
+}
+
+.card-content {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    color: #fff;
+    h3 {
+        border-radius: 10px;
+        padding: 5px;
+    }
+}
+
+.category-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+
+
+
+
+/* SOUS-CATEGORIES */
+
+.subCategories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); /* Grille flexible avec des colonnes de largeur minimale de 100px */
+    gap: 20px; /* Espace entre les éléments de la grille */
+    background-color: #24325950; /* Couleur de fond sombre */
+    padding: 40px; /* Espacement intérieur de la grille */
+    border-radius: 10px; /* Coins arrondis pour un aspect esthétique */
+}
+
+.tag {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #051a2f; /* Couleur de fond du tag */
+    color: #fff; /* Couleur du texte */
+    text-decoration: none; /* Supprimer le soulignement par défaut sur les liens */
+    border-radius: 5px; /* Coins arrondis pour un aspect esthétique */
+    transition: background-color 0.3s ease; /* Animation de transition pour le changement de couleur de fond */
+}
+
+.tag:hover {
+    background-color: #0056b3; /* Couleur de fond du tag au survol */
+}
+

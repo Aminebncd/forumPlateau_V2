@@ -4,10 +4,8 @@
 
 <h1>Liste des sous-catégories</h1>
 
-<?php
-foreach($subCategories as $subCategory ){ ?>
-    <p><a href="index.php?ctrl=topic&action=listTopicsBySubCategory&id=<?= $subCategory->getId() ?>"><?= $subCategory->getName() ?></a></p>
-<?php }
-
-
-  
+<div class="subCategories-grid">
+    <?php foreach ($subCategories as $subCategory): ?>
+        <a href="index.php?ctrl=topic&action=listTopicsBySubCategory&id=<?= $subCategory->getId() ?>" class="tag"><?= $subCategory->getName() ?></a>
+    <?php endforeach; ?>
+</div>

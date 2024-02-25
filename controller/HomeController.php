@@ -4,13 +4,23 @@ namespace Controller;
 use App\AbstractController;
 use App\ControllerInterface;
 use Model\Managers\UserManager;
+use Model\Managers\TopicManager;
 
 class HomeController extends AbstractController implements ControllerInterface {
 
     public function index(){
+        
+        $topicManager = new TopicManager();
+        
+        $topics = $topicManager->findAll();
+        // var_dump($topics->current());die;
+        
         return [
             "view" => VIEW_DIR."home.php",
-            "meta_description" => "Page d'accueil du forum"
+            // "meta_description" => "Liste des topics par catégorie : ".$topics,
+            "data" => [
+                "topics" => $topics
+            ]
         ];
     }
         
@@ -28,6 +38,7 @@ class HomeController extends AbstractController implements ControllerInterface {
             ]
         ];
     }
+
 
     public function forumRules() {
 

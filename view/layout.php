@@ -8,69 +8,83 @@
         <script src="https://cdn.tiny.cloud/1/zg3mwraazn1b2ezih16je1tc6z7gwp5yd4pod06ae5uai8pa/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" integrity="sha256-h20CPZ0QyXlBuAw7A+KluUYx/3pK+c7lYEpqLTlxjYQ=" crossorigin="anonymous" />
         <link rel="stylesheet" href="<?= PUBLIC_DIR ?>/css/main.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
         <title>FORUM</title>
     </head>
     
     <body>
 
-    <!-- <?php var_dump(App\Session::getUser()); ?> -->
+    
 
         <div id="wrapper"> 
             <div id="mainpage">
                 <!-- c'est ici que les messages (erreur ou succès) s'affichent-->
                 <h3 class="message" style="color: red"><?= App\Session::getFlash("error") ?></h3>
                 <h3 class="message" style="color: green"><?= App\Session::getFlash("success") ?></h3>
+
                 <header>
-                    <nav>
+                    <nav class="navbar">
+                        <div class="navContainer">
+                            <a class="navbar-brand" href="index.php?ctrl=home">Accueil</a>
+                            <div class="navbar-header">
+                                <button class="navbar-toggler" id="navbar-toggler">
+                                    <span class="navbar-toggler-icon">&#9776;</span>
+                                </button>
+                            </div>
+                            <div class="sidebar" id="sidebar">
+                                <ul class="navbar-nav">
+                                    <?php if (App\Session::getUser()): ?>
 
-                        <div id="nav-left">
-                            <a href="index.php?ctrl=home">Accueil</a>
-                            <?php
-                            if(App\Session::isAdmin()){
-                                ?>
-                                <a href="index.php?ctrl=user&action=listUsers">Voir la liste des users</a>
-                                <?php 
-                            } 
-                            ?>
+                                    <li><a href="index.php?ctrl=user&action=whoIsThisUser&id=<?= App\Session::getUser()->getId() ?>"><span class="fas fa-user"></span>&nbsp;<?= App\Session::getUser()->getPseudo() ?></a></li>
+                                    <li><a href="index.php?ctrl=tag&action=listCategories">Liste des catégories</a></li>
+                                    <li><a href="index.php?ctrl=tag&action=listSubCategories">Liste des sous-catégories</a></li>
+                                    <li><a href="index.php?ctrl=topic&action=listTopics">Liste des Topics</a></li>
+
+                                    <?php if (App\Session::isAdmin()): ?>
+
+                                    <li><a href="index.php?ctrl=user&action=listUsers">Liste des utilisateurs</a></li>
+
+                                    <?php endif; ?>
+                                    
+                                    <li><a href="index.php?ctrl=security&action=logout">Déconnexion</a></li>
+
+                                    <?php else: ?>
+
+                                    <li><a href="index.php?ctrl=security&action=loginForm">Connexion</a></li>
+                                    <li><a href="index.php?ctrl=security&action=registerForm">Inscription</a></li>
+
+                                    <?php endif; ?>
+                                </ul>
+                            </div>
+                            </div>
+                                <div class="sidebar-mask" id="sidebar-mask"></div>
+                            </div>
                         </div>
-
-                        <div id="nav-right">
-                        <?php
-                            // si l'utilisateur est connecté 
-                            if(App\Session::getUser()){
-                                ?>
-                                <a href="index.php?ctrl=user&action=whoIsThisUser&id=<?= App\Session::getUser()->getId()?>"><span class="fas fa-user"></span>&nbsp;<?= App\Session::getUser()?></a>
-                                
-                                <a href="index.php?ctrl=security&action=logout">Déconnexion</a>
-
-                                <a href="index.php?ctrl=tag&action=listCategories">Liste des catégories</a>
-                                <a href="index.php?ctrl=tag&action=listSubCategories">Liste des sous-catégories</a>
-                                <a href="index.php?ctrl=topic&action=listTopics">Liste des Topics</a>
-                                
-                                <?php
-                            }
-                            else{
-                                ?>
-                                <a href="index.php?ctrl=security&action=loginForm">Connexion</a>
-                                <a href="index.php?ctrl=security&action=registerForm">Inscription</a>
-                                <a href="index.php?ctrl=tag&action=listCategories">Liste des catégories</a>
-                                <a href="index.php?ctrl=tag&action=listSubCategories">Liste des sous-catégories</a>
-                                <a href="index.php?ctrl=topic&action=listTopics">Liste des Topics</a>
-                            <?php
-                            }
-                        ?>
-                        </div>
-                        
                     </nav>
                 </header>
-                
+
+
+
                 <main id="forum">
                     <?= $page ?>
                 </main>
             </div>
             <footer>
-                <p>&copy; <?= date_create("now")->format("Y") ?> - <a href="#">Règlement du forum</a> - <a href="#">Mentions légales</a></p>
-            </footer>
+    <div class="footer-content">
+        <div class="footer-links">
+            <a href="#">Accueil</a>
+            <a href="#">LinkedIn</a>
+            <a href="#">Github</a>
+            <a href="#">Contact</a>
+        </div>
+        <div class="footer-info">
+            <p>&copy; <?= date_create("now")->format("Y") ?> - AmineBncd@ElanFormation - <a href="#">Règlement du forum</a> - <a href="#">Mentions légales</a></p>
+        </div>
+    </div>
+</footer>
+
         </div>
 
 
@@ -110,7 +124,7 @@
             })
         </script>
 
-        <script src="<?= PUBLIC_DIR ?>/js/script.js"></script>
+        <script src="<?= PUBLIC_DIR ?>js/script.js"></script>
 
 
 

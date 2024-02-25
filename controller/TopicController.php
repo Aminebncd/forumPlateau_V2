@@ -43,27 +43,29 @@ class TopicController extends AbstractController implements ControllerInterface{
     // Listage des topics par sous-categorie
     public function listTopicsByCategory($id) {
 
-        $categoryManager = new CategoryManager();
-        $topicManager = new TopicManager();
+        
+            $categoryManager = new CategoryManager();
+            $topicManager = new TopicManager();
 
-        $category = $categoryManager->findOneById($id);
-        // $user = $topicManager->findUserByTopic($id);
-        $topics = $topicManager->findTopicsByCategory($id);
+            $category = $categoryManager->findOneById($id);
+            // $user = $topicManager->findUserByTopic($id);
+            $topics = $topicManager->findTopicsByCategory($id);
 
 
-        if ($category) {
-            return [
-                "view" => VIEW_DIR."forum/tags/detailsCategory.php",
-                // "meta_description" => "Liste des topics sous la catégorie : ".$subCategory,
-                "data" => [
-                    "category" => $category,
-                    // "user" => $user,
-                    "topics" => $topics
-                ]
-            ];
-        } else {
-            $this->redirectTo("home", "index");
-        }
+            if ($category) {
+                return [
+                    "view" => VIEW_DIR."forum/tags/detailsCategory.php",
+                    // "meta_description" => "Liste des topics sous la catégorie : ".$subCategory,
+                    "data" => [
+                        "category" => $category,
+                        // "user" => $user,
+                        "topics" => $topics
+                    ]
+                ];
+            } else {
+                $this->redirectTo("home", "index");
+            }
+        
     }
 
     // Listage des topics par sous-categorie
@@ -93,21 +95,22 @@ class TopicController extends AbstractController implements ControllerInterface{
 
     // listage des posts (réponses) sous un topic
     public function listPostByTopic($id) {
+        // if(Session::getUser()){
+            $topicManager = new TopicManager();
+            $postManager = new PostManager();
 
-        $topicManager = new TopicManager();
-        $postManager = new PostManager();
+            $topic = $topicManager->findOneById($id);
+            $posts = $postManager->findPostsByTopic($id);
 
-        $topic = $topicManager->findOneById($id);
-        $posts = $postManager->findPostsByTopic($id);
-
-        return [
-            "view" => VIEW_DIR."forum/topics/detailsTopic.php",
-            // "meta_description" => "Liste des topics sous la catégorie : ".$category,
-            "data" => [
-                "topic" => $topic,
-                "posts" => $posts
-            ]
-        ];
+            return [
+                "view" => VIEW_DIR."forum/topics/detailsTopic.php",
+                // "meta_description" => "Liste des topics sous la catégorie : ".$category,
+                "data" => [
+                    "topic" => $topic,
+                    "posts" => $posts
+                ]
+            ];
+        // }
     }
 
 
