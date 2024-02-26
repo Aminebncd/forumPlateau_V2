@@ -3,7 +3,7 @@ use App\Session;
 // var_dump($fieldData);
 ?>
 
-<form class="register-form" action="index.php?ctrl=security&action=register" method="post">
+<form class="form" action="index.php?ctrl=security&action=register" method="post">
     <div class="form-group">
         <label for="pseudo">Pseudo :</label>
         <input type="text" id="pseudo" name="pseudo" required>
@@ -33,7 +33,9 @@ use App\Session;
         <?= Session::getFlash("motDePasseAgain") ?>
     </div>
     <div class="form-group">
-        <button type="submit" name="submit">S'inscrire</button>
+        <button form-group">
+        <button class="form-button" type="submit" name="submit">S'inscrire</button>
     </div>
 </form>
 
+<a href="index.php?ctrl=security&action=loginForm">Déjà membre? connectez vous !</a>

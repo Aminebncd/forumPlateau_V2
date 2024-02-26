@@ -1,7 +1,9 @@
 <?php
 use App\Session;
     $topic = $result["data"]['topic']; 
-    $posts = $result["data"]['posts']; 
+    $posts = $result["data"]['posts'];
+    // $users = $result["data"]['users'];
+    
 
     if ($topic->isClosed() == 0){
         $state = "Ouvert";
@@ -12,72 +14,58 @@ use App\Session;
     // echo '<pre>'; var_dump($_SESSION); echo '</pre>'
     
 ?>
-<?php
-        if(Session::getUser() && ((Session::isAdmin()) || (Session::getUser()->getId() == $topic->getUser()->getId()))){
-            ?>
-            <a href="index.php?ctrl=topic&action=deleteTopic&id=<?= $topic->getId() ?>">supprimer le topic</a>
-            <a href="index.php?ctrl=topic&action=updateTopicForm&id=<?= $topic->getId() ?>">modifier le topic</a>
-            <?php 
-        }
-?>
-<?php
-        if(Session::isAdmin()){
-            ?>
-            <a href="index.php?ctrl=topic&action=topicState&id=<?= $topic->getId() ?>">
-                <?php echo "<h2>Statut : $state</h2>";?>
-            </a>
-            <?php 
-        }
-?>
 
-<?php 
-        if ($topic->isClosed() == 0) { 
-        if (Session::getUser()) { 
-?>
-            <div id="form-container">
-                <div id="form-header">
-                    <h1>ajoutez une reponse :</h1>
+<h1 class="post-list-title"><?= $topic->getTitle() ?></h1>
+
+<div class="container">
+    
+    <?php if(Session::getUser() && ((Session::isAdmin()) || (Session::getUser()->getId() == $topic->getUser()->getId()))): ?>
+        <div class="topic-actions">
+            <a href="index.php?ctrl=topic&action=deleteTopic&id=<?= $topic->getId() ?>" class="delete-topic">Supprimer le topic</a>
+            <a href="index.php?ctrl=topic&action=updateTopicForm&id=<?= $topic->getId() ?>" class="update-topic">Modifier le topic</a>
+        </div>
+    <?php endif; ?>
+
+    <?php if(Session::isAdmin()): ?>
+        <a href="index.php?ctrl=topic&action=topicState&id=<?= $topic->getId() ?>" class="topic-state"><h2>Statut : <?= $state ?></h2></a>
+    <?php endif; ?>
+
+    <?php if ($topic->isClosed() == 0): ?>
+        <?php if (Session::getUser()): ?>
+            <div class="reply-form-container">
+                <div class="form-header">
+                    <h2>Ajoutez une réponse :</h2>
                 </div>
-
                 <form id="form-content" action="index.php?ctrl=topic&action=createPost&id=<?= $topic->getId() ?>" method="post">
-                    <label for="content">contenu :</label>
+                    <label for="content">Contenu :</label>
                     <textarea id="content" type="text" name="content" cols="60" rows="5"></textarea>
                     <?= Session::getFlash("content") ?>
-                    <button type="submit" name ="submit">soumettre</button>
+                    <button class="form-button" type="submit" name="submit">Soumettre</button>
                 </form>
             </div>
-<?php } else {
- echo "Veuilez vous connecter pour pouvoir répondre.";
-}
-        } else {
-            echo "Topic cloturé.";
-        } 
-?>
+        <?php else: ?>
+            <p>Veuillez vous connecter pour pouvoir répondre.</p>
+        <?php endif; ?>
+    <?php else: ?>
+        <p>Topic clôturé.</p>
+    <?php endif; ?>
 
-<h1>Liste des posts sous le topic : "<?= $topic->getTitle() ?>"</h1>
-
-
-<?php
-        if (!empty($posts)) {
-        foreach($posts as $post ){ 
-?>
-        <p>
-        <?= $post->getContent() ?> par <?= $post->getUser() ?> 
-
-<?php
-        if(Session::getUser() && ((Session::isAdmin()) || (Session::getUser()->getId() == $topic->getUser()->getId()))){
-?>
-            <a href="index.php?ctrl=topic&action=deletePost&id=<?= $post->getId() ?>">supprimer</a> 
-            <a href="index.php?ctrl=topic&action=updatePostForm&id=<?= $post->getId() ?>">modifier</a>
-<?php 
-        }
-?>
-        </p>
-<?php       } 
-        } else {
-            echo "<p>Soyez le premier à repondre !</p>";
-        }
-?>
+    <div class="replies-container">
+        <?php if (!empty($posts)): ?>
+            <?php foreach($posts as $post ): ?>
+                <div class="post">
+                    <p class="post-content"><?= $post->getContent() ?> par <span class="post-user"><?= $post->getUser() ?></span></p>
+                    <?php if(Session::getUser() && ((Session::isAdmin()) || (Session::getUser()->getId() == $topic->getUser()->getId()))): ?>
+                        <a href="index.php?ctrl=topic&action=deletePost&id=<?= $post->getId() ?>" class="delete-post">Supprimer</a> 
+                        <a href="index.php?ctrl=topic&action=updatePostForm&id=<?= $post->getId() ?>" class="update-post">Modifier</a>
+                    <?php endif; ?>
+                </div>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <p>Soyez le premier à répondre !</p>
+        <?php endif; ?>
+    </div>
+</div>
 
 
 

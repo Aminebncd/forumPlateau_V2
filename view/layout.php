@@ -25,45 +25,79 @@
                 <h3 class="message" style="color: green"><?= App\Session::getFlash("success") ?></h3>
 
                 <header>
-                    <nav class="navbar">
-                        <div class="navContainer">
-                            <a class="navbar-brand" href="index.php?ctrl=home">Accueil</a>
-                            <div class="navbar-header">
-                                <button class="navbar-toggler" id="navbar-toggler">
-                                    <span class="navbar-toggler-icon">&#9776;</span>
-                                </button>
-                            </div>
-                            <div class="sidebar" id="sidebar">
-                                <ul class="navbar-nav">
-                                    <?php if (App\Session::getUser()): ?>
+    <nav class="navbar">
+        <div class="navContainer">
+            <a class="navbar-brand" href="index.php?ctrl=home">Accueil</a>
+            <div class="navbar-header">
+                <button class="navbar-toggler" id="navbar-toggler">
+                    <span class="navbar-toggler-icon">&#9776;</span>
+                </button>
+            </div>
+            <div class="sidebar" id="sidebar">
+                <ul class="navbar-nav">
 
-                                    <li><a href="index.php?ctrl=user&action=whoIsThisUser&id=<?= App\Session::getUser()->getId() ?>"><span class="fas fa-user"></span>&nbsp;<?= App\Session::getUser()->getPseudo() ?></a></li>
-                                    <li><a href="index.php?ctrl=tag&action=listCategories">Liste des catégories</a></li>
-                                    <li><a href="index.php?ctrl=tag&action=listSubCategories">Liste des sous-catégories</a></li>
-                                    <li><a href="index.php?ctrl=topic&action=listTopics">Liste des Topics</a></li>
-
-                                    <?php if (App\Session::isAdmin()): ?>
-
-                                    <li><a href="index.php?ctrl=user&action=listUsers">Liste des utilisateurs</a></li>
-
-                                    <?php endif; ?>
-                                    
-                                    <li><a href="index.php?ctrl=security&action=logout">Déconnexion</a></li>
-
-                                    <?php else: ?>
-
-                                    <li><a href="index.php?ctrl=security&action=loginForm">Connexion</a></li>
-                                    <li><a href="index.php?ctrl=security&action=registerForm">Inscription</a></li>
-
-                                    <?php endif; ?>
-                                </ul>
-                            </div>
-                            </div>
-                                <div class="sidebar-mask" id="sidebar-mask"></div>
-                            </div>
+                    <!-- Liens pour l'utilisateur connecté -->
+                    <?php if (App\Session::getUser()): ?>
+                        <div class="link-group user">
+                            <li>
+                                <a href="index.php?ctrl=user&action=whoIsThisUser&id=<?= App\Session::getUser()->getId() ?>">
+                                    <span class="navPic"><?= App\Session::getUser()->showProfilePictureNav() ?></span>
+                                    <?= App\Session::getUser()->getPseudo() ?>
+                                </a>
+                            </li>
                         </div>
-                    </nav>
-                </header>
+
+                        <div class="link-group">
+                            <li><a href="index.php?ctrl=topic&action=listTopics">Liste des Topics</a></li>
+                        </div>
+                        <div class="link-group">
+                            <li><a href="index.php?ctrl=tag&action=listCategories">Liste des catégories</a>
+                                <ul class="subLinks">
+                                    <li><a href="index.php?ctrl=topic&action=listTopicsByCategory&id=1" class="category-link">Bloodborne</a></li>
+                                    <li><a href="index.php?ctrl=topic&action=listTopicsByCategory&id=2" class="category-link">Elden Ring</a></li>
+                                    <li><a href="index.php?ctrl=topic&action=listTopicsByCategory&id=3" class="category-link">Sekiro</a></li>
+                                </ul>
+                            </li>
+                            </div>
+                            <div class="link-group">
+                            <li><a href="index.php?ctrl=tag&action=listSubCategories">Liste des sous-catégories</a>
+                                <ul class="subLinks">
+                                    <li><a href="index.php?ctrl=topic&action=listTopicsBySubCategory&id=1" class="category-link">Guide</a></li>
+                                    <li><a href="index.php?ctrl=topic&action=listTopicsBySubCategory&id=2" class="category-link">Humour</a></li>
+                                    <li><a href="index.php?ctrl=topic&action=listTopicsBySubCategory&id=3" class="category-link">Hype</a></li>
+                                    <li><a href="index.php?ctrl=topic&action=listTopicsBySubCategory&id=4" class="category-link">Discussion & Info</a></li>
+                                    <li><a href="index.php?ctrl=topic&action=listTopicsBySubCategory&id=5" class="category-link">Aide</a></li>
+                                    <li><a href="index.php?ctrl=topic&action=listTopicsBySubCategory&id=6" class="category-link">Speculation</a></li>
+                                </ul>
+                            </li>
+                        </div>
+                        
+
+                        <!-- Pour les administrateurs -->
+                        <?php if (App\Session::isAdmin()): ?>
+                            <div class="link-group">
+                                <li><a href="index.php?ctrl=user&action=listUsers">Liste des utilisateurs</a></li>
+                            </div>
+                        <?php endif; ?>
+                        <div class="link-group">
+                            <li><a href="index.php?ctrl=security&action=logout">Déconnexion</a></li>
+                        </div>
+
+                    <!-- Pour les utilisateurs non connectés -->
+                    <?php else: ?>
+                        <div class="link-group">
+                            <li><a href="index.php?ctrl=security&action=loginForm">Connexion</a></li>
+                            <li><a href="index.php?ctrl=security&action=registerForm">Inscription</a></li>
+                        </div>
+                    <?php endif; ?>
+                </ul>
+            </div>
+        </div>
+        <!-- Masque de la barre latérale pour l'effet d'assombrissement -->
+        <div class="sidebar-mask" id="sidebar-mask"></div>
+    </nav>
+</header>
+
 
 
 
@@ -75,9 +109,8 @@
     <div class="footer-content">
         <div class="footer-links">
             <a href="#">Accueil</a>
-            <a href="#">LinkedIn</a>
-            <a href="#">Github</a>
-            <a href="#">Contact</a>
+            <a href="https://www.linkedin.com/feed/?trk=seo-authwall-base_sign-in-submit">LinkedIn</a>
+            <a href="https://github.com/Aminebncd">Github</a>
         </div>
         <div class="footer-info">
             <p>&copy; <?= date_create("now")->format("Y") ?> - AmineBncd@ElanFormation - <a href="#">Règlement du forum</a> - <a href="#">Mentions légales</a></p>
@@ -95,7 +128,7 @@
             crossorigin="anonymous">
         </script>
 
-        <script>
+        <!-- <script>
             $(document).ready(function(){
                 $(".message").each(function(){
                     if($(this).text().length > 0){
@@ -122,7 +155,7 @@
                     content_css: '//www.tiny.cloud/css/codepen.min.css'
                 });
             })
-        </script>
+        </script> -->
 
         <script src="<?= PUBLIC_DIR ?>js/script.js"></script>
 

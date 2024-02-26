@@ -3,7 +3,7 @@ use App\Session;
 
 ?>
 
-<form class="login-form" action="index.php?ctrl=security&action=login" method="post">
+<form class="form" action="index.php?ctrl=security&action=login" method="post">
     <h2>Connexion</h2>
     <div class="form-group">
         <label for="pseudo">Pseudo :</label>
@@ -14,7 +14,7 @@ use App\Session;
         <input type="password" id="motDePasse" name="motDePasse" required>
     </div>
     <div class="form-group">
-        <button type="submit" name="submit">Connexion</button>
+        <button class="form-button" type="submit" name="submit">Connexion</button>
     </div>
 </form>
 

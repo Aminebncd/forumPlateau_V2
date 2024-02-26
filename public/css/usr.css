@@ -1,16 +1,32 @@
 
 
-.login-form {
-    max-width: 400px;
+.form {
+    max-width: 80vw;
     margin: 0 auto;
-    padding: 20px;
+    padding: 40px;
     border: 1px solid #101d385a;
-    border-radius: 5px;
+    border-radius: 15px;
     background-color: #00000059;
+    margin-bottom: 20px;
+     
     h2 {
         background-color: #00000000;
     }
-    margin-bottom: 20px;
+
+    ul, 
+    li {
+        background-color: #00000034;
+    }
+    
+    p {
+        background-color: #00000052;
+        padding-top: 15px;
+        padding-bottom: 10px;
+    }
+    a {
+        background-color: #00000034;
+    }
+
 }
 
 .form-group {
@@ -20,7 +36,6 @@
 label {
     display: block;
     margin-bottom: 5px;
-    background-color: #00000059;
 }
 
 input[type="text"],
@@ -33,7 +48,7 @@ input[type="password"] {
     box-sizing: border-box;
 }
 
-button {
+.form-button {
     width: 100%;
     padding: 10px;
     border: none;
@@ -43,7 +58,7 @@ button {
     cursor: pointer;
 }
 
-button:hover {
+.form-button:hover {
     background-color: #0056b3;
 }
 
@@ -64,26 +79,7 @@ button:hover {
 
 
 
-.register-form {
-    max-width: 500px;
-    margin: 0 auto;
-    padding: 40px;
-    border: 1px solid #101d385a;
-    border-radius: 15px;
-    background-color: #00000059;
-     
-    ul, 
-    li {
-        background-color: #00000034;
-    }
-    
-    p {
-        background-color: #00000052;
-        padding-top: 15px;
-        padding-bottom: 10px;
-    }
 
-}
 
 
 

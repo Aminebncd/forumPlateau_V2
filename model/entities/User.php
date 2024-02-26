@@ -134,6 +134,17 @@ final class User extends Entity{
         </figure>
         ";
     }
+
+    public function showProfilePictureNav() {
+        $picture = $this->getProfilePic();
+        
+        
+        echo "
+        <figure class='figUser'>
+            <img src='./public/img/uploads/$picture' alt='$picture' class='navPic' >
+        </figure>
+        ";
+    }
     
     public function __toString() {
         return $this->pseudo;

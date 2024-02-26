@@ -5,7 +5,7 @@
 * {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
+    /* box-sizing: border-box; */
     background-color: #1A1D28;
     color: aliceblue;
     font-size: 20px;
@@ -14,12 +14,14 @@
 }
 
 h1 {
+    margin-top: 100px;
     color: rgb(255, 255, 255);
     font-size: 35px;
+    margin-bottom: 50px;
 }
 
 #wrapper {
-    padding: 30px;
+    /* padding: 30px; */
 
 }
 
@@ -48,24 +50,33 @@ form {
 }
 
 /* NAVBAR */
+
+
+
 .navbar {
     /* background-color: #1869bb; */
-    padding: 10px 0;
+    background-color: #262D34;
+    padding: 10px 20px;
+    /* width: 100vw; */
 }
 
 .navbar-header {
-   display: flex;
+    background-color: #262D34;
+    display: flex;
     padding: 10px 0;
     
 }
 
 .navContainer {
+    background-color: #262D34;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    
 }
 
 .navbar-brand {
+    background-color: #262D34;
     font-size: 1.5rem;
     font-weight: bold;
     text-decoration: none;
@@ -78,6 +89,7 @@ form {
 }
 
 .navbar-toggler .navbar-toggler-icon {
+    background-color: #262D34;
     font-size: 1.8rem;
 }
 
@@ -86,7 +98,7 @@ form {
     position: fixed;
     top: 0px;
     right: -500px; /* Rétracté par défaut */
-    /* width: 35%; */
+    width: 35vw;
     height: 100%;
     transition: right 0.5s ease; /* Animation de transition */
     z-index: 1000; /* Assure que la sidebar apparaît au-dessus de tout le contenu */
@@ -98,9 +110,28 @@ form {
     text-align: end;
 }
 
+.link-group {
+    background-color: #262D34;
+    padding: 15px;
+    margin: 10px 0 10px;
+    border-radius: 10px;
+    ul,
+    li,
+    a {
+        background-color: #262D34;
+    }
+    .subLinks {
+        
+        margin-top: 10px;
+    }
+    .category-link {
+        font-size: 20px;
+    }
+}
+
 .sidebar ul {
     list-style-type: none;
-    padding-top: 100px;
+    /* padding-top: 100px; */
 }
 
 .sidebar ul li {
@@ -110,29 +141,49 @@ form {
 .sidebar ul li a {
     color: #fff;
     text-decoration: none;
-    font-size: 18px;
+    font-size: 25px;
+
+    
 }
 
 .sidebar ul li a:hover {
     color: #007bff;
 }
 
+.user {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.figUser {
+    background-color: #262D34;
+}
+.navPic {
+    background-color: #262D34;
+    width: 50px;
+    height: auto;
+    border-radius: 50%;
+}
+
+
 .show {
     display: flex;
-    
+    justify-content: flex-end;
 }
 
 .sidebar-mask {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%; /* Couvrir toute la largeur de la page */
-    height: 100%; /* Couvrir toute la hauteur de la page */
-    background-color: rgba(0, 0, 0, 0.5); /* Couleur de fond semi-transparente */
-    z-index: 999; /* Assure que le masque apparaît en-dessous de la sidebar mais au-dessus du contenu */
-    display: none; /* Masqué par défaut */
-    
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    display: none;
+    backdrop-filter: blur(5px); /* Effet de flou */
 }
+
 
 .sidebar-mask.show {
     display: block; /* Afficher le masque lorsque la sidebar est ouverte */
