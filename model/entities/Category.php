@@ -89,4 +89,24 @@ final class Category extends Entity{
         </figure>
         ";
     }
+
+    public function colorTag() {
+        $name = $this->getName();
+        
+        switch ($name) {
+            case 'Bloodborne':
+                $classTag = "BB";
+                break;
+            case 'Elden Ring':
+                $classTag = "ER";
+                break;                
+            case 'Sekiro':
+                $classTag = "SK";
+                break;                
+        }
+        
+        echo "
+        <p class='$classTag'>$name<p>
+        ";
+    }
 }

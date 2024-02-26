@@ -145,6 +145,17 @@ final class User extends Entity{
         </figure>
         ";
     }
+
+    public function showProfilePicturePost() {
+        $picture = $this->getProfilePic();
+        
+        
+        echo "
+        <figure class='figUserPost'>
+            <img src='./public/img/uploads/$picture' alt='$picture' class='postPic' >
+        </figure>
+        ";
+    }
     
     public function __toString() {
         return $this->pseudo;

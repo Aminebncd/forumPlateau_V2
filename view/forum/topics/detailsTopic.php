@@ -38,9 +38,9 @@ use App\Session;
                 </div>
                 <form id="form-content" action="index.php?ctrl=topic&action=createPost&id=<?= $topic->getId() ?>" method="post">
                     <label for="content">Contenu :</label>
-                    <textarea id="content" type="text" name="content" cols="60" rows="5"></textarea>
+                    <textarea id="content" type="text" name="content" cols="60" rows="3"></textarea>
                     <?= Session::getFlash("content") ?>
-                    <button class="form-button" type="submit" name="submit">Soumettre</button>
+                    <button class="form-button" type="submit" name="submit">répondre</button>
                 </form>
             </div>
         <?php else: ?>
@@ -51,20 +51,44 @@ use App\Session;
     <?php endif; ?>
 
     <div class="replies-container">
-        <?php if (!empty($posts)): ?>
-            <?php foreach($posts as $post ): ?>
-                <div class="post">
-                    <p class="post-content"><?= $post->getContent() ?> par <span class="post-user"><?= $post->getUser() ?></span></p>
-                    <?php if(Session::getUser() && ((Session::isAdmin()) || (Session::getUser()->getId() == $topic->getUser()->getId()))): ?>
+    <?php if (!empty($posts)): ?>
+        <?php foreach($posts as $post ): ?>
+            <div class="post">
+                <div class="upper-post">
+                    <div class="user-profile">
+    
+                        <?= $post->getUser()->showProfilePicturePost() ?>
+    
+                        <div class="user-info">
+                            <span class="user-name"><?= $post->getUser()->getPseudo() ?></span>
+                            <span class="user-name"><?= $post->getDateCreation()->format('d/m h:i') ?></span>
+                        </div>  
+    
+                        
+                    </div>
+                    <?php if(Session::getUser() && ((Session::isAdmin()) || (Session::getUser()->getId() == $post->getUser()->getId()))): ?>
+    
+                    <div class="post-actions">
                         <a href="index.php?ctrl=topic&action=deletePost&id=<?= $post->getId() ?>" class="delete-post">Supprimer</a> 
                         <a href="index.php?ctrl=topic&action=updatePostForm&id=<?= $post->getId() ?>" class="update-post">Modifier</a>
+                    </div>
+                    
                     <?php endif; ?>
                 </div>
-            <?php endforeach; ?>
-        <?php else: ?>
-            <p>Soyez le premier à répondre !</p>
-        <?php endif; ?>
-    </div>
+
+                <div class="separator"></div>
+
+                <div class="post-content">
+                    <p><?= $post->getContent() ?></p>
+                </div>
+                
+            </div>
+        <?php endforeach; ?>
+    <?php else: ?>
+        <p>Soyez le premier à répondre !</p>
+    <?php endif; ?>
+</div>
+
 </div>
 
 

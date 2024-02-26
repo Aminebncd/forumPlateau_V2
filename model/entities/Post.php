@@ -13,7 +13,7 @@ final class Post extends Entity{
     private $content;
     private $topic;
     private $user;
-    private $creationDate;
+    private $dateCreation;
     
 
     public function __construct($data){         
@@ -90,5 +90,24 @@ final class Post extends Entity{
 
     public function __toString(){
         return $this->content;
+    }
+    /**
+     * Get the value of category
+     */ 
+    public function getDateCreation()
+    {
+        $formattedDate = $this->dateCreation;
+        return $formattedDate;
+    }
+
+    /**
+     * Set the value of closed
+     *
+     * @return  self
+     */ 
+    public function setDateCreation($date)
+    {
+        $this->dateCreation = new \DateTime($date);
+        return $this;
     }
 }

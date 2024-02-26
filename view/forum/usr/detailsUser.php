@@ -8,7 +8,13 @@ $posts = $result["data"]['posts'];
 
 
 <header id="myProfile">
-    <h1>Profil de <?= $user->getPseudo() ?></h1>
+    <div class="profile-header">
+        <h1>Profil de <?= $user->getPseudo() ?></h1>
+        <?php if((Session::isAdmin()) || (Session::getUser()->getId() == $user->getId())): ?>
+            <span class="role"><?= $user->getRole() ?></span>
+        <?php endif; ?>
+        
+    </div>
     <div class="profile-picture">
         <?= $user->showProfilePicture() ?>
     </div>
@@ -32,11 +38,11 @@ $posts = $result["data"]['posts'];
     </section>
 
     <section class="posts-section">
-        <h2>Liste des posts :</h2>
+        <h2>Liste des réponses :</h2>
         <?php if (!empty($posts)): ?>
             <ul class="post-list">
                 <?php foreach ($posts as $post): ?>
-                    <li><?= $post->getContent() ?></li>
+                    <li><?= $post->getContent() ?> (<a href="index.php?ctrl=topic&action=listPostByTopic&id=<?= $post->getTopic()->getId() ?>"><?= $post->getTopic()->getTitle() ?></a>)</li>
                 <?php endforeach; ?>
             </ul>
         <?php else: ?>
@@ -44,3 +50,4 @@ $posts = $result["data"]['posts'];
         <?php endif; ?>
     </section>
 </main>
+

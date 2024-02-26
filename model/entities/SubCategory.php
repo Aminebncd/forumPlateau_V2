@@ -59,5 +59,34 @@ final class SubCategory extends Entity{
         return $this->name;
     }
 
+    public function colorSubTag() {
+        $name = $this->getName();
+        
+        switch ($name) {
+            case 'Guide':
+                $classSubTag = "Guide";
+                break;
+            case 'Humour':
+                $classSubTag = "Humour";
+                break;                
+            case 'Hype':
+                $classSubTag = "Hype";
+                break;                
+            case 'Discussion & Info':
+                $classSubTag = "Discuss";
+                break;
+            case 'Aide':
+                $classSubTag = "Aide";
+                break;                
+            case 'Speculation':
+                $classSubTag = "Speculation";
+                break;                
+        }
+        
+        echo "
+        <p class='$classSubTag'>$name<p>
+        ";
+    }
+
 
 }

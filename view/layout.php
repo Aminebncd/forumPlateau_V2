@@ -89,6 +89,30 @@
                             <li><a href="index.php?ctrl=security&action=loginForm">Connexion</a></li>
                             <li><a href="index.php?ctrl=security&action=registerForm">Inscription</a></li>
                         </div>
+                        <div class="link-group">
+                            <li><a href="index.php?ctrl=topic&action=listTopics">Liste des Topics</a></li>
+                        </div>
+                        <div class="link-group">
+                            <li><a href="index.php?ctrl=tag&action=listCategories">Liste des catégories</a>
+                                <ul class="subLinks">
+                                    <li><a href="index.php?ctrl=topic&action=listTopicsByCategory&id=1" class="category-link">Bloodborne</a></li>
+                                    <li><a href="index.php?ctrl=topic&action=listTopicsByCategory&id=2" class="category-link">Elden Ring</a></li>
+                                    <li><a href="index.php?ctrl=topic&action=listTopicsByCategory&id=3" class="category-link">Sekiro</a></li>
+                                </ul>
+                            </li>
+                            </div>
+                            <div class="link-group">
+                            <li><a href="index.php?ctrl=tag&action=listSubCategories">Liste des sous-catégories</a>
+                                <ul class="subLinks">
+                                    <li><a href="index.php?ctrl=topic&action=listTopicsBySubCategory&id=1" class="category-link">Guide</a></li>
+                                    <li><a href="index.php?ctrl=topic&action=listTopicsBySubCategory&id=2" class="category-link">Humour</a></li>
+                                    <li><a href="index.php?ctrl=topic&action=listTopicsBySubCategory&id=3" class="category-link">Hype</a></li>
+                                    <li><a href="index.php?ctrl=topic&action=listTopicsBySubCategory&id=4" class="category-link">Discussion & Info</a></li>
+                                    <li><a href="index.php?ctrl=topic&action=listTopicsBySubCategory&id=5" class="category-link">Aide</a></li>
+                                    <li><a href="index.php?ctrl=topic&action=listTopicsBySubCategory&id=6" class="category-link">Speculation</a></li>
+                                </ul>
+                            </li>
+                        </div>
                     <?php endif; ?>
                 </ul>
             </div>
