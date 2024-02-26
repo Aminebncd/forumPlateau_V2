@@ -10,8 +10,8 @@ $topics = $result["data"]['topics'];
 <main id="home">
     <div class="mainContainer">
         <h1>Bienvenue sur Mon Forum</h1>
-        <p>Un espace de discussions et de partage pour tous les passionnés.</p>
-        <a href="#" class="btn-primary">Commencer</a>
+        <p>Un espace de discussions et de partage pour tous les passionnés de l'univers From SoftWare.</p>
+        
     </div>
 
     <a href="index.php?ctrl=topic&action=createTopicForm" class="add-topic-btn">Ajouter un topic</a>

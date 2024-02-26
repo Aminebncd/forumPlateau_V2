@@ -128,20 +128,31 @@ class TopicController extends AbstractController implements ControllerInterface{
 
     // TOPICS
     public function createTopicForm() { 
-        $subCategoryManager = new subCategoryManager();
-        $subCategories = $subCategoryManager->findAll();
-        $categoryManager = new categoryManager();
-        $categories = $categoryManager->findAll();
-        
-            return [
-                "view" => VIEW_DIR."forum/topics/createTopic.php",
-                "data" => [
-                    "title" => "Topic creation",
-                    "subCategories" => $subCategories,
-                    "categories" => $categories
-                ],
-                // "meta_description" => "creation form used to create topics"
-            ];
+        if (Session::getUser()) {
+            $subCategoryManager = new subCategoryManager();
+            $subCategories = $subCategoryManager->findAll();
+            $categoryManager = new categoryManager();
+            $categories = $categoryManager->findAll();
+            
+                return [
+                    "view" => VIEW_DIR."forum/topics/createTopic.php",
+                    "data" => [
+                        "title" => "Topic creation",
+                        "subCategories" => $subCategories,
+                        "categories" => $categories
+                    ],
+                    // "meta_description" => "creation form used to create topics"
+                ];
+
+            } else {
+                return [
+                    "view" => VIEW_DIR."security/register.php",
+                    "data" => [
+                        "title" => "Topic creation"
+                    ],
+                    // "meta_description" => "creation form used to create topics"
+                ];    
+        }
     }
 
     public function createTopic() {
@@ -300,23 +311,30 @@ class TopicController extends AbstractController implements ControllerInterface{
              && !preg_match("/^[a-zA-Z0-9]$/", $title)) {
 
                 $dataTopic = [
+                    "id_topic" => $id,
                     "title" => $title,
+                    "dateCreation" => $topic->getDateCreation()->format('d/m/Y H:i:s'),
+                    "closed" => $topic->isClosed(),
                     "subCategory_id" => $subCategory_id,
-                    "category_id" => $category_id, 
+                    "category_id" => $category_id,
+                    "user_id" => $topic->getUser()
                 ];
+ 
                 
                 $topicManager->update($dataTopic);
-                $this->redirectTo("topic", "detailsTopic", $topic->getId());
+
+                // $this->redirectTo("topics", "detailsTopic", $topic->getId());
                 return [
                     "view" => VIEW_DIR."forum/topics/detailsTopic.php",
                     "data" => [
                         "title" => "Topic",
                         "topic" => $topic,
-                        "subCategories" => $subCategories
+                        "posts" => $posts
                     ],
                 ];
-            }      
-            $this->redirectTo("topic", "updateTopic", $topic->getId());
+            }    
+
+            // $this->redirectTo("topics", "updateTopic", $topic->getId());
             return [
                 "view" => VIEW_DIR."forum/topics/updateTopic.php",
                 "data" => [
@@ -413,7 +431,7 @@ class TopicController extends AbstractController implements ControllerInterface{
         // var_dump($topic);die;
 
         if(!$topic) {
-            $this->redirectTo("security", "index");
+            $this->redirectTo("home");
         }
 
         if (isset($_POST["submit"])) {
@@ -423,20 +441,20 @@ class TopicController extends AbstractController implements ControllerInterface{
             $content = trim(filter_input(INPUT_POST, "content", FILTER_SANITIZE_FULL_SPECIAL_CHARS));
             $topic_id = $id;
             $user_id = Session::getUser()->getId();
-            $dateCreation = new \DateTime();
-                $formattedDateCreation = $dateCreation->format('Y-m-d H:i:s');
+            // $dateCreation = new \DateTime();
+            //     $formattedDateCreation = $dateCreation->format('Y-m-d H:i:s');
 
             if(empty($content)) {
                 Session::addFlash("content", "This field is mandatory!");
                 $errorCheck = true;
             }
             
-            if(!$errorCheck && !preg_match("/^[a-zA-Z0-9]{5,}$/", $content)) {
+            if(!$errorCheck && !preg_match("/^[a-zA-Z0-9]$/", $content)) {
                 $data = [
                     "content" => $content,
                     "topic_id" => $topic_id,
-                    "user_id" => $user_id,
-                    "dateCreation" => $formattedDateCreation
+                    "user_id" => $user_id
+                    // "dateCreation" => $formattedDateCreation
                 ];
                 $success = $postManager->add($data);
             }
