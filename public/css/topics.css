@@ -29,11 +29,11 @@
     color: #fff;
     text-decoration: none;
     border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
 }
 
 .topics-list {
-    /* margin-top: 20px; */
-    border-radius: 15px 15px 0 0;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
 }
 
 .topic {
@@ -47,6 +47,9 @@
     justify-content: space-between;
 }
 
+.first-topic {
+    border-radius: 15px 15px 0 0; /* Bords arrondis uniquement pour le premier topic */
+}
 
 
 .topic-header {
@@ -67,7 +70,7 @@
 .topic-details {
     /* display: flex; */
     font-size: 0.9rem;
-    width: 200px;
+    width: 220px;
     color: #555;
     .topic-author,
     .topic-category,
@@ -77,90 +80,161 @@
     .BB a {
         display: flex;
         justify-content: center;
-        padding: 5px;
+        /* padding: 5px; */
         border-radius: 5px;
-        background-color: #021526;
-        color: #87a4c7;
-        width: 55%;
+        background-color: #002240;
+        color: #9dc9ff;
+        width: 120px;
+        height: 35px;
+        align-items: center;
+        /* margin-top: 5px; */
+        /* border: 1px solid rgb(0, 13, 39); */
     }
     .ER a {
         display: flex;
         justify-content: center;
-        padding: 5px;
+        /* padding: 5px; */
         border-radius: 5px;
-        background-color: #20170b;
-        color: #d9c149;
-        width: 55%;
+        background-color: #321c00;
+        color: #ffe562;
+        width: 110px;
+        height: 35px;
+        align-items: center;
+        /* margin-top: 5px; */
     }
     .SK a {
         display: flex;
         justify-content: center;
-        padding: 5px;
+        /* padding: 5px; */
         border-radius: 5px;
-        background-color: #400707;
-        color: #d78383;
-        width: 55%;
+        background-color: #5e0000;
+        color: #ff9999;
+        width: 80px;
+        height: 35px;
+        align-items: center;
+        /* margin-top: 5px; */
+    }
+    .BB  {
+        display: flex;
+        justify-content: center;
+        /* padding: 5px; */
+        border-radius: 5px;
+        background-color: #002240;
+        color: #9dc9ff;
+        width: 120px;
+        height: 35px;
+        align-items: center;
+        /* margin-top: 5px; */
+      
+    }
+    .ER  {
+        display: flex;
+        justify-content: center;
+        /* padding: 5px; */
+        border-radius: 5px;
+        background-color: #321c00;
+        color: #ffe562;
+        width: 110px;
+        height: 35px;
+        align-items: center;
+
+        /* margin-top: 5px; */
+      
+    }
+    .SK  {
+        display: flex;
+        justify-content: center;
+        /* padding: 5px; */
+        border-radius: 5px;
+        background-color: #5e0000;
+        color: #ff9999;
+        width: 80px;
+        height: 35px;
+        align-items: center;
+        /* margin-top: 5px; */
     }
 
     .Guide {
         display: flex;
         justify-content: center;
-        padding: 5px;
-        background-color: #000000d3;
+        /* padding: 5px; */
+        background-color: #000000;
         border-radius: 5px;
-        width: 55%;
+        width: 70px;
+        height: 35px;
         color: #61e06f;
+        align-items: center;
     }
     .Humour{
         display: flex;
         justify-content: center;
-        padding: 5px;
-        background-color: #000000d3;
+        /* padding: 5px; */
+        background-color: #000000;
         border-radius: 5px;
-        width: 55%;
+        width: 85px;
+        height: 35px;
         color: #98c6ff;
+        align-items: center;
     }
     .Hype{
         display: flex;
         justify-content: center;
-        padding: 5px;
-        background-color: #000000d3;
+        /* padding: 5px; */
+        background-color: #000000;
         border-radius: 5px;
-        width: 55%;
+        width: 70px;
+        height: 35px;
         color: #da6b6b;
+        align-items: center;
     }
-    .Discuss{
+    .Discuss {
         display: flex;
-        justify-content: center;
-        padding: 5px;
-        background-color: #000000d3;
+        /* justify-content: center; */
+        background-color: #000000;
         border-radius: 5px;
-        width: 55%;
+        width: 80px; /* Réduire la largeur à 80px */
+        height: 35px;
         color: #e7bfe6;
+        overflow: hidden;
+        align-items: center;
+        text-overflow: ellipsis; /* Afficher les trois points de suspension en cas de dépassement */
+        white-space: nowrap; /* Empêcher le texte de se couper sur plusieurs lignes */
     }
+    
     .Aide{
         display: flex;
         justify-content: center;
-        padding: 5px;
-        background-color: #000000d3;
+        /* padding: 5px; */
+        background-color: #000000;
         border-radius: 5px;
-        width: 55%;
+        width: 70px;
+        height: 35px;
         color: #c7ce5d;
+        align-items: center;
     }
     .Speculation{
         display: flex;
         justify-content: center;
-        padding: 5px;
-        background-color: #000000d3;
+        /* padding: 5px; */
+        background-color: #000000;
         border-radius: 5px;
-        width: 55%;
+        width: 110px;
+        height: 35px;
         color: #59bbca;
+        align-items: center;
     }
 }
 
 .topic-category a {
     color: #007bff;
     text-decoration: none;
+    margin: 1px;
+}
+
+.topic-category {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 
 
@@ -183,85 +257,148 @@ une couleur de fond differente des elements impairs */
     .BB a {
         display: flex;
         justify-content: center;
-        padding: 5px;
+        /* padding: 5px; */
         border-radius: 5px;
-        background-color: #021526;
-        color: #87a4c7;
-        width: 55%;
+        background-color: #002240;
+        color: #9dc9ff;
+        width: 120px;
+        height: 35px;
+        align-items: center;
+        /* margin-top: 5px; */
     }
     .ER a {
         display: flex;
         justify-content: center;
-        padding: 5px;
+        /* padding: 5px; */
         border-radius: 5px;
-        background-color: #20170b;
-        color: #d9c149;
-        width: 55%;
+        background-color: #321c00;
+        color: #ffe562;
+        width: 110px;
+        height: 35px;
+        align-items: center;
+
+        /* margin-top: 5px; */
     }
     .SK a {
         display: flex;
         justify-content: center;
-        padding: 5px;
+        /* padding: 5px; */
         border-radius: 5px;
-        background-color: #400707;
-        color: #d78383;
-        width: 55%;
+        background-color: #5e0000;
+        color: #ff9999;
+        width: 80px;
+        height: 35px;
+        align-items: center;
+        /* margin-top: 5px; */
+    }
+    .BB  {
+        display: flex;
+        justify-content: center;
+        /* padding: 5px; */
+        border-radius: 5px;
+        background-color: #002240;
+        color: #9dc9ff;
+        width: 120px;
+        height: 35px;
+        align-items: center;
+        /* margin-top: 5px; */
+      
+    }
+    .ER  {
+        display: flex;
+        justify-content: center;
+        /* padding: 5px; */
+        border-radius: 5px;
+        background-color: #321c00;
+        color: #ffe562;
+        width: 110px;
+        height: 35px;
+        align-items: center;
+
+        /* margin-top: 5px; */
+      
+    }
+    .SK  {
+        display: flex;
+        justify-content: center;
+        /* padding: 5px; */
+        border-radius: 5px;
+        background-color: #5e0000;
+        color: #ff9999;
+        width: 80px;
+        height: 35px;
+        align-items: center;
+        /* margin-top: 5px; */
     }
 
-    
     .Guide {
         display: flex;
         justify-content: center;
-        padding: 5px;
-        background-color: #000000d3;
+        /* padding: 5px; */
+        background-color: #000000;
         border-radius: 5px;
-        width: 55%;
+        width: 70px;
+        height: 35px;
         color: #61e06f;
+        align-items: center;
     }
     .Humour{
         display: flex;
         justify-content: center;
-        padding: 5px;
-        background-color: #000000d3;
+        /* padding: 5px; */
+        background-color: #000000;
         border-radius: 5px;
-        width: 55%;
+        width: 85px;
+        height: 35px;
         color: #98c6ff;
+        align-items: center;
     }
     .Hype{
         display: flex;
         justify-content: center;
-        padding: 5px;
-        background-color: #000000d3;
+        /* padding: 5px; */
+        background-color: #000000;
         border-radius: 5px;
-        width: 55%;
+        width: 70px;
+        height: 35px;
         color: #da6b6b;
+        align-items: center;
     }
-    .Discuss{
+    .Discuss {
         display: flex;
-        justify-content: center;
-        padding: 5px;
-        background-color: #000000d3;
+        /* justify-content: center; */
+        background-color: #000000;
         border-radius: 5px;
-        width: 55%;
+        width: 80px; /* Réduire la largeur à 80px */
+        height: 35px;
         color: #e7bfe6;
+        
+        align-items: center;
+        text-overflow: ellipsis; /* Afficher les trois points de suspension en cas de dépassement */
+        white-space: nowrap; /* Empêcher le texte de se couper sur plusieurs lignes */
     }
+    
     .Aide{
         display: flex;
         justify-content: center;
-        padding: 5px;
-        background-color: #000000d3;
+        /* padding: 5px; */
+        background-color: #000000;
         border-radius: 5px;
-        width: 55%;
+        width: 70px;
+        height: 35px;
         color: #c7ce5d;
+        align-items: center;
     }
     .Speculation{
         display: flex;
         justify-content: center;
-        padding: 5px;
-        background-color: #000000d3;
+        /* padding: 5px; */
+        background-color: #000000;
         border-radius: 5px;
-        width: 55%;
+        width: 110px;
+        height: 35px;
         color: #59bbca;
+        align-items: center;
     }
 }
 
@@ -382,6 +519,11 @@ textarea {
 
 .user-name{
     background-color: #1a232c;
+}
+.post-date{
+    background-color: #1a232c;
+    color: #a8a8a8;
+    font-size: 16px;
 }
 
 .post-user {

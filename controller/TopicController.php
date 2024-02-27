@@ -251,26 +251,37 @@ class TopicController extends AbstractController implements ControllerInterface{
     }
 
     public function updateTopicForm($id) {
-
         $topicManager = new TopicManager;
         $topic = $topicManager->findOneById($id);
 
-        $subCategoryManager = new subCategoryManager();
-        $subCategories = $subCategoryManager->findAll();
+        if (Session::getUser()) {
 
-        $categoryManager = new categoryManager();
-        $categories = $categoryManager->findAll();
-        
-        return [
-            "view" => VIEW_DIR."forum/topics/updateTopic.php",
-            "data" => [
-                "title" => "Topic update",
-                "topic" => $topic,
-                "subCategories" => $subCategories,
-                "categories" => $categories
-            ],
-            "meta" => "update an existing topic"
-        ];
+            if ((Session::isAdmin()) 
+             || (Session::getUser()->getId() == $topic->getUser()->getId())) {
+                $subCategoryManager = new subCategoryManager();
+                $subCategories = $subCategoryManager->findAll();
+
+                $categoryManager = new categoryManager();
+                $categories = $categoryManager->findAll();
+                
+                return [
+                    "view" => VIEW_DIR."forum/topics/updateTopic.php",
+                    "data" => [
+                        "title" => "Topic update",
+                        "topic" => $topic,
+                        "subCategories" => $subCategories,
+                        "categories" => $categories
+                    ],
+                    "meta" => "update an existing topic"
+                ];
+            }
+        } else {
+            Session::addFlash('stop', "Ce n'est pas ton topic désolé.");
+            return [
+                "view" => VIEW_DIR."security/stop.php",
+                
+            ];
+        }
     }
 
     public function updateTopic($id) {
@@ -351,41 +362,51 @@ class TopicController extends AbstractController implements ControllerInterface{
 
 
     public function topicState($id) {
-        $topicManager = new TopicManager();
-        $topic = $topicManager->findOneById($id);
 
-        $postManager = new PostManager();
-        $posts = $postManager->findPostsByTopic($id);
+        if (Session::isAdmin()){
 
-        $state = $topic->isClosed();
-
-        if ($state == 1) {
-            $topic->setClosed(0);
+            $topicManager = new TopicManager();
+            $topic = $topicManager->findOneById($id);
+    
+            $postManager = new PostManager();
+            $posts = $postManager->findPostsByTopic($id);
+    
+            $state = $topic->isClosed();
+    
+            if ($state == 1) {
+                $topic->setClosed(0);
+            } else {
+                $topic->setClosed(1);
+            }
+    
+            $dataTopic = [
+                "id" => $id,
+                "closed" => $topic->isClosed()
+            ];
+    
+            $topicManager->update($dataTopic);
+            $state = $topic->isClosed();
+            // var_dump($topic->isClosed());
+            // var_dump($topic->isClosed($id));
+    
+            return [
+                "view" => VIEW_DIR."forum/topics/detailsTopic.php",
+                "data" => [
+                    "title" => "Topic update",
+                    "topic" => $topic,
+                    'posts' => $posts
+                ],
+                "meta" => "update an existing topic"
+            ];
+    
+            $this->redirectTo("topic", "detailsTopic, $id");
         } else {
-            $topic->setClosed(1);
+            Session::addFlash('stop', "tu n'as pas les droits pour faire ça mon coco");
+            return [
+                "view" => VIEW_DIR."security/stop.php",
+                
+            ];
         }
-
-        $dataTopic = [
-            "id" => $id,
-            "closed" => $topic->isClosed()
-        ];
-
-        $topicManager->update($dataTopic);
-        $state = $topic->isClosed();
-        // var_dump($topic->isClosed());
-        // var_dump($topic->isClosed($id));
-
-        return [
-            "view" => VIEW_DIR."forum/topics/detailsTopic.php",
-            "data" => [
-                "title" => "Topic update",
-                "topic" => $topic,
-                'posts' => $posts
-            ],
-            "meta" => "update an existing topic"
-        ];
-
-        $this->redirectTo("topic", "detailsTopic, $id");
     }
 
     public function deleteTopic($id) {

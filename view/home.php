@@ -24,22 +24,29 @@ if (!empty($topics)) {
         <?php 
         $count = 0; // Initialisation du compteur 
         foreach ($topics as $topic): ?>
-            <div class="topic <?= ($count % 2 == 0) ? 'even' : 'odd'; ?>">
+            <div class="topic <?= ($count === 0) ? 'first-topic' : ''; ?>">
                 <?php $count++; // Incrémentation du compteur ?>
+
                 <div class="topic-header">
                     <a href="index.php?ctrl=topic&action=listPostByTopic&id=<?= $topic->getId() ?>" class="topic-title"><?= $topic->getTitle() ?></a>
                 </div>
+
                 <div class="topic-details">
                     <div class="topic-category">
-                        <a href="index.php?ctrl=topic&action=listTopicsBySubCategory&id=<?= $topic->getSubCategory()->getId() ?>"><?= $topic->getSubCategory() ?></a> 
-                        - 
-                        <a href="index.php?ctrl=topic&action=listTopicsByCategory&id=<?= $topic->getCategory()->getId() ?>"><?= $topic->getCategory() ?></a>
+                        <a href="index.php?ctrl=topic&action=listTopicsBySubCategory&id=<?= $topic->getSubCategory()->getId() ?>">
+                            <?= $topic->getSubCategory()->colorSubTag()?>
+                        </a> 
+                        
+                        <a href="index.php?ctrl=topic&action=listTopicsByCategory&id=<?= $topic->getCategory()->getId() ?>">
+                            <?= $topic->getCategory()->colorTag() ?>
+                        </a>
                     </div>
                     <div class="topic-author">
                         par <a href="index.php?ctrl=user&action=whoIsThisUser&id=<?= $topic->getUser()->getId() ?>"><?= $topic->getUser() ?></a>
                     </div>
                     <div class="topic-date"><?= $topic->getDateCreation()->format('d/m/Y H:i') ?></div>
                 </div>
+                
             </div>
         <?php endforeach; ?>
     </div>

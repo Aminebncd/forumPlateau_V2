@@ -17,5 +17,6 @@ use App\Session;
         <button class="form-button" type="submit" name="submit">Connexion</button>
     </div>
 </form>
+<?= Session::getFlash("error")?>
 
 <a href="index.php?ctrl=security&action=newMdpForm" class="forgot-password">Mot de passe oublié?</a>

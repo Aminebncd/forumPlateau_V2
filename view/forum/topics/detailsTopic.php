@@ -61,7 +61,7 @@ use App\Session;
     
                         <div class="user-info">
                             <span class="user-name"><?= $post->getUser()->getPseudo() ?></span>
-                            <span class="user-name"><?= $post->getDateCreation()->format('d/m h:i') ?></span>
+                            <span class="post-date"><?= $post->getDateCreation()->format('d/m h:i') ?></span>
                         </div>  
     
                         

@@ -19,6 +19,7 @@ h1 {
     color: rgb(255, 255, 255);
     font-size: 35px;
     margin-bottom: 50px;
+    text-align: center;
 }
 
 #wrapper {
@@ -56,10 +57,11 @@ form {
 
 
 .navbar {
-    /* background-color: #1869bb; */
-    background-color: #262D34;
-    padding: 10px 20px;
-    /* width: 100vw; */
+        /* background-color: #1869bb; */
+        background-color: #262D34;
+        padding: 10px 20px;
+        /* width: 100vw; */
+        box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
 }
 
 .navbar-header {
@@ -99,8 +101,9 @@ form {
 .sidebar {
     position: fixed;
     top: 0px;
-    right: -500px; /* Rétracté par défaut */
-    width: 35vw;
+    right: -1000px; /* Rétracté par défaut */
+    width: 45vw;
+    max-width: max-content;
     height: 100%;
     transition: right 0.5s ease; /* Animation de transition */
     z-index: 1000; /* Assure que la sidebar apparaît au-dessus de tout le contenu */
@@ -116,7 +119,7 @@ form {
     min-width: 200px;
     background-color: #262D34;
     padding: 15px;
-    margin: 10px 0 10px;
+    margin: 15px 0 30px;
     border-radius: 10px;
     ul,
     li,
@@ -131,6 +134,7 @@ form {
         font-size: 20px;
         color: rgb(140, 176, 207);
     }
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
 }
 
 .sidebar ul {
@@ -192,22 +196,19 @@ form {
 
 
 .sidebar-mask.show {
-    display: block; /* Afficher le masque lorsque la sidebar est ouverte */
+    display: block; 
 }
 
 
 
 
 
-#forum {
-    flex: 1; /* Le contenu prendra toute la hauteur disponible */
-}
 
 footer {
-    /* background-color: #000000; */
+   
     color: #fff;
     padding: 20px;
-    margin-top: auto; /* Le pied de page est placé tout en bas */
+    margin-top: auto; 
 }
 
 .footer-content {
@@ -238,4 +239,19 @@ footer {
 
 .footer-info a:hover {
     text-decoration: underline;
+}
+
+
+
+
+.patches {
+    height: auto;
+    width : 80vw;
+    border-radius: 5%;
+}
+
+.stop {
+    margin-top: 20px;
+    font-size: 25px;
+    font-style: italic;
 }

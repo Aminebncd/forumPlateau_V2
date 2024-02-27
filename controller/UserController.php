@@ -20,40 +20,61 @@ class UserController extends AbstractController implements ControllerInterface{
 
     // affiche les informations d'un utilisateur precis
     public function whoIsThisUser($id) {
+        if (Session::getUser()) {
 
-        $userManager = new userManager();
-        $topicManager = new TopicManager();
-        $postManager = new PostManager();
-
-        $user = $userManager->findOneById($id);
-        $topics = $topicManager->findTopicsByUser($id);
-        $posts = $postManager->findPostsByUser($id);
-
-        return [
-            "view" => VIEW_DIR."forum/usr/detailsUser.php",
-            // "meta_description" => "Liste des topics sous la catégorie : ".$user,
-            "data" => [
-                "user" => $user,
-                "topics" => $topics,
-                "posts" => $posts
-            ]
-        ];
+            $userManager = new userManager();
+            $topicManager = new TopicManager();
+            $postManager = new PostManager();
+    
+            $user = $userManager->findOneById($id);
+            $topics = $topicManager->findTopicsByUser($id);
+            $posts = $postManager->findPostsByUser($id);
+    
+            return [
+                "view" => VIEW_DIR."forum/usr/detailsUser.php",
+                // "meta_description" => "Liste des topics sous la catégorie : ".$user,
+                "data" => [
+                    "user" => $user,
+                    "topics" => $topics,
+                    "posts" => $posts
+                ]
+            ];
+        } else {
+            return [
+                "view" => VIEW_DIR."security/login.php",
+                // "meta_description" => "Liste des topics sous la catégorie : ".$user,
+                // "data" => [
+                //     "user" => $user,
+                //     "topics" => $topics,
+                //     "posts" => $posts
+                // ]
+            ];
+        }
     }
 
     // liste tous les utilisateurs 
     public function listUsers() {
-        $userManager = new UserManager();
+        if (Session::isAdmin()) {
 
-        $users = $userManager->findAll();
-        // var_dump($users);die;
+            $userManager = new UserManager();
+            $users = $userManager->findAll();
+            // var_dump($users);die;
+    
+            return [
+                "view" => VIEW_DIR."forum/usr/listUsers.php",
+                // "meta_description" => "Liste des utilisateurs : ".$users,
+                "data" => [
+                    "users" => $users
+                ]
+            ];
+        } else {
+            Session::addFlash("stop", "petit fouineur lol t'as rien à faire ici");
 
-        return [
-            "view" => VIEW_DIR."forum/usr/listUsers.php",
-            // "meta_description" => "Liste des utilisateurs : ".$users,
-            "data" => [
-                "users" => $users
-            ]
-        ];
+            return [
+                "view" => VIEW_DIR."security/stop.php",
+                // "meta_description" => "Liste des utilisateurs : ".$users,
+                ];
+        }
     }
 
 

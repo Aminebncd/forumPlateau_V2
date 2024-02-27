@@ -15,7 +15,7 @@ if (!empty($topics)) {
         <?php 
         $count = 0; // Initialisation du compteur 
         foreach ($topics as $topic): ?>
-            <div class="topic <?= ($count % 2 == 0) ? 'even' : 'odd'; ?>">
+            <div class="topic <?= ($count === 0) ? 'first-topic' : ''; ?>">
                 <?php $count++; // Incrémentation du compteur ?>
 
                 <div class="topic-header">
@@ -27,6 +27,7 @@ if (!empty($topics)) {
                         <a href="index.php?ctrl=topic&action=listTopicsBySubCategory&id=<?= $topic->getSubCategory()->getId() ?>">
                             <?= $topic->getSubCategory()->colorSubTag()?>
                         </a> 
+                        
                         <a href="index.php?ctrl=topic&action=listTopicsByCategory&id=<?= $topic->getCategory()->getId() ?>">
                             <?= $topic->getCategory()->colorTag() ?>
                         </a>
@@ -45,4 +46,5 @@ if (!empty($topics)) {
     echo "<p>Aucun topic n'a été trouvé.</p>";
 }
 ?>
+
 

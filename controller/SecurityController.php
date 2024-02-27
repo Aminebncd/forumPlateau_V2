@@ -7,7 +7,7 @@ use App\ControllerInterface;
 use App\Manager;
 use Model\Managers\UserManager;
 
-class SecurityController extends AbstractController{
+class SecurityController extends AbstractController {
     // contiendra les méthodes liées à l'authentification : register, login et logout
 
 
@@ -174,23 +174,23 @@ class SecurityController extends AbstractController{
 
                     } else {
                         // Gérer les erreurs
-                        $error = "Le nom d'utilisateur ou le mot de passe est incorrect.";
+                        Session::addFlash("error", "Le nom d'utilisateur ou le mot de passe est incorrect.");
                     }
 
                 } else {
                     // Gérer les erreurs
-                    $error = "Le nom d'utilisateur ou le mot de passe est incorrect.";
+                    Session::addFlash("error", "Utilisateur inconnu");
                 }
 
             } else {
                 // Gérer les erreurs
-                $error = "Veuillez saisir votre nom d'utilisateur et votre mot de passe.";
+                Session::addFlash("error", "Veuillez remplir tous les champs");
             }
 
         }  
     
         return [
-            "view" => VIEW_DIR."home.php",
+            "view" => VIEW_DIR."security/login.php",
             "data" => [
                 "title" => ""
             ],
@@ -208,14 +208,15 @@ class SecurityController extends AbstractController{
 
 
     public function newMdpForm() {
-
-        return [
-            "view" => VIEW_DIR."security/newMdp.php",
-            "data" => [
-                "title" => "Change password"
-            ],
-            "meta" => "change the password of an account"
-        ];
+        
+            return [
+                "view" => VIEW_DIR."security/newMdp.php",
+                "data" => [
+                    "title" => "Change password"
+                ],
+                "meta" => "change the password of an account"
+            ];
+        
     }
 
     public function newMdp() { 
@@ -280,127 +281,106 @@ class SecurityController extends AbstractController{
     }
 
     public function updateUserForm($id) {
-        
-        $userManager = new userManager;
-        $user = $userManager->findOneById($id);
-        
-        return [
-            "view" => VIEW_DIR."forum/usr/updateUser.php",
-            "data" => [
-                "title" => "user update",
-                "user" => $user
-            ],
-            "meta" => "update an existing topic"
-        ];
+        if(Session::getUser()){
+
+        if ((Session::isAdmin()) 
+         || (Session::getUser()->getId() == $id)) {
+                $userManager = new userManager;
+                $user = $userManager->findOneById($id);
+                
+                return [
+                    "view" => VIEW_DIR."forum/usr/updateUser.php",
+                    "data" => [
+                        "title" => "user update",
+                        "user" => $user
+                    ],
+                    "meta" => "update an existing topic"
+                ];
+            } else {
+                Session::addFlash('stop', "Pas touche aux comptes qui t'appartiennent pas.");
+                return [
+                    "view" => VIEW_DIR."security/stop.php",
+                ];
+            }
+        } else {
+            return [
+            "view" => VIEW_DIR."security/login.php",
+            ];
+        }
     }
 
     public function updateUser($id) {
-        if(Session::getUser()){
-            $userManager = new userManager();
-            $user = $userManager->findOneById($id);
+         
+        $userManager = new userManager();
+        $user = $userManager->findOneById($id);
+    
+        if (isset($_POST["submit"])) {
+
+            $pseudo = filter_input(INPUT_POST, "pseudo", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $mail = filter_input(INPUT_POST, "mail", FILTER_SANITIZE_EMAIL);
+
         
-            if (isset($_POST["submit"])) {
+            if(isset($_FILES['profilePic'])){
 
-                $pseudo = filter_input(INPUT_POST, "pseudo", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-                $mail = filter_input(INPUT_POST, "mail", FILTER_SANITIZE_EMAIL);
-
-            
-                if(isset($_FILES['profilePic'])){
-
-                    $tmpName = $_FILES['profilePic']['tmp_name'];
-                    $name = $_FILES['profilePic']['name'];
-                    $size = $_FILES['profilePic']['size'];
-                    $error = $_FILES['profilePic']['error'];
-                    
-                    $tabExtension = explode('.', $name);
-                    $extension = strtolower(end($tabExtension));
-                    
-                    //Tableau des extensions que l'on accepte
-                    $extensions = ['jpg', 'png', 'jpeg', 'gif', 'webp'];
-                    $maxSize = 1200000;
-                    
-                    if(in_array($extension, $extensions) && $size <= $maxSize){
-                        $uniqueName = uniqid('', true);
-                        //uniqid génère quelque chose comme ca : 5f586bf96dcd38.73540086
-                        $profilePic = $uniqueName.".".$extension;
-                        //$file = 5f586bf96dcd38.73540086.jpg
-                        move_uploaded_file($tmpName, 'public/img/uploads/'.$profilePic);  
-                    }
-                }
-
-                $data = [
-                    "id" => $id,
-                    "pseudo" => $pseudo,
-                    "mail" => $mail,
-                    "profilePic" => $profilePic
-                ];
-
-                $success = $userManager->update($data);
+                $tmpName = $_FILES['profilePic']['tmp_name'];
+                $name = $_FILES['profilePic']['name'];
+                $size = $_FILES['profilePic']['size'];
+                $error = $_FILES['profilePic']['error'];
                 
-                if ($success) {
-                    // Rediriger l'utilisateur vers la page du topic
-                    // $this->redirectTo("user", "detailsUser", $id);
-                    return [
-                        "view" => VIEW_DIR."forum/usr/detailsUser.php",
-                        "data" => [
-                            "title" => "user profile",
-                            "user" => $user
-                        ],
-                        "meta" => "details"
-                    ];
-                } else {
-                    // Gérer les erreurs
-                    return [
-                        "view" => VIEW_DIR."forum/usr/updateUser.php",
-                        "data" => [
-                            "title" => "user profile",
-                            "user" => $user
-                        ],
-                        "meta" => "details"
-                    ];
-                    echo "Une erreur s'est produite lors de la mise à jour de la photo.";
+                $tabExtension = explode('.', $name);
+                $extension = strtolower(end($tabExtension));
+                
+                //Tableau des extensions que l'on accepte
+                $extensions = ['jpg', 'png', 'jpeg', 'gif', 'webp'];
+                $maxSize = 1200000;
+                
+                if(in_array($extension, $extensions) && $size <= $maxSize){
+                    $uniqueName = uniqid('', true);
+                    //uniqid génère quelque chose comme ca : 5f586bf96dcd38.73540086
+                    $profilePic = $uniqueName.".".$extension;
+                    //$file = 5f586bf96dcd38.73540086.jpg
+                    move_uploaded_file($tmpName, 'public/img/uploads/'.$profilePic);  
                 }
             }
+
+            $data = [
+                "id" => $id,
+                "pseudo" => $pseudo,
+                "mail" => $mail,
+                "profilePic" => $profilePic
+            ];
+
+            $success = $userManager->update($data);
+            
+            if ($success) {
+                // Rediriger l'utilisateur vers la page du topic
+                // $this->redirectTo("user", "detailsUser", $id);
+                return [
+                    "view" => VIEW_DIR."forum/usr/detailsUser.php",
+                    "data" => [
+                        "title" => "user profile",
+                        "user" => $user
+                    ],
+                    "meta" => "details"
+                ];
+            } else {
+                // Gérer les erreurs
+                return [
+                    "view" => VIEW_DIR."forum/usr/updateUser.php",
+                    "data" => [
+                        "title" => "user profile",
+                        "user" => $user
+                    ],
+                    "meta" => "details"
+                ];
+                echo "Une erreur s'est produite lors de la mise à jour de la photo.";
+            }
         }
-       
     }
-
-
-
-    // public function hashMoi() {
+    
         
-    //     if (isset($_POST["submit"])) {
-    //         $userManager = new UserManager;
-
-    //         $mail = filter_input(INPUT_POST, "mail", FILTER_SANITIZE_EMAIL);
-    //         $user = $userManager->findUserByMail($mail);
-    //         $mdp = $user->getMotDePasse();
-    //         $hashedNewMotDePasse = password_hash($mdp, PASSWORD_DEFAULT);
-    //         // Mise à jour du mot de passe de l'utilisateur
-    //         $user->setMotDePasse($hashedNewMotDePasse);
-    //         $data = [
-    //                     "id" => $user->getId(),
-    //                     "motDePasse" => $hashedNewMotDePasse
-    //                 ];
-    
-    //                 $userManager->update($data);
-
-    //         var_dump($user->getMotDePasse());die;
-
-    //         return [
-    //             "view" => VIEW_DIR."security/login.php",
-    //             "data" => [
-    //                 "title" => ""
-    //             ],
-    //             "meta" => ""
-    //         ];
-    //     }
-    // }
-    
-    
-
-  
-
-
 
 }
+
+
+

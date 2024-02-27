@@ -38,16 +38,17 @@ $posts = $result["data"]['posts'];
     </section>
 
     <section class="posts-section">
-        <h2>Liste des réponses :</h2>
-        <?php if (!empty($posts)): ?>
-            <ul class="post-list">
-                <?php foreach ($posts as $post): ?>
-                    <li><?= $post->getContent() ?> (<a href="index.php?ctrl=topic&action=listPostByTopic&id=<?= $post->getTopic()->getId() ?>"><?= $post->getTopic()->getTitle() ?></a>)</li>
-                <?php endforeach; ?>
-            </ul>
-        <?php else: ?>
-            <p>Aucun post n'a été trouvé.</p>
-        <?php endif; ?>
-    </section>
+    <h2>Liste des réponses :</h2>
+    <?php if (!empty($posts)): ?>
+        <ul class="post-list">
+            <?php foreach ($posts as $post): ?>
+                <li><p class="post-item"><?= $post->getContent() ?> </p>(<a href="index.php?ctrl=topic&action=listPostByTopic&id=<?= $post->getTopic()->getId() ?>"><?= $post->getTopic()->getTitle() ?></a>)</li>
+            <?php endforeach; ?>
+        </ul>
+    <?php else: ?>
+        <p>Aucun post n'a été trouvé.</p>
+    <?php endif; ?>
+</section>
+
 </main>
 

@@ -105,6 +105,7 @@ input[type="password"] {
     height: auto;
     border-radius: 16px;
     margin: 20px;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
 }
 
 #myProfile {
@@ -123,15 +124,17 @@ input[type="password"] {
     background-color: #0000005d;
     padding: 10px 20px;
     border-radius: 5px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
 }
 
 main {
     padding: 20px;
+    .topics-section, .posts-section {
+        margin-bottom: 40px;
+      
+    }
 }
 
-.topics-section, .posts-section {
-    margin-bottom: 40px;
-}
 
 h2 {
     color: #ffffff;
@@ -146,3 +149,11 @@ h2 {
 .topic-list li, .post-list li {
     margin-bottom: 10px;
 }
+
+.post-item {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 300px; /* ajustez la largeur maximale selon vos besoins */
+}
+
