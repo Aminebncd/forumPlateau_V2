@@ -10,7 +10,7 @@
 
 /* CATEGORIES */
 .cardsBg {
-    background-color: #262D34;
+    background-color: #1d242c;
     padding: 10px;
     margin: 10px;
     border-radius: 15px;
@@ -19,8 +19,8 @@
 
 .card {
     position: relative;
-    width: 400px; /* ou toute autre largeur désirée */
-    height: 300px; /* ou toute autre hauteur désirée */
+    width: 60vw; /* ou toute autre largeur désirée */
+    height: 40vh; /* ou toute autre hauteur désirée */
     margin: 20px;
     border-radius: 10px;
     overflow: hidden;
@@ -73,11 +73,11 @@
 
 .subCategories-grid {
     /* margin-top: 50px; */
-    width: 60vw;
+    width: 70vw;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); 
     gap: 20px; 
-    background-color: #262D34; 
+    background-color: #1d242c; 
     padding: 40px; 
     border-radius: 10px; 
     box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
@@ -85,8 +85,9 @@
 
 .tag {
     display: flex;
+    /* min-width: 90px; */
     padding: 20px 35px;
-    background-color: #192027;
+    background-color: #0a2037;
     color: #fff;
     text-decoration: none;
     border-radius: 5px;

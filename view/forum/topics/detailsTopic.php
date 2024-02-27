@@ -60,7 +60,7 @@ use App\Session;
                         <?= $post->getUser()->showProfilePicturePost() ?>
     
                         <div class="user-info">
-                            <span class="user-name"><?= $post->getUser()->getPseudo() ?></span>
+                            <a href="index.php?ctrl=user&action=whoIsThisUser&id=<?= $post->getUser()->getId() ?>" class="user-name"><?= $post->getUser()->getPseudo() ?></a>
                             <span class="post-date"><?= $post->getDateCreation()->format('d/m h:i') ?></span>
                         </div>  
     

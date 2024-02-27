@@ -42,7 +42,7 @@ class SecurityController extends AbstractController {
             
             // regex: needs at least 1 capital, 1 small, 1 number, 1 special char and 4 characters in total 
             //(the CNIL advise around 12 to be actually safe)
-            $password_regex = "/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{4,}$/";
+            $password_regex = "/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{10,}$/";
 
             // check that all inputs were completed
             if(empty($pseudo)) {
@@ -377,10 +377,52 @@ class SecurityController extends AbstractController {
             }
         }
     }
+
+    public function deleteUser($id) {
+        if (Session::isAdmin()) {
+
+            $userManager = new UserManager();
+            $users = $userManager->findAll();
+            $user = $userManager->findOneById($id);
+
+            // var_dump($user);die;
+
+            if ($user) {
+
+                $data = [
+                    "id" => $id,
+                "pseudo" => "deleted_user",
+                "mail" => "null",
+                "motDePasse" => "null",
+                "profilePic" => "deleted_user.webp"
+                ];
+
+                $userManager->update($data);
+
+                return [
+                    "view" => VIEW_DIR."forum/usr/listUsers.php",
+                    // "meta_description" => "Liste des utilisateurs : ".$users,
+                    "data" => [
+                        "users" => $users
+                    ]
+                ];
+            }
+        } else {
+            Session::addFlash("stop", "petit fouineur lol t'as rien à faire ici");
+
+            return [
+                "view" => VIEW_DIR."security/stop.php",
+                // "meta_description" => "Liste des utilisateurs : ".$users,
+                ];
+        }
+    }
+
+
+}
     
         
 
-}
+
 
 
 

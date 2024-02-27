@@ -24,6 +24,7 @@ use App\Session;
                 <li>1 lowercase</li>
                 <li>1 number</li>
                 <li>1 special character (@ $ * # - ! ?)</li>
+                <li>10 characters</li>
             </ul>
         </p>
     </div>
@@ -33,7 +34,6 @@ use App\Session;
         <?= Session::getFlash("motDePasseAgain") ?>
     </div>
     <div class="form-group">
-        <button form-group">
         <button class="form-button" type="submit" name="submit">S'inscrire</button>
     </div>
 </form>

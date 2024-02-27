@@ -83,9 +83,7 @@ final class SubCategory extends Entity{
                 break;                
         }
         
-        echo "
-        <p class='$classSubTag'>$name<p>
-        ";
+        return "<p class='$classSubTag'>$name</p>";
     }
 
 

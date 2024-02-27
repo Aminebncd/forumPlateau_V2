@@ -105,8 +105,6 @@ final class Category extends Entity{
                 break;                
         }
         
-        echo "
-        <p class='$classTag'>$name<p>
-        ";
+        return "<p class='$classTag'>$name</p>";
     }
 }

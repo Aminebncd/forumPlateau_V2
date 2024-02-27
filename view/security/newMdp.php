@@ -21,7 +21,6 @@ use App\Session;
         <input type="password" id="NewMotDePasseAgain" name="NewMotDePasseAgain" required>
     </div>
     <div class="form-group">
-        <button form-group">
         <button class="form-button" type="submit" name="submit">Changer le mot de passe</button>
     </div>
 </form>

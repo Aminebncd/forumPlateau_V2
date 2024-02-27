@@ -9,7 +9,7 @@ $topics = $result["data"]['topics'];
 
 <main id="home">
     <div class="mainContainer">
-        <h1>Bienvenue sur Mon Forum</h1>
+        <h1>Bienvenue sur dans le Rêve du Chasseur</h1>
         <p>Un espace de discussions et de partage pour tous les passionnés de l'univers FromSoftware.</p>
         
     </div>
@@ -32,18 +32,17 @@ if (!empty($topics)) {
                 </div>
 
                 <div class="topic-details">
+
                     <div class="topic-category">
-                        <a href="index.php?ctrl=topic&action=listTopicsBySubCategory&id=<?= $topic->getSubCategory()->getId() ?>">
-                            <?= $topic->getSubCategory()->colorSubTag()?>
-                        </a> 
                         
-                        <a href="index.php?ctrl=topic&action=listTopicsByCategory&id=<?= $topic->getCategory()->getId() ?>">
-                            <?= $topic->getCategory()->colorTag() ?>
-                        </a>
+                        <a href="index.php?ctrl=topic&action=listTopicsByCategory&id=<?= $topic->getCategory()->getId() ?>"><?= $topic->getCategory()->colorTag() ?></a>
+                        <a href="index.php?ctrl=topic&action=listTopicsBySubCategory&id=<?= $topic->getSubCategory()->getId() ?>"><?= $topic->getSubCategory()->colorSubTag()?></a>
                     </div>
+
                     <div class="topic-author">
                         par <a href="index.php?ctrl=user&action=whoIsThisUser&id=<?= $topic->getUser()->getId() ?>"><?= $topic->getUser() ?></a>
                     </div>
+
                     <div class="topic-date"><?= $topic->getDateCreation()->format('d/m/Y H:i') ?></div>
                 </div>
                 

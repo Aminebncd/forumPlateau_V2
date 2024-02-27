@@ -28,7 +28,7 @@ h1 {
 }
 
 a {
-    color: aliceblue;
+    color: rgb(183, 214, 240);
 }
 
 main {
@@ -58,21 +58,21 @@ form {
 
 .navbar {
         /* background-color: #1869bb; */
-        background-color: #262D34;
+        background-color: #1d242c;
         padding: 10px 20px;
         /* width: 100vw; */
         box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
 }
 
 .navbar-header {
-    background-color: #262D34;
+    background-color: #1d242c;
     display: flex;
     padding: 10px 0;
     
 }
 
 .navContainer {
-    background-color: #262D34;
+    background-color: #1d242c;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -80,7 +80,8 @@ form {
 }
 
 .navbar-brand {
-    background-color: #262D34;
+    color: #fff;
+    background-color: #1d242c;
     font-size: 1.5rem;
     font-weight: bold;
     text-decoration: none;
@@ -93,8 +94,8 @@ form {
 }
 
 .navbar-toggler .navbar-toggler-icon {
-    background-color: #262D34;
-    font-size: 1.8rem;
+    background-color: #1d242c;
+    font-size: 2rem;
 }
 
 /* styles.css */
@@ -117,14 +118,14 @@ form {
 
 .link-group {
     min-width: 200px;
-    background-color: #262D34;
+    background-color: #1d242c;
     padding: 15px;
     margin: 15px 0 30px;
     border-radius: 10px;
     ul,
     li,
     a {
-        background-color: #262D34;
+        background-color: #1d242c;
     }
     .subLinks {
         
@@ -166,10 +167,10 @@ form {
 }
 
 .figUser {
-    background-color: #262D34;
+    background-color: #1d242c;
 }
 .navPic {
-    background-color: #262D34;
+    background-color: #1d242c;
     width: 50px;
     height: 50px;
     border-radius: 50%;
@@ -220,7 +221,7 @@ footer {
 
 .footer-links a {
     text-decoration: none;
-    color: #fff;
+    color: rgb(183, 214, 240);
     margin-right: 20px;
 }
 
@@ -233,11 +234,12 @@ footer {
 }
 
 .footer-info a {
-    color: #fff;
+    color: rgb(183, 214, 240);
     text-decoration: none;
 }
 
 .footer-info a:hover {
+    color: #ffffff;
     text-decoration: underline;
 }
 

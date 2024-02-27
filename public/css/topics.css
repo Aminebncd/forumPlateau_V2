@@ -38,7 +38,7 @@
 
 .topic {
     display: flex;
-    background-color: #262D34;
+    background-color: #1d242c;
     /* border-radius: 5px;  */
     padding: 20px;
     width: 80vw;
@@ -55,7 +55,7 @@
 .topic-header {
     margin-bottom: 10px;
     width: 150px;
-    background-color: #262D34;
+    background-color: #1d242c;
     /* display: flex; */
 }
 
@@ -64,7 +64,7 @@
     font-weight: bold;
     color: #ffffff;
     text-decoration: none;
-    background-color: #262D34;
+    background-color: #1d242c;
 }
 
 .topic-details {
@@ -75,7 +75,7 @@
     .topic-author,
     .topic-category,
     .topic-date,div, a, p, a{
-        background-color: #262D34;
+        background-color: #1d242c;
     }
     .BB a {
         display: flex;
@@ -192,13 +192,13 @@
         /* justify-content: center; */
         background-color: #000000;
         border-radius: 5px;
-        width: 80px; /* Réduire la largeur à 80px */
+        /* width: 80px; */
         height: 35px;
         color: #e7bfe6;
         overflow: hidden;
         align-items: center;
-        text-overflow: ellipsis; /* Afficher les trois points de suspension en cas de dépassement */
-        white-space: nowrap; /* Empêcher le texte de se couper sur plusieurs lignes */
+        text-overflow: ellipsis; 
+        white-space: nowrap; 
     }
     
     .Aide{
@@ -218,7 +218,7 @@
         /* padding: 5px; */
         background-color: #000000;
         border-radius: 5px;
-        width: 110px;
+        width: 120px;
         height: 35px;
         color: #59bbca;
         align-items: center;
@@ -246,13 +246,13 @@
 /* fais en sorte que les elements pairs aient 
 une couleur de fond differente des elements impairs */
 .topic:nth-child(even) {
-    background-color: #193659; 
+    background-color: #334c69; 
     .topic-header,
     .topic-title,
     .topic-author,
     .topic-category,
     .topic-date,div, a, p {
-        background-color: #193659;
+        background-color: #334c69;
     }
     .BB a {
         display: flex;
@@ -469,7 +469,7 @@ textarea {
 .replies-container {
     margin-top: 20px;
     margin-bottom: 20px;
-    background-color: #262D34;
+    background-color: #1d242c;
     padding: 15px;
     border-radius: 15px;
 }

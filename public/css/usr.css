@@ -6,39 +6,39 @@
     padding: 40px;
     border: 1px solid #101d385a;
     border-radius: 15px;
-    /* background-color: #262D34; */
+    /* background-color: #1d242c; */
     margin-bottom: 20px;
      
     h2 {
-        /* background-color: #262D34; */
+        /* background-color: #1d242c; */
     }
 
     ul, 
     li {
-        /* background-color: #262D34; */
+        /* background-color: #1d242c; */
     }
     
     p {
-        /* background-color: #262D34; */
+        /* background-color: #1d242c; */
         padding-top: 15px;
         padding-bottom: 10px;
     }
     a {
-        background-color: #262D34;
+        background-color: #1d242c;
     }
 
 }
 
 .form-group {
     margin-bottom: 20px;
-    /* background-color: #262D34; */
+    /* background-color: #1d242c; */
     
 }
 
 label {
     display: block;
     margin-bottom: 5px;
-    /* background-color: #262D34; */
+    /* background-color: #1d242c; */
     
 }
 
@@ -49,7 +49,7 @@ input[type="password"] {
     padding: 10px;
     border: 1px solid #6e6e6e;
     border-radius: 5px;
-    background-color: #262D34;
+    background-color: #1d242c;
 
     box-sizing: border-box;
 }
@@ -101,8 +101,9 @@ input[type="password"] {
 
 
 .profileImg {
-    width: 150px;
+    width: 200px;
     height: auto;
+    object-fit: cover;
     border-radius: 16px;
     margin: 20px;
     box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
@@ -156,4 +157,68 @@ h2 {
     text-overflow: ellipsis;
     max-width: 300px; /* ajustez la largeur maximale selon vos besoins */
 }
+
+
+
+
+
+.user-list {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.user {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-radius: 8px;
+    background-color: #1d242c;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+    
+    a {
+        background-color: #1d242c;
+    }
+}
+
+.user-link {
+    text-decoration: none;
+    color: inherit;
+    width: 100%;
+    background-color: #1d242c;
+}
+
+.user-avatar {
+    margin-right: 15px;
+    background-color: #1d242c;
+    figure {
+        background-color: #1d242c;
+    }
+}
+
+.user-avatar img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #1d242c;
+}
+
+.user-details {
+    display: flex;
+    flex-direction: column;
+    background-color: #1d242c;
+}
+
+.user-name {
+    font-weight: bold;
+    background-color: #1d242c;
+}
+
+.user-registration-date {
+    color: #888;
+    background-color: #1d242c;
+}
+
 
