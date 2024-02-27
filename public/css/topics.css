@@ -65,6 +65,10 @@
     color: #ffffff;
     text-decoration: none;
     background-color: #1d242c;
+    a {
+        background-color: #1d242c;
+
+    }
 }
 
 .topic-details {

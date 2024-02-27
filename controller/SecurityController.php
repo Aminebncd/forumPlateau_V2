@@ -151,6 +151,7 @@ class SecurityController extends AbstractController {
     }
 
     public function login () {
+        
         if (isset($_POST["submit"])) {
             $userManager = new UserManager(); 
     
@@ -281,6 +282,7 @@ class SecurityController extends AbstractController {
     }
 
     public function updateUserForm($id) {
+
         if(Session::getUser()){
 
         if ((Session::isAdmin()) 
@@ -300,6 +302,7 @@ class SecurityController extends AbstractController {
                 Session::addFlash('stop', "Pas touche aux comptes qui t'appartiennent pas.");
                 return [
                     "view" => VIEW_DIR."security/stop.php",
+                    "meta_description" => "hmmmmmm you're not supposed to be here."
                 ];
             }
         } else {
@@ -358,8 +361,8 @@ class SecurityController extends AbstractController {
                 return [
                     "view" => VIEW_DIR."forum/usr/detailsUser.php",
                     "data" => [
-                        "title" => "user profile",
-                        "user" => $user
+                        "user" => $user,
+                        "meta_description" => "Profile details."
                     ],
                     "meta" => "details"
                 ];
@@ -368,10 +371,9 @@ class SecurityController extends AbstractController {
                 return [
                     "view" => VIEW_DIR."forum/usr/updateUser.php",
                     "data" => [
-                        "title" => "user profile",
-                        "user" => $user
+                        "user" => $user,
+                        "meta_description" => "Update profile."
                     ],
-                    "meta" => "details"
                 ];
                 echo "Une erreur s'est produite lors de la mise à jour de la photo.";
             }
@@ -379,6 +381,7 @@ class SecurityController extends AbstractController {
     }
 
     public function deleteUser($id) {
+
         if (Session::isAdmin()) {
 
             $userManager = new UserManager();
@@ -401,8 +404,8 @@ class SecurityController extends AbstractController {
 
                 return [
                     "view" => VIEW_DIR."forum/usr/listUsers.php",
-                    // "meta_description" => "Liste des utilisateurs : ".$users,
                     "data" => [
+                        "meta_description" => "Suppression du compte : ".$user,
                         "users" => $users
                     ]
                 ];
@@ -412,7 +415,7 @@ class SecurityController extends AbstractController {
 
             return [
                 "view" => VIEW_DIR."security/stop.php",
-                // "meta_description" => "Liste des utilisateurs : ".$users,
+                "meta_description" => "hmmmmmm you're not supposed to be here."
                 ];
         }
     }

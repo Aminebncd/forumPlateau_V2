@@ -19,12 +19,14 @@ class HomeController extends AbstractController implements ControllerInterface {
             "view" => VIEW_DIR."home.php",
             // "meta_description" => "Liste des topics par catégorie : ".$topics,
             "data" => [
-                "topics" => $topics
+                "topics" => $topics,
+                "meta_description" => "Bienvenue sur dans le Rêve du Chasseur, un espace de discussions et de partage pour tous les passionnés de l'univers FromSoftware. Venez discuter des derniers sujets liés à Bloodborne, Elden Ring, Sekiro et bien plus encore."
             ]
         ];
     }
         
     public function users(){
+        
         $this->restrictTo("ROLE_USER");
 
         $manager = new UserManager();
@@ -32,8 +34,8 @@ class HomeController extends AbstractController implements ControllerInterface {
 
         return [
             "view" => VIEW_DIR."security/users.php",
-            "meta_description" => "Liste des utilisateurs du forum",
             "data" => [ 
+                "meta_description" => "Liste des utilisateurs du forum",
                 "users" => $users 
             ]
         ];

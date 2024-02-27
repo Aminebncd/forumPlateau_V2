@@ -80,6 +80,7 @@ final class Category extends Entity{
     }
 
     public function showImage() {
+
         $image = $this->getImage();
         
         
@@ -91,6 +92,7 @@ final class Category extends Entity{
     }
 
     public function colorTag() {
+        
         $name = $this->getName();
         
         switch ($name) {

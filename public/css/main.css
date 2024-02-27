@@ -1,6 +1,7 @@
 @import url(usr.css);
 @import url(tags.css);
 @import url(topics.css);
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
 
 * {
     margin: 0;
@@ -10,8 +11,6 @@
     color: aliceblue;
     font-size: 20px;
     font-family: "rubik";
-    
-
 }
 
 h1 {
@@ -109,6 +108,9 @@ form {
     transition: right 0.5s ease; /* Animation de transition */
     z-index: 1000; /* Assure que la sidebar apparaît au-dessus de tout le contenu */
     padding: 20px;
+    .link-group {
+        margin: 15px 0 30px;
+    }
 }
 
 .sidebar.show {
@@ -120,8 +122,9 @@ form {
     min-width: 200px;
     background-color: #1d242c;
     padding: 15px;
-    margin: 15px 0 30px;
+    
     border-radius: 10px;
+    
     ul,
     li,
     a {

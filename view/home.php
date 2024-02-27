@@ -1,6 +1,7 @@
 <?php
 // Récupération des données
 $topics = $result["data"]['topics'];
+$topics = $result["data"]['topics'];
 
 // Bouton d'ajout d'un nouveau topic
 ?>
@@ -28,22 +29,22 @@ if (!empty($topics)) {
                 <?php $count++; // Incrémentation du compteur ?>
 
                 <div class="topic-header">
-                    <a href="index.php?ctrl=topic&action=listPostByTopic&id=<?= $topic->getId() ?>" class="topic-title"><?= $topic->getTitle() ?></a>
-                </div>
+                                <h2 class="topic-title"><a href="index.php?ctrl=topic&action=listPostByTopic&id=<?= $topic->getId() ?>"><?= $topic->getTitle() ?></a></h2>
+                            </div>
 
                 <div class="topic-details">
 
-                    <div class="topic-category">
+                    <span class="topic-category">
                         
                         <a href="index.php?ctrl=topic&action=listTopicsByCategory&id=<?= $topic->getCategory()->getId() ?>"><?= $topic->getCategory()->colorTag() ?></a>
                         <a href="index.php?ctrl=topic&action=listTopicsBySubCategory&id=<?= $topic->getSubCategory()->getId() ?>"><?= $topic->getSubCategory()->colorSubTag()?></a>
-                    </div>
+                    </span>
 
-                    <div class="topic-author">
+                    <span class="topic-author">
                         par <a href="index.php?ctrl=user&action=whoIsThisUser&id=<?= $topic->getUser()->getId() ?>"><?= $topic->getUser() ?></a>
-                    </div>
+                    </span>
 
-                    <div class="topic-date"><?= $topic->getDateCreation()->format('d/m/Y H:i') ?></div>
+                    <span class="topic-date"><?= $topic->getDateCreation()->format('d/m/Y H:i') ?></span>
                 </div>
                 
             </div>

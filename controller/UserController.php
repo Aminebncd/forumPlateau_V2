@@ -20,6 +20,7 @@ class UserController extends AbstractController implements ControllerInterface{
 
     // affiche les informations d'un utilisateur precis
     public function whoIsThisUser($id) {
+
         if (Session::getUser()) {
 
             $userManager = new userManager();
@@ -32,8 +33,8 @@ class UserController extends AbstractController implements ControllerInterface{
     
             return [
                 "view" => VIEW_DIR."forum/usr/detailsUser.php",
-                // "meta_description" => "Liste des topics sous la catégorie : ".$user,
                 "data" => [
+                    "meta_description" => "Détail du profil de : ".$user,
                     "user" => $user,
                     "topics" => $topics,
                     "posts" => $posts
@@ -42,18 +43,16 @@ class UserController extends AbstractController implements ControllerInterface{
         } else {
             return [
                 "view" => VIEW_DIR."security/login.php",
-                // "meta_description" => "Liste des topics sous la catégorie : ".$user,
-                // "data" => [
-                //     "user" => $user,
-                //     "topics" => $topics,
-                //     "posts" => $posts
-                // ]
+                "data" => [
+                    "meta_description" => "Formulaire de connexion."
+                ]
             ];
         }
     }
 
     // liste tous les utilisateurs 
     public function listUsers() {
+        
         if (Session::isAdmin()) {
 
             $userManager = new UserManager();
@@ -62,8 +61,8 @@ class UserController extends AbstractController implements ControllerInterface{
     
             return [
                 "view" => VIEW_DIR."forum/usr/listUsers.php",
-                // "meta_description" => "Liste des utilisateurs : ".$users,
                 "data" => [
+                    "meta_description" => "Liste des utilisateurs",
                     "users" => $users
                 ]
             ];
@@ -72,8 +71,10 @@ class UserController extends AbstractController implements ControllerInterface{
 
             return [
                 "view" => VIEW_DIR."security/stop.php",
-                // "meta_description" => "Liste des utilisateurs : ".$users,
-                ];
+                "data" => [
+                    "meta_description" => "hmmmmmm you're not supposed to be here."
+                ]
+            ];
         }
     }
 

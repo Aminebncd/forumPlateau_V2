@@ -20,6 +20,7 @@ class TagController extends AbstractController implements ControllerInterface{
    
     // liste nos trois grandes categories
     public function listCategories() {
+        
         $categoryManager = new CategoryManager();
         
         $categories = $categoryManager->findAll();
@@ -27,9 +28,9 @@ class TagController extends AbstractController implements ControllerInterface{
         
         return [
             "view" => VIEW_DIR."forum/tags/listCategories.php",
-            // "meta_description" => "Liste des topics par catégorie : ".$category,
             "data" => [
-                "categories" => $categories
+                "categories" => $categories,
+                "meta_description" => "Liste de toutes les categories principales."
             ]
         ];
     }
@@ -44,9 +45,8 @@ class TagController extends AbstractController implements ControllerInterface{
         
         return [
             "view" => VIEW_DIR."forum/tags/listSubCategories.php",
-            // "meta_description" => "Liste des topics par catégorie : ".$category,
             "data" => [
-                
+                "meta_description" => "Liste de toutes les categories secondaires.",
                 "subCategories" => $subCategories
             ]
         ];

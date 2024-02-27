@@ -26,6 +26,7 @@ class TopicController extends AbstractController implements ControllerInterface{
 
     // Listage de tous les topics peu importe les tags 
     public function listTopics() {
+        
         $topicManager = new TopicManager();
         
         $topics = $topicManager->findAll();
@@ -33,8 +34,8 @@ class TopicController extends AbstractController implements ControllerInterface{
         
         return [
             "view" => VIEW_DIR."forum/topics/listTopics.php",
-            // "meta_description" => "Liste des topics par catégorie : ".$topics,
             "data" => [
+                "meta_description" => "Liste des topics",
                 "topics" => $topics
             ]
         ];
@@ -42,7 +43,6 @@ class TopicController extends AbstractController implements ControllerInterface{
 
     // Listage des topics par sous-categorie
     public function listTopicsByCategory($id) {
-
         
             $categoryManager = new CategoryManager();
             $topicManager = new TopicManager();
@@ -55,10 +55,10 @@ class TopicController extends AbstractController implements ControllerInterface{
             if ($category) {
                 return [
                     "view" => VIEW_DIR."forum/tags/detailsCategory.php",
-                    // "meta_description" => "Liste des topics sous la catégorie : ".$subCategory,
                     "data" => [
+                        "meta_description" => "Liste des topics sous la catégorie : ".$category,
                         "category" => $category,
-                        // "user" => $user,
+                        
                         "topics" => $topics
                     ]
                 ];
@@ -81,8 +81,8 @@ class TopicController extends AbstractController implements ControllerInterface{
         if($subCategory) {
             return [
                 "view" => VIEW_DIR."forum/tags/detailsSubCategory.php",
-                // "meta_description" => "Liste des topics sous la catégorie : ".$subCategory,
                 "data" => [
+                    "meta_description" => "Liste des topics sous la catégorie : ".$subCategory,
                     "subCategory" => $subCategory,
                     // "user" => $user,
                     "topics" => $topics
@@ -95,6 +95,7 @@ class TopicController extends AbstractController implements ControllerInterface{
 
     // listage des posts (réponses) sous un topic
     public function listPostByTopic($id) {
+
         // if(Session::getUser()){
             $topicManager = new TopicManager();
             $postManager = new PostManager();
@@ -104,8 +105,8 @@ class TopicController extends AbstractController implements ControllerInterface{
 
             return [
                 "view" => VIEW_DIR."forum/topics/detailsTopic.php",
-                // "meta_description" => "Liste des topics sous la catégorie : ".$category,
                 "data" => [
+                    "meta_description" => "Liste des réponses sous le topic : ".$topic->getTitle(),
                     "topic" => $topic,
                     "posts" => $posts
                 ]
@@ -128,6 +129,7 @@ class TopicController extends AbstractController implements ControllerInterface{
 
     // TOPICS
     public function createTopicForm() { 
+
         if (Session::getUser()) {
             $subCategoryManager = new subCategoryManager();
             $subCategories = $subCategoryManager->findAll();
@@ -140,22 +142,23 @@ class TopicController extends AbstractController implements ControllerInterface{
                         "title" => "Topic creation",
                         "subCategories" => $subCategories,
                         "categories" => $categories
+                        "meta_description" => "Formulaire de création de topic."
                     ],
-                    // "meta_description" => "creation form used to create topics"
                 ];
 
             } else {
                 return [
                     "view" => VIEW_DIR."security/register.php",
                     "data" => [
+                        "meta_description" => "Formulaire de connexion",
                         "title" => "Topic creation"
                     ],
-                    // "meta_description" => "creation form used to create topics"
                 ];    
         }
     }
 
     public function createTopic() {
+
         if(Session::getUser()){
             
             if (isset($_POST["submit"])) {
@@ -170,6 +173,7 @@ class TopicController extends AbstractController implements ControllerInterface{
                 $topics = $topicManager->findAll();
 
                 $postManager = new PostManager();
+                
 
 
                 
@@ -234,13 +238,13 @@ class TopicController extends AbstractController implements ControllerInterface{
                 }
                 
                 return [
-                    "view" => VIEW_DIR."forum/topics/createTopic.php",
+                    "view" => VIEW_DIR."forum/topics/detailsTopic.php",
                     "data" => [
-                        "title" => "Topic creation",
-                        "subCategories" => $subCategories,
-                        "categories" => $categories
+                        "meta_description" => "Topic creation",
+                        "topic" => $topic_id,
+                        $posts = $postManager->findPostsByTopic($topic_id)
                     ],
-                    // "meta_description" => "creation form used to create topics"
+    
                 ];
             } 
             
@@ -251,6 +255,7 @@ class TopicController extends AbstractController implements ControllerInterface{
     }
 
     public function updateTopicForm($id) {
+
         $topicManager = new TopicManager;
         $topic = $topicManager->findOneById($id);
 
@@ -271,15 +276,15 @@ class TopicController extends AbstractController implements ControllerInterface{
                         "topic" => $topic,
                         "subCategories" => $subCategories,
                         "categories" => $categories
+                        "meta_description" => "update an existing topic"
                     ],
-                    "meta" => "update an existing topic"
                 ];
             }
         } else {
             Session::addFlash('stop', "Ce n'est pas ton topic désolé.");
             return [
                 "view" => VIEW_DIR."security/stop.php",
-                
+                "meta_description" => "hmmmmmm you're not supposed to be here."
             ];
         }
     }
@@ -341,6 +346,7 @@ class TopicController extends AbstractController implements ControllerInterface{
                         "title" => "Topic",
                         "topic" => $topic,
                         "posts" => $posts
+                        "meta_description" => "Topic apres mise à jour"
                     ],
                 ];
             }    
@@ -353,8 +359,8 @@ class TopicController extends AbstractController implements ControllerInterface{
                     "topic" => $topic,
                     "subCategories" => $subCategories,
                     "categories" => $categories
+                    "meta_description" => "Echec modification topic"
                 ],
-                // "meta_description" => "creation form used to create topics"
             ];
         }
     }
@@ -395,8 +401,8 @@ class TopicController extends AbstractController implements ControllerInterface{
                     "title" => "Topic update",
                     "topic" => $topic,
                     'posts' => $posts
+                    "meta_description" => "Mise à jour statut topic"
                 ],
-                "meta" => "update an existing topic"
             ];
     
             $this->redirectTo("topic", "detailsTopic, $id");
@@ -404,6 +410,7 @@ class TopicController extends AbstractController implements ControllerInterface{
             Session::addFlash('stop', "tu n'as pas les droits pour faire ça mon coco");
             return [
                 "view" => VIEW_DIR."security/stop.php",
+                "meta_description" => "hmmmmmm you're not supposed to be here."
                 
             ];
         }
@@ -490,8 +497,8 @@ class TopicController extends AbstractController implements ControllerInterface{
             }   
             return [
                 "view" => VIEW_DIR."forum/topics/detailsTopic.php",
-                // "meta_description" => "Liste des topics sous la catégorie : ".$category,
                 "data" => [
+                    "meta_description" => "Liste des reponses sous le topic : ".$topic->getTitle(),
                     "topic" => $topic,
                     "posts" => $posts
                 ]
@@ -509,8 +516,8 @@ class TopicController extends AbstractController implements ControllerInterface{
             "data" => [
                 "title" => "post update",
                 "post" => $post
+                "meta_description" => "Mise à jour d'une réponse" 
             ],
-            "meta" => "update an existing topic"
         ];
     }
 
@@ -536,8 +543,16 @@ class TopicController extends AbstractController implements ControllerInterface{
             // Rediriger l'utilisateur vers la page du topic
             $this->redirectTo("topic", "listPostByTopic", $topic);
         } else {
-            // Gérer les erreurs
-            $error = "Une erreur s'est produite lors de la mise à jour du message.";
+            return [
+                Session::addFlash("error", "une erreur est survenue lors de la mise à jour.");
+
+                "view" => VIEW_DIR."forum/topics/updatePost.php",
+                "data" => [
+                    "title" => "post update",
+                    "post" => $post
+                    "meta_description" => "Mise à jour d'une réponse" 
+                ],
+            ];
         }
         }
        
