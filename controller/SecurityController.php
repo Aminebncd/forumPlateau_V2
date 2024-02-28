@@ -20,9 +20,8 @@ class SecurityController extends AbstractController {
         return [
             "view" => VIEW_DIR."security/register.php",
             "data" => [
-                "title" => "Register"
+                "meta_description" => "Formulaire d'inscription."
             ],
-            "meta" => "Form to create an account"
         ];
     }
 
@@ -117,7 +116,13 @@ class SecurityController extends AbstractController {
                     $success = $userManager->add($data);
         
                     if ($success) {
-                        $this->redirectTo("home");
+                        $this->redirectTo("security", "login");
+                        return [
+                            "view" => VIEW_DIR."security/login.php",
+                            "data" => [
+                                "meta_description" => "inscription ok."
+                            ],
+                        ];
                     } else {
                         // Gérer les erreurs
                         $error = "Une erreur s'est produite lors de l'ajout de l'utilisateur.";
@@ -125,16 +130,14 @@ class SecurityController extends AbstractController {
 
                 } else { // mistake(s) were made in some of the input 
                     $this->redirectTo("security", "register");
+                    return [
+                        "view" => VIEW_DIR."security/register.php",
+                        "data" => [
+                            "meta_description" => "Register"
+                        ],
+                    ];
                 }
             }
-
-            return [
-                "view" => VIEW_DIR."security/register.php",
-                "data" => [
-                    "title" => "Register"
-                ],
-                "meta" => "Form to create an account"
-            ];
         }
     }
     
@@ -144,9 +147,8 @@ class SecurityController extends AbstractController {
         return [
             "view" => VIEW_DIR."security/login.php",
             "data" => [
-                "title" => "login"
+                "meta_description" => "Formulaire de connexion."
             ],
-            "meta" => "Connect to your account"
         ];
     }
 
@@ -172,6 +174,12 @@ class SecurityController extends AbstractController {
                         Session::setUser($user);
                         // Redirection vers la page d'accueil
                         $this->redirectTo("home");
+                        return [
+                            "view" => VIEW_DIR."home",
+                            "data" => [
+                                "meta_description" => "Connexion ok."
+                            ],
+                        ];
 
                     } else {
                         // Gérer les erreurs
@@ -193,9 +201,8 @@ class SecurityController extends AbstractController {
         return [
             "view" => VIEW_DIR."security/login.php",
             "data" => [
-                "title" => ""
+                "meta_description" => "Formulaire de connexion."
             ],
-            "meta" => ""
         ];
     }
     
@@ -205,6 +212,12 @@ class SecurityController extends AbstractController {
           unset($_SESSION["user"]);
 
           $this->redirectTo("home", "index");
+          return [
+            "view" => VIEW_DIR."home",
+            "data" => [
+                "meta_description" => "Deconnexion ok."
+            ],
+        ];
     }
 
 
@@ -213,9 +226,9 @@ class SecurityController extends AbstractController {
             return [
                 "view" => VIEW_DIR."security/newMdp.php",
                 "data" => [
-                    "title" => "Change password"
+                    "title" => "Change password",
+                    "meta_description" => "change the password of an account"
                 ],
-                "meta" => "change the password of an account"
             ];
         
     }
@@ -273,9 +286,9 @@ class SecurityController extends AbstractController {
             return [
                 "view" => VIEW_DIR."security/login.php",
                 "data" => [
-                    "title" => ""
+                    
+                    "meta_description" => "Change Password ok."
                 ],
-                "meta" => ""
             ];
         }  
         
@@ -294,20 +307,23 @@ class SecurityController extends AbstractController {
                     "view" => VIEW_DIR."forum/usr/updateUser.php",
                     "data" => [
                         "title" => "user update",
-                        "user" => $user
+                        "user" => $user,
+                        "meta_description" => "update an existing account."
                     ],
-                    "meta" => "update an existing topic"
                 ];
             } else {
                 Session::addFlash('stop', "Pas touche aux comptes qui t'appartiennent pas.");
                 return [
                     "view" => VIEW_DIR."security/stop.php",
+                    "data" => [
                     "meta_description" => "hmmmmmm you're not supposed to be here."
+                    ],
                 ];
             }
         } else {
             return [
             "view" => VIEW_DIR."security/login.php",
+            "meta_description" => "Update an existing account ok."
             ];
         }
     }
@@ -362,9 +378,9 @@ class SecurityController extends AbstractController {
                     "view" => VIEW_DIR."forum/usr/detailsUser.php",
                     "data" => [
                         "user" => $user,
-                        "meta_description" => "Profile details."
+                        "meta_description" => "Update profile ok."
                     ],
-                    "meta" => "details"
+                   
                 ];
             } else {
                 // Gérer les erreurs
@@ -372,7 +388,7 @@ class SecurityController extends AbstractController {
                     "view" => VIEW_DIR."forum/usr/updateUser.php",
                     "data" => [
                         "user" => $user,
-                        "meta_description" => "Update profile."
+                        "meta_description" => "Update profile fail."
                     ],
                 ];
                 echo "Une erreur s'est produite lors de la mise à jour de la photo.";
@@ -401,13 +417,13 @@ class SecurityController extends AbstractController {
                 ];
 
                 $userManager->update($data);
-
+                $this->redirectTo("usr", "listUsers");
                 return [
                     "view" => VIEW_DIR."forum/usr/listUsers.php",
                     "data" => [
                         "meta_description" => "Suppression du compte : ".$user,
                         "users" => $users
-                    ]
+                    ],
                 ];
             }
         } else {
@@ -415,8 +431,10 @@ class SecurityController extends AbstractController {
 
             return [
                 "view" => VIEW_DIR."security/stop.php",
+                "data" => [
                 "meta_description" => "hmmmmmm you're not supposed to be here."
-                ];
+                ],
+            ];
         }
     }
 

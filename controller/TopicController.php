@@ -141,7 +141,7 @@ class TopicController extends AbstractController implements ControllerInterface{
                     "data" => [
                         "title" => "Topic creation",
                         "subCategories" => $subCategories,
-                        "categories" => $categories
+                        "categories" => $categories,
                         "meta_description" => "Formulaire de création de topic."
                     ],
                 ];
@@ -275,7 +275,7 @@ class TopicController extends AbstractController implements ControllerInterface{
                         "title" => "Topic update",
                         "topic" => $topic,
                         "subCategories" => $subCategories,
-                        "categories" => $categories
+                        "categories" => $categories,
                         "meta_description" => "update an existing topic"
                     ],
                 ];
@@ -284,7 +284,9 @@ class TopicController extends AbstractController implements ControllerInterface{
             Session::addFlash('stop', "Ce n'est pas ton topic désolé.");
             return [
                 "view" => VIEW_DIR."security/stop.php",
+                "data" => [
                 "meta_description" => "hmmmmmm you're not supposed to be here."
+                ],
             ];
         }
     }
@@ -345,7 +347,7 @@ class TopicController extends AbstractController implements ControllerInterface{
                     "data" => [
                         "title" => "Topic",
                         "topic" => $topic,
-                        "posts" => $posts
+                        "posts" => $posts,
                         "meta_description" => "Topic apres mise à jour"
                     ],
                 ];
@@ -358,7 +360,7 @@ class TopicController extends AbstractController implements ControllerInterface{
                     "title" => "Topic",
                     "topic" => $topic,
                     "subCategories" => $subCategories,
-                    "categories" => $categories
+                    "categories" => $categories,
                     "meta_description" => "Echec modification topic"
                 ],
             ];
@@ -400,7 +402,7 @@ class TopicController extends AbstractController implements ControllerInterface{
                 "data" => [
                     "title" => "Topic update",
                     "topic" => $topic,
-                    'posts' => $posts
+                    'posts' => $posts,
                     "meta_description" => "Mise à jour statut topic"
                 ],
             ];
@@ -410,8 +412,9 @@ class TopicController extends AbstractController implements ControllerInterface{
             Session::addFlash('stop', "tu n'as pas les droits pour faire ça mon coco");
             return [
                 "view" => VIEW_DIR."security/stop.php",
+                "data" => [
                 "meta_description" => "hmmmmmm you're not supposed to be here."
-                
+                ],
             ];
         }
     }
@@ -429,9 +432,22 @@ class TopicController extends AbstractController implements ControllerInterface{
         if ($success) {
             // Rediriger l'utilisateur vers la page du topic
             $this->redirectTo("topic", "listTopics");
+            return [
+                "view" => VIEW_DIR."forum/topics/listTopics.php",
+                "data" => [
+                    "topics" => $topics,
+                    "meta_description" => "delete topic ok"
+                ]
+            ];
         } else {
             // Gérer les erreurs
-            $error = "Une erreur s'est produite lors de la mise à jour du message.";
+            return [
+                "view" => VIEW_DIR."forum/topics/detailsTopic.php",
+                "data" => [
+                    "topic" => $topic,
+                    "meta_description" => "delete topic fail."
+                ]
+            ];
         } 
     }
 
@@ -491,6 +507,14 @@ class TopicController extends AbstractController implements ControllerInterface{
             if ($success) {
                 // Rediriger l'utilisateur vers la page du topic
                 $this->redirectTo("topic", "listPostByTopic", $topic->getId());
+                return [
+                    "view" => VIEW_DIR."forum/topics/detailsTopic.php",
+                    "data" => [
+                        "meta_description" => "Liste des reponses sous le topic : ".$topic->getTitle(),
+                        "topic" => $topic,
+                        "posts" => $posts
+                    ]
+                ];
             } else {
                 // Gérer les erreurs
                 $error = "Une erreur s'est produite lors de la mise à jour du message.";
@@ -515,7 +539,7 @@ class TopicController extends AbstractController implements ControllerInterface{
             "view" => VIEW_DIR."forum/topics/updatePost.php",
             "data" => [
                 "title" => "post update",
-                "post" => $post
+                "post" => $post,
                 "meta_description" => "Mise à jour d'une réponse" 
             ],
         ];
@@ -542,15 +566,23 @@ class TopicController extends AbstractController implements ControllerInterface{
         if ($success) {
             // Rediriger l'utilisateur vers la page du topic
             $this->redirectTo("topic", "listPostByTopic", $topic);
-        } else {
             return [
-                Session::addFlash("error", "une erreur est survenue lors de la mise à jour.");
-
-                "view" => VIEW_DIR."forum/topics/updatePost.php",
+                "view" => VIEW_DIR."forum/topics/detailsTopic.php",
                 "data" => [
-                    "title" => "post update",
-                    "post" => $post
-                    "meta_description" => "Mise à jour d'une réponse" 
+                    "topic" => $topic,
+                    "posts" => $posts,
+                    "meta_description" => "Mise à jour d'une réponse ok" 
+                ],
+            ];
+        } else {
+            Session::addFlash("error", "une erreur est survenue lors de la mise à jour.");
+            
+                return [
+                    "view" => VIEW_DIR."forum/topics/detailsTopic.php",
+                    "data" => [
+                        "topic" => $topic,
+                        "posts" => $posts,
+                    "meta_description" => "Mise à jour d'une réponse fail" 
                 ],
             ];
         }
@@ -570,9 +602,25 @@ class TopicController extends AbstractController implements ControllerInterface{
         if ($success) {
             // Rediriger l'utilisateur vers la page du topic
             $this->redirectTo("topic", "listPostByTopic", $topic);
+            return [
+                "view" => VIEW_DIR."forum/topics/detailsTopic.php",
+                "data" => [
+                    "topic" => $topic,
+                    "posts" => $posts,
+                    "meta_description" => "Suppression d'une réponse ok" 
+                ],
+            ];
         } else {
             // Gérer les erreurs
-            $error = "Une erreur s'est produite lors de la mise à jour du message.";
+            $this->redirectTo("topic", "listPostByTopic", $topic);
+            return [
+                "view" => VIEW_DIR."forum/topics/detailsTopic.php",
+                "data" => [
+                    "topic" => $topic,
+                    "posts" => $posts,
+                    "meta_description" => "Suppression d'une réponse fail" 
+                ],
+            ];
         } 
     }
 

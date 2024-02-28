@@ -44,13 +44,15 @@ label {
 
 input[type="text"],
 input[type="email"],
-input[type="password"] {
+input[type="password"],
+select,
+textarea {
     width: 100%;
     padding: 10px;
     border: 1px solid #6e6e6e;
     border-radius: 5px;
     background-color: #1d242c;
-
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
     box-sizing: border-box;
 }
 
@@ -71,7 +73,7 @@ input[type="password"] {
 .forgot-password {
     display: block;
     text-align: center;
-    color: #007bff;
+    color: #9dc9ff;
     text-decoration: none;
 }
 
@@ -217,7 +219,8 @@ h2 {
 }
 
 .user-registration-date {
-    color: #888;
+    color: #7ea8cb;
+    font-style: italic;
     background-color: #1d242c;
 }
 

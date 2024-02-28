@@ -33,6 +33,10 @@
 }
 
 .topics-list {
+    /* box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
 }
 
@@ -78,45 +82,8 @@
     color: #555;
     .topic-author,
     .topic-category,
-    .topic-date,div, a, p, a{
+    .topic-date, a, p, a{
         background-color: #1d242c;
-    }
-    .BB a {
-        display: flex;
-        justify-content: center;
-        /* padding: 5px; */
-        border-radius: 5px;
-        background-color: #002240;
-        color: #9dc9ff;
-        width: 120px;
-        height: 35px;
-        align-items: center;
-        /* margin-top: 5px; */
-        /* border: 1px solid rgb(0, 13, 39); */
-    }
-    .ER a {
-        display: flex;
-        justify-content: center;
-        /* padding: 5px; */
-        border-radius: 5px;
-        background-color: #321c00;
-        color: #ffe562;
-        width: 110px;
-        height: 35px;
-        align-items: center;
-        /* margin-top: 5px; */
-    }
-    .SK a {
-        display: flex;
-        justify-content: center;
-        /* padding: 5px; */
-        border-radius: 5px;
-        background-color: #5e0000;
-        color: #ff9999;
-        width: 80px;
-        height: 35px;
-        align-items: center;
-        /* margin-top: 5px; */
     }
     .BB  {
         display: flex;
@@ -125,11 +92,12 @@
         border-radius: 5px;
         background-color: #002240;
         color: #9dc9ff;
+        text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
         width: 120px;
         height: 35px;
         align-items: center;
         /* margin-top: 5px; */
-      
+        /* border: 1px solid rgb(0, 13, 39); */
     }
     .ER  {
         display: flex;
@@ -138,12 +106,11 @@
         border-radius: 5px;
         background-color: #321c00;
         color: #ffe562;
+        text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
         width: 110px;
         height: 35px;
         align-items: center;
-
         /* margin-top: 5px; */
-      
     }
     .SK  {
         display: flex;
@@ -152,11 +119,13 @@
         border-radius: 5px;
         background-color: #5e0000;
         color: #ff9999;
+        text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
         width: 80px;
         height: 35px;
         align-items: center;
         /* margin-top: 5px; */
     }
+    
 
     .Guide {
         display: flex;
@@ -167,6 +136,7 @@
         width: 70px;
         height: 35px;
         color: #61e06f;
+        text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
         align-items: center;
     }
     .Humour{
@@ -178,6 +148,7 @@
         width: 85px;
         height: 35px;
         color: #98c6ff;
+        text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
         align-items: center;
     }
     .Hype{
@@ -189,6 +160,7 @@
         width: 70px;
         height: 35px;
         color: #da6b6b;
+        text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
         align-items: center;
     }
     .Discuss {
@@ -199,6 +171,7 @@
         /* width: 80px; */
         height: 35px;
         color: #e7bfe6;
+        text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
         overflow: hidden;
         align-items: center;
         text-overflow: ellipsis; 
@@ -214,6 +187,7 @@
         width: 70px;
         height: 35px;
         color: #c7ce5d;
+        text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
         align-items: center;
     }
     .Speculation{
@@ -225,6 +199,7 @@
         width: 120px;
         height: 35px;
         color: #59bbca;
+        text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
         align-items: center;
     }
 }
@@ -420,13 +395,19 @@ une couleur de fond differente des elements impairs */
     margin-bottom: 20px;
     flex-direction: column;
     align-items: flex-start;
+    
 }
 
 .topic-actions a {
     display: inline-block;
     margin-right: 10px;
-    color: #0070c0;
+    color: #d3e7ff;
     text-decoration: none;
+    margin-top: 10px;
+    background-color: #253151;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
 }
 
 .topic-actions a:hover {
@@ -434,7 +415,13 @@ une couleur de fond differente des elements impairs */
 }
 
 .topic-state h2 {
+    margin-top: 10px;
+    background-color: #253151;
+    padding: 10px;
+    border-radius: 10px;
     color: #ffffff;
+    width: 160px;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
 }
 
 .reply-form-container {
@@ -463,6 +450,7 @@ textarea {
     background-color: #007bff;
     color: #fff;
     cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
 }
 
 .form-button:hover {
@@ -476,6 +464,7 @@ textarea {
     background-color: #1d242c;
     padding: 15px;
     border-radius: 15px;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
 }
 
 .post {
@@ -554,7 +543,7 @@ textarea {
 .delete-post,
 .update-post {
     margin-left: 10px;
-    color: #0070c0;
+    color: #d3e7ff;
     text-decoration: none;
     background-color: #1a232c;
     font-size: 15px;
@@ -589,12 +578,13 @@ button[type="submit"] {
     display: block;
     width: 100%;
     padding: 10px;
-    background-color: #007bff;
+    background-color: #253151;
     color: #fff;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
 }
 
 button[type="submit"]:hover {

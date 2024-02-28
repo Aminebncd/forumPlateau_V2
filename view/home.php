@@ -16,8 +16,7 @@ $topics = $result["data"]['topics'];
     </div>
 
     <a href="index.php?ctrl=topic&action=createTopicForm" class="add-topic-btn">Ajouter un topic</a>
-    
-    <?php
+<?php
 // Affichage des topics s'il y en a
 if (!empty($topics)) {
     ?>
@@ -29,22 +28,23 @@ if (!empty($topics)) {
                 <?php $count++; // Incrémentation du compteur ?>
 
                 <div class="topic-header">
-                                <h2 class="topic-title"><a href="index.php?ctrl=topic&action=listPostByTopic&id=<?= $topic->getId() ?>"><?= $topic->getTitle() ?></a></h2>
-                            </div>
+                    <a href="index.php?ctrl=topic&action=listPostByTopic&id=<?= $topic->getId() ?>" class="topic-title"><?= $topic->getTitle() ?></a>
+                </div>
 
                 <div class="topic-details">
-
-                    <span class="topic-category">
+                    <div class="topic-category">
+                        <a href="index.php?ctrl=topic&action=listTopicsBySubCategory&id=<?= $topic->getSubCategory()->getId() ?>">
+                            <?= $topic->getSubCategory()->colorSubTag()?>
+                        </a> 
                         
-                        <a href="index.php?ctrl=topic&action=listTopicsByCategory&id=<?= $topic->getCategory()->getId() ?>"><?= $topic->getCategory()->colorTag() ?></a>
-                        <a href="index.php?ctrl=topic&action=listTopicsBySubCategory&id=<?= $topic->getSubCategory()->getId() ?>"><?= $topic->getSubCategory()->colorSubTag()?></a>
-                    </span>
-
-                    <span class="topic-author">
+                        <a href="index.php?ctrl=topic&action=listTopicsByCategory&id=<?= $topic->getCategory()->getId() ?>">
+                            <?= $topic->getCategory()->colorTag() ?>
+                        </a>
+                    </div>
+                    <div class="topic-author">
                         par <a href="index.php?ctrl=user&action=whoIsThisUser&id=<?= $topic->getUser()->getId() ?>"><?= $topic->getUser() ?></a>
-                    </span>
-
-                    <span class="topic-date"><?= $topic->getDateCreation()->format('d/m/Y H:i') ?></span>
+                    </div>
+                    <div class="topic-date"><?= $topic->getDateCreation()->format('d/m/Y H:i') ?></div>
                 </div>
                 
             </div>
@@ -55,5 +55,6 @@ if (!empty($topics)) {
     echo "<p>Aucun topic n'a été trouvé.</p>";
 }
 ?>
+
 
 </main>

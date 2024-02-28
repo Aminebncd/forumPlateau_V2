@@ -73,21 +73,22 @@
 
 .subCategories-grid {
     /* margin-top: 50px; */
-    width: 70vw;
+    width: 45vw;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); 
-    gap: 20px; 
-    background-color: #1d242c; 
-    padding: 40px; 
-    border-radius: 10px; 
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 20px;
+    background-color: #1d242c;
+    padding: 30px;
+    border-radius: 10px;
     box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+    justify-items: stretch;
 }
 
 .tag {
     display: flex;
     /* min-width: 90px; */
     padding: 20px 35px;
-    background-color: #0a2037;
+    background-color: #1a3653;
     color: #fff;
     text-decoration: none;
     border-radius: 5px;

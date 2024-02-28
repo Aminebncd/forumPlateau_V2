@@ -42,10 +42,10 @@ class HomeController extends AbstractController implements ControllerInterface {
     }
 
 
-    public function forumRules() {
+    // public function forumRules() {
 
-        return [
-            "view" => VIEW_DIR."rules.php"
-        ];
-    }
+    //     return [
+    //         "view" => VIEW_DIR."rules.php"
+    //     ];
+    // }
 }
